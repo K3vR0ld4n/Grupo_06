@@ -1,4 +1,4 @@
-general/SecondaryController.class
 general/App.class
-module-info.class
 general/PrimaryController.class
+module-info.class
+general/SecondaryController.class

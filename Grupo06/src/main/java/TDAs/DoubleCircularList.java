@@ -1,16 +1,27 @@
 package TDAs;
 
-
 public class DoubleCircularList<E> implements List<E> {
 
     private Node<E> last;
 
-    public Node<E> getLast() {
-        return last;
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setLast(Node<E> last) {
-        this.last = last;
+    @Override
+    public E removeFirst() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public E removeLast() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public E set(int index, E element) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -40,26 +51,16 @@ public class DoubleCircularList<E> implements List<E> {
         Node<E> nuevo = new Node<>(e);
         if (isEmpty()) {
             last = nuevo;
-            last.setNext(nuevo);
-            last.setPrev(nuevo);
+            last.setNext(last);
+            last.setPrev(last);
         } else {
-            nuevo.setNext(last);
-            nuevo.setPrev(last.getPrev());
-            nuevo.getPrev().setNext(nuevo);
-            last.setPrev(nuevo);
+            nuevo.setNext(last.getNext());
+            nuevo.setPrev(last);
+            last.setNext(nuevo);
+            nuevo.getNext().setPrev(nuevo);
             last = nuevo;
         }
         return true;
-    }
-
-    @Override
-    public E removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E removeLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -79,11 +80,6 @@ public class DoubleCircularList<E> implements List<E> {
     @Override
     public boolean isEmpty() {
         return last == null;
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -131,12 +127,17 @@ public class DoubleCircularList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        E element = null;
+        if (isInRange(index)) {
+            Node<E> traveler = this.last.getNext();
+            int cont = 0;
+            while (cont <= index) {
+                element = traveler.getContent();
+                traveler = traveler.getNext();
+                cont++;
+            }
+        }
+        return element;
     }
 
     @Override
@@ -153,11 +154,20 @@ public class DoubleCircularList<E> implements List<E> {
             if (viajero != last) {
                 retorno += ", ";
             } else {
-                retorno += (", "+viajero.getContent()+"]");
+                if (this.size() == 1) {
+                    retorno += "]";
+                } else {
+                    retorno += (", " + viajero.getContent() + "]");
+                }
                 condicion = true;
             }
         }
         return retorno;
+    }
+
+    private boolean isInRange(int index) {
+        return index >= 0 && index < this.size();
+
     }
 
 }

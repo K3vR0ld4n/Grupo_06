@@ -1,5 +1,6 @@
 package general;
 
+import TDAs.DoubleCircularList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +34,14 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        DoubleCircularList<Integer> lista = new DoubleCircularList<>();
+        for (int i = 0; i < 10; i++) {
+            lista.addLast(i+1);
+            System.out.println(lista);
+
+        }
+        System.out.println(lista.get(9));
+
     }
 
 }
