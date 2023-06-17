@@ -1,6 +1,8 @@
 package TDAs;
 
-public interface List<E> {
+import java.io.Serializable;
+
+public interface List<E> extends Serializable {
     
 
     public boolean addFirst(E e); // inserta el elemento e al inicio
@@ -17,7 +19,7 @@ public interface List<E> {
 
     public void clear();          
 
-    public void add(E element); // inserta element en la posición index
+    public void add(int index, E element); // inserta element en la posición index
 
     public boolean remove(E element); // remueve y retorna el elemento en la posición index
 

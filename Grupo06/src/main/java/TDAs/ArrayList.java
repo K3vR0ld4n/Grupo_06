@@ -77,26 +77,24 @@ public class ArrayList<E> implements List<E> {
     public E removeLast() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-//    @Override
-//    public boolean add(int index, E element) {
-//        if (index < 0 || index > effectiveSize) {
-//            // throw new IndexOutOfBoundsException("Invalid index: " + index);
-//            return false;
-//        }
-//        if (isFull()) {
-//            addCapacity();
-//        }
-//        for (int i = effectiveSize; i > index; i--) {
-//            elements[i] = elements[i - 1];
-//            // elements[i+1] = elements[i]; MAL
-//        }
-//        elements[index] = element;
-//        effectiveSize++;
-//        return true;
-//    }
+
+    @Override
+    public void add(int index, E element) {
+        if (index < 0 || index > effectiveSize) {
+            System.out.println("Indece incorrecto");
+        }
+        if (isFull()) {
+            addCapacity();
+        }
+        for (int i = effectiveSize; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+        elements[index] = element;
+        effectiveSize++;
+    }
 //remueve el elemento en la posicion index y lo retorna
-       public E remove(int index) {
+
+    public E remove(int index) {
         if (isInRange(index)) {
             E elemnt = elements[index];
             for (int i = (index + 1); i < effectiveSize; i++) {
@@ -153,7 +151,6 @@ public class ArrayList<E> implements List<E> {
         return chain;
     }
 
-
     //Metodo creado para tener mayoe facilidad a la hora de validar un indice
     private boolean isInRange(int Idx) {
         return Idx >= 0 && Idx < effectiveSize;
@@ -163,12 +160,6 @@ public class ArrayList<E> implements List<E> {
     public boolean remove(E element) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void add(E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 
 
 }
