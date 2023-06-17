@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f1f6f9;" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.LoginController">
+<AnchorPane fx:id="PanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f1f6f9;" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.LoginController">
    <children>
-      <Label layoutX="407.0" layoutY="241.0" prefHeight="53.0" prefWidth="86.0" text="Login" textFill="#212a3e">
+      <Label layoutX="407.0" layoutY="241.0" prefHeight="53.0" prefWidth="115.0" text="Login" textFill="#212a3e">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -20,12 +20,12 @@
             <Font name="Berlin Sans FB" size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="BtLogin" layoutX="374.0" layoutY="456.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" text="Login">
+      <Button fx:id="BtLogin" layoutX="374.0" layoutY="456.0" mnemonicParsing="false" onMouseClicked="#logIn" prefHeight="40.0" prefWidth="152.0" text="Login">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="lblCrearCuenta" layoutX="416.0" layoutY="505.0" onMouseClicked="#switchToRegister" prefHeight="19.0" prefWidth="69.0" text="Crear cuenta" textFill="#212a3e" underline="true">
+      <Label fx:id="lblCrearCuenta" layoutX="416.0" layoutY="505.0" onMouseClicked="#switchToRegister" prefHeight="19.0" prefWidth="86.0" text="Crear cuenta" textFill="#212a3e" underline="true">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>

@@ -5,6 +5,7 @@
 package modules;
 
 import TDAs.ArrayList;
+import TDAs.List;
 import java.io.Serializable;
 
 /**
@@ -15,13 +16,14 @@ public class Register implements Serializable{
     private String name;
     private String password;
     private String mail;
-    public static ArrayList<Register> RegisterArray = new ArrayList();
+    public static ArrayList<Register> RegisterArray = new ArrayList<>();
 
     public Register(String name, String password, String mail) {
         this.name = name;
         this.password = password;
         this.mail = mail;
         RegisterArray.addLast(this);
+        
     }
 
     public String getName() {
@@ -58,7 +60,8 @@ public class Register implements Serializable{
 
     @Override
     public String toString() {
-        return "Register{" + "name=" + name + ", password=" + password + ", mail=" + mail + '}';
+        return "\nRegister{" + "name=" + name + ", password=" + password + ", mail=" + mail + "}\n";
+
     }
     
     

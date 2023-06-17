@@ -1,4 +1,6 @@
 package general;
+import TDAs.ArrayList;
+import modules.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +26,7 @@ public class LoginController {
     private Label lblCrearCuenta;
     
     @FXML
-    private void switchToRegister() throws IOException {
+    private void switchToRegister() throws IOException{
         App.setRoot("Register");
     }
     
@@ -32,5 +34,24 @@ public class LoginController {
     private void closeWindow() throws IOException{
         System.exit(0);
     }
-
+    
+    @FXML
+    private void logIn(){
+        try{
+            String nameInput = this.Txtname.getText();
+            String passwordInput = this.TxtPasword.getText();
+      
+            for(Login l: Login.loginArray){
+                if(nameInput.equals(l.getName()) && passwordInput.equals(l.getPassword())){
+                    System.out.println("INICIO DE SESION CORRECTO");
+                    return;
+                 }
+            }
+        }catch(Exception e){
+            System.out.println("INTENTE DE NUEVO");
+        }
+       
+    }
+    
+    
 }

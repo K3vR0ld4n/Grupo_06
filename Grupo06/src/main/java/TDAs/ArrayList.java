@@ -4,11 +4,13 @@
  */
 package TDAs;
 
+import java.util.Iterator;
+
 /**
  *
  * @author kev-roldan
  */
-public class ArrayList<E> implements List<E> {
+public class ArrayList<E> implements List<E>, Iterable<E> {
 
     private E[] elements;
     private int MAX_SIZE = 100;
@@ -64,8 +66,14 @@ public class ArrayList<E> implements List<E> {
         if (isFull()) {
             addCapacity();
         }
+        if(this.isEmpty()){
+            addFirst(element);
+            return true;
+        }
         elements[effectiveSize++] = element;
         return true;
+        
+
     }
 
     @Override
@@ -81,7 +89,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public void add(int index, E element) {
         if (index < 0 || index > effectiveSize) {
-            System.out.println("Indece incorrecto");
+            System.out.println("Indice incorrecto");
         }
         if (isFull()) {
             addCapacity();
@@ -159,6 +167,25 @@ public class ArrayList<E> implements List<E> {
     @Override
     public boolean remove(E element) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>(){
+            private int index;
+            
+            @Override
+            public boolean hasNext(){
+                return index < elements.length;
+            }
+            
+            @Override
+            public E next(){
+                E element = elements[index];
+                index++;
+                return element;
+            }
+        };
     }
 
 

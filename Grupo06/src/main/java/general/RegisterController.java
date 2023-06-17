@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import modules.Login;
 
 public class RegisterController implements Initializable {
 
@@ -53,7 +54,7 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
-    private void RegisterButton() {
+    private void RegisterButton() throws IOException {
         String name = TxtName.getText();
         String password = TxtPassword.getText();
         String mail = TxtMail.getText();
@@ -62,9 +63,11 @@ public class RegisterController implements Initializable {
             alert.AlertError("Rellenos todos los campos");
         }
         Register newRegister = new Register(name, password, mail);
+        Login user = new Login(name, password);
         System.out.println(Register.RegisterArray);
         Serialization.serialize(Register.RegisterArray, "register");
         
+        App.setRoot("Login");
     }
 
     @FXML

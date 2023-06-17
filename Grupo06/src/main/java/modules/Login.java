@@ -13,14 +13,15 @@ import TDAs.ArrayList;
 public class Login {
     private String name;
     private String password;
-    private ArrayList<Login> loginArray;
+    public static ArrayList<Login> loginArray = new ArrayList<>();
 
     public Login(String name, String password) {
         this.name = name;
         this.password = password;
-        loginArray.addLast(new Login(name, password));
+        
+        loginArray.addLast(this);
     }
-
+    
     public String getName() {
         return name;
     }
