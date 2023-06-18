@@ -1,4 +1,15 @@
+TDAs/ArrayList.class
+TDAs/List.class
+general/Emoji.class
+general/Resource.class
+TDAs/Node.class
 general/App.class
+general/Profile.class
 general/PrimaryController.class
 module-info.class
+general/Library.class
 general/SecondaryController.class
+TDAs/DoubleCircularList.class
+Fx/RegisterController.class
+Fx/LoginController.class
+Fx/ComponentController.class
