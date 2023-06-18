@@ -83,7 +83,7 @@ public class DoubleCircularList<E> implements List<E> {
     }
 
     @Override
-    public void add(E element) {
+    public void add(int index, E element) {
         Node<E> nuevo = new Node<>(element);
         if (element == null) {
             System.out.println("Ingrese un elemento válido");

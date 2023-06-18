@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 TDAs/ArrayList.class
 TDAs/List.class
 general/Emoji.class
@@ -13,3 +14,22 @@ TDAs/DoubleCircularList.class
 Fx/RegisterController.class
 Fx/LoginController.class
 Fx/ComponentController.class
+=======
+TDAs/List.class
+TDAs/ArrayList.class
+modules/Login.class
+general/Profile.class
+module-info.class
+modules/Serialization.class
+TDAs/ArrayList$1.class
+modules/Alertas.class
+general/Emoji.class
+general/Resource.class
+modules/Register.class
+TDAs/Node.class
+general/App.class
+general/RegisterController.class
+general/Library.class
+TDAs/DoubleCircularList.class
+general/LoginController.class
+>>>>>>> 55a7964985a82c68764a85e4b16c633f0896650a

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.stage.StageStyle;
 
 /**
  * JavaFX App
@@ -18,8 +19,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("Login"));
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
@@ -34,13 +36,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-        DoubleCircularList<Integer> lista = new DoubleCircularList<>();
-        for (int i = 0; i < 10; i++) {
-            lista.addLast(i+1);
-            System.out.println(lista);
 
-        }
-        System.out.println(lista.get(9));
 
     }
 
