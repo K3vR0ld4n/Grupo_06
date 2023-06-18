@@ -41,8 +41,8 @@ public class LoginController {
             String nameInput = this.Txtname.getText();
             String passwordInput = this.TxtPasword.getText();
       
-            for(Login l: Login.loginArray){
-                if(nameInput.equals(l.getName()) && passwordInput.equals(l.getPassword())){
+            for(Profile p: Profile.arrayProfile){
+                if(nameInput.equals(p.getName()) && passwordInput.equals(p.getPassword())){
                     System.out.println("INICIO DE SESION CORRECTO");
                     return;
                  }

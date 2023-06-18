@@ -1,9 +1,9 @@
 package general;
 
 import TDAs.ArrayList;
-import modules.Alertas;
-import modules.Serialization;
-import modules.Register;
+import utils.Alertas;
+import utils.Serialization;
+import modules.Profile;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import java.net.URL;
@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import modules.Login;
+
 
 public class RegisterController implements Initializable {
 
@@ -62,10 +62,10 @@ public class RegisterController implements Initializable {
         if (name.equals("") || password.equals("") || mail.equals("")) {
             alert.AlertError("Rellenos todos los campos");
         }
-        Register newRegister = new Register(name, password, mail);
-        Login user = new Login(name, password);
-        System.out.println(Register.RegisterArray);
-        Serialization.serialize(Register.RegisterArray, "register");
+        Profile newRegister = new Profile(name, password, mail);
+        
+       
+        Serialization.serialize(Profile.arrayProfile, "profile");
         
         App.setRoot("Login");
     }
