@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f1f6f9;" stylesheets="@../styles/register.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.RegisterController">
+<AnchorPane fx:id="PanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f1f6f9;" stylesheets="@../styles/register.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.RegisterController">
    <children>
       <Label layoutX="390.0" layoutY="240.0" prefHeight="53.0" prefWidth="122.0" text="Register" textFill="#212a3e">
          <font>
@@ -30,7 +30,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="lblCrearCuenta" layoutX="410.0" layoutY="522.0" onMouseClicked="#switchToLogin" prefHeight="19.0" prefWidth="83.0" text="Ya tengo cuenta" textFill="#212a3e" underline="true">
+      <Label fx:id="lblCrearCuenta" layoutX="405.0" layoutY="521.0" onMouseClicked="#switchToLogin" prefHeight="19.0" prefWidth="91.0" text="I have an account" textFill="#212a3e" underline="true">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>

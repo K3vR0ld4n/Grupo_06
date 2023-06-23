@@ -1,6 +1,6 @@
 
 #PanePrincipal{
-    -fx-background-image: url("fondoLogin.png");
+    -fx-background-image: url("imagesCss/fondoLogin.png");
 
 }
 
@@ -51,4 +51,9 @@
 
 #ImgClose:hover{
     -fx-cursor: hand;
+}
+
+#lblGuest:hover{
+    -fx-cursor: hand;
+    -fx-text-fill: #0014d4;
 }
