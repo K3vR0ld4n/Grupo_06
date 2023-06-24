@@ -1,16 +1,2 @@
-TDAs\ArrayList$1.class
-TDAs\List.class
-modules\Emoji.class
-TDAs\Node.class
-utils\Serialization.class
 module-info.class
-utils\Resource.class
-general\App.class
-modules\Profile.class
-general\RegisterController.class
-TDAs\ArrayList.class
-utils\Alertas.class
-TDAs\DoubleCircularList.class
-general\LoginController.class
-general\EmojiSectionController.class
-modules\Library.class
+general/EmojiSectionController.class

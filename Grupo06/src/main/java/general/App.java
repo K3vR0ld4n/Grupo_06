@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.stage.StageStyle;
 import modules.Profile;
 import utils.Serialization;
@@ -38,13 +41,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-       
-        
         Profile.loadProfiles();
-         
-        launch();
-       
+          launch();
 
     }
-
 }

@@ -32,8 +32,8 @@ public class DoubleCircularList<E> implements List<E> {
         Node<E> nuevo = new Node<>(e);
         if (isEmpty()) {
             last = nuevo;
-            last.setNext(nuevo);
-            last.setPrev(nuevo);
+            last.setNext(last);
+            last.setPrev(last);
         } else {
             nuevo.setNext(last.getNext());
             nuevo.setPrev(last);
@@ -138,6 +138,14 @@ public class DoubleCircularList<E> implements List<E> {
             }
         }
         return element;
+    }
+
+    public E getFirst() {
+        return this.last.getNext().getContent();
+    }
+
+    public E getLast() {
+        return this.last.getContent();
     }
 
     @Override
