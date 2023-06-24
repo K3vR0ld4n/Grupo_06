@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import utils.Resource;
 
 /**
@@ -56,6 +57,10 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private ImageView ImgArrowR;
+
+    @FXML
+    private StackPane SPEmoji;
+
     @FXML
     private HBox HBoxEmojis;
 
@@ -73,10 +78,9 @@ public class EmojiSectionController implements Initializable {
         button.setGraphic(new ImageView(defaultIcon));
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
-        
-        
-        button.setOnAction(event-> loadEmojiSelected(resources));
-        
+
+        button.setOnAction(event -> loadEmojiSelected(resources));
+
     }
 
     @Override
@@ -102,26 +106,64 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private void getNextElement(MouseEvent event) {
+        int sizeHBox = HBoxEmojis.getChildren().size();
+
+        if (sizeHBox > 0) {
+
+            ImageView img = (ImageView) HBoxEmojis.getChildren().get(sizeHBox - 1);
+            Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
+            ImageView imgVw = new ImageView(nextImage);
+            imgVw.setPreserveRatio(true);
+            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            HBoxEmojis.getChildren().remove(0);
+            HBoxEmojis.getChildren().addAll(imgVw);
+            showEmoji();
+        }
 
     }
 
     @FXML
     private void getPreviousElement(MouseEvent event) {
+        int sizeHBox = HBoxEmojis.getChildren().size();
+
+        if (sizeHBox > 0) {
+
+            ImageView img = (ImageView) HBoxEmojis.getChildren().get(0);
+            Image nextImage = currentComponents.getResourcesList().getPrevious(img.getImage());
+            ImageView imgVw = new ImageView(nextImage);
+            imgVw.setPreserveRatio(true);
+            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            HBoxEmojis.getChildren().remove(sizeHBox - 1);
+            HBoxEmojis.getChildren().add(0, imgVw);
+            showEmoji();
+        }
 
     }
 
     private void loadEmojiSelected(Resource resource) {
         HBoxEmojis.getChildren().clear();
-        
-        currentComponents= resource;
-        
+
+        currentComponents = resource;
+
         for (int i = 0; i < 8; i++) {
             ImageView img = new ImageView(resource.getResourcesList().get(i));
             img.setPreserveRatio(true);
-            img.setFitHeight(HBoxEmojis.getPrefHeight()-10);
+            img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
             HBoxEmojis.getChildren().addAll(img);
         }
+        showEmoji();
 
+    }
+
+    private void showEmoji() {
+
+        ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
+        Image image = img.getImage();
+        ImageView imgVw = new ImageView(image);
+        imgVw.setPreserveRatio(true);
+        imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
+
+        SPEmoji.getChildren().add(imgVw);
     }
 
 }

@@ -140,12 +140,26 @@ public class DoubleCircularList<E> implements List<E> {
         return element;
     }
 
-    public E getFirst() {
-        return this.last.getNext().getContent();
+    public E getNext(E element) {
+        Node<E> currentNode = last.getNext();
+        do {
+            if (currentNode.getContent().equals(element)) {
+                return currentNode.getNext().getContent();
+            }
+            currentNode = currentNode.getNext();
+        } while (currentNode != last.getNext());
+        return null;
     }
 
-    public E getLast() {
-        return this.last.getContent();
+    public E getPrevious(E element) {
+        Node<E> currentNode = last.getNext();
+        do {
+            if (currentNode.getContent().equals(element)) {
+                return currentNode.getPrev().getContent();
+            }
+            currentNode = currentNode.getNext();
+        } while (currentNode != last.getNext());
+        return null;
     }
 
     @Override
