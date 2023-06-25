@@ -53,5 +53,9 @@ public class History {
         this.historyBack.push(old);
         this.actual = newE;
     }
+
+    public Emoji getActual() {
+        return actual;
+    }
    
 }

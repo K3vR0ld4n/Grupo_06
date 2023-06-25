@@ -68,24 +68,23 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private HBox HBoxEmojis;
-    
+
     @FXML
     private ImageView forward;
-    
+
     @FXML
     private ImageView back;
-    
-    private ImageView viewAccessory= new ImageView();
+
+    private ImageView viewAccessory = new ImageView();
     private ImageView viewFace = new ImageView();
     private ImageView viewEyes = new ImageView();
     private ImageView viewEyebrows = new ImageView();
     private ImageView viewMouth = new ImageView();
-    
-    private Emoji creatingEmoji; //= 
-    History history = new History(creatingEmoji);
-    private Resource currentComponents;
-    
 
+    //private Emoji creatingEmoji; //= 
+    //History history = new History(creatingEmoji);
+    private History history;
+    private Resource currentComponents;
 
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
@@ -104,15 +103,17 @@ public class EmojiSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        SPEmoji.getChildren().addAll(viewFace,viewEyes,viewEyebrows,viewMouth,viewAccessory);
-        creatingEmoji = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
+        SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows, viewMouth, viewAccessory);
+
+        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
+
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
         initializeIcon("/resources/DefaultIconMouth.png", "/resources/HoverIconMouth.png", btMouth);
         initializeIcon("/resources/DefaultIconAccessories.png", "/resources/HoverIconAccessories.png", btAccessories);
-        
-    }   
+
+    }
 
     @FXML
     private void closeWindow() throws IOException {
@@ -176,20 +177,20 @@ public class EmojiSectionController implements Initializable {
             ImageView img = (ImageView) HBoxEmojis.getChildren().get(i);
             Image image = img.getImage();
             ImageView imgVw = currentImageView();
-            
-            img.setOnMouseClicked( ev-> {
+
+            img.setOnMouseClicked(ev -> {
                 updateEmoji(imgVw, image);
             });
-            
+
             imgVw.setPreserveRatio(true);
             imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
         }
-        
+
     }
 
-    private ImageView currentImageView(){
+    private ImageView currentImageView() {
         String type = currentComponents.getType().name();
-        
+
         switch (type) {
             case "FACES":
                 return viewFace;
@@ -204,23 +205,44 @@ public class EmojiSectionController implements Initializable {
             default:
                 break;
         }
-        
+
         return null;
     }
-    
-    @FXML
-    public void goForward(){
-        history.advance();
 
-    }
-    
     @FXML
-    public void goBack(){
-        history.back();
-
+    public void goForward() {
+        Emoji emoji = history.advance();
+        if(emoji!=null) {
+        viewEyes.setImage(emoji.getEyes());
+        viewMouth.setImage(emoji.getMouth());
+        viewFace.setImage(emoji.getFace());
+        viewEyebrows.setImage(emoji.getEyesbrows());
+        viewAccessory.setImage(emoji.getAccessories());
+        }
     }
-    
-    public void updateEmoji(ImageView imgV, Image img){
+
+    @FXML
+    public void goBack() {
+        
+        Emoji emoji = history.back();
+        if(emoji!=null){
+        viewEyes.setImage(emoji.getEyes());
+        viewMouth.setImage(emoji.getMouth());
+        viewFace.setImage(emoji.getFace());
+        viewEyebrows.setImage(emoji.getEyesbrows());
+        viewAccessory.setImage(emoji.getAccessories());
+        }
+    }
+
+    public void updateEmoji(ImageView imgV, Image img) {
+
+        imgV.setImage(img);
+        Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
+
+        history.setActual(e);
+
+        /*
+ 
         String type = currentComponents.getType().name();
         Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
         if(type.equals("FACES")) e.setFace(img) ; imgV.setImage(img);
@@ -229,5 +251,6 @@ public class EmojiSectionController implements Initializable {
         if(type.equals("MOUTH")) e.setMouth(img); imgV.setImage(img);
         if(type.equals("EYEBROWS")) e.setEyesbrows(img); imgV.setImage(img);
         history.setActual(e);
+         */
     }
 }
