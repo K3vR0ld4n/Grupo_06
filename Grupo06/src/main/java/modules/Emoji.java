@@ -17,12 +17,34 @@ public class Emoji {
     private Image eyesbrows;
     private Image accessories;
 
-    public Emoji(Image eyes, Image mouth, Image face) {
+    public Emoji(Image eyes, Image mouth, Image face, Image eyesbrows, Image accessories) {
         this.eyes = eyes;
         this.mouth = mouth;
         this.face = face;
+        this.accessories = accessories;
+        this.eyesbrows = eyesbrows;
     }
-
+    
+    public boolean haveFace(){
+        return this.face != null;
+    }
+    
+    public boolean haveEyes(){
+        return this.eyes != null;
+    }
+    
+    public boolean haveMouth(){
+        return this.mouth != null;
+    }
+    
+    public boolean haveEyeBrows(){
+        return this.eyesbrows != null;
+    }
+    
+    public boolean haveAccessories(){
+        return this.accessories != null;
+    }
+    
     public Image getEyes() {
         return eyes;
     }

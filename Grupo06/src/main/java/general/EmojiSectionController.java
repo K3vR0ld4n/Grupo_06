@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import modules.Emoji;
+import modules.History;
 import utils.Resource;
 
 /**
@@ -66,14 +68,20 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private HBox HBoxEmojis;
-
+    
+    @FXML
+    private ImageView forward;
+    
+    @FXML
+    private ImageView back;
+    
     private ImageView viewAccessory= new ImageView();
     private ImageView viewFace = new ImageView();
     private ImageView viewEyes = new ImageView();
     private ImageView viewEyebrows = new ImageView();
     private ImageView viewMouth = new ImageView();
     
-    
+    private Emoji creatingEmoji = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
     
     private Resource currentComponents;
     
@@ -103,6 +111,7 @@ public class EmojiSectionController implements Initializable {
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
         initializeIcon("/resources/DefaultIconMouth.png", "/resources/HoverIconMouth.png", btMouth);
         initializeIcon("/resources/DefaultIconAccessories.png", "/resources/HoverIconAccessories.png", btAccessories);
+        
     }   
 
     @FXML
@@ -164,13 +173,22 @@ public class EmojiSectionController implements Initializable {
     private void showEmoji() {
 
         for (int i = 0; i < 8; i++) {
-        ImageView img = (ImageView) HBoxEmojis.getChildren().get(i);
-        Image image = img.getImage();
-        ImageView imgVw = currentImageView();
-        img.setOnMouseClicked(ev->imgVw.setImage(image));
-        imgVw.setPreserveRatio(true);
-        imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
-        
+            ImageView img = (ImageView) HBoxEmojis.getChildren().get(i);
+            Image image = img.getImage();
+            ImageView imgVw = currentImageView();
+            img.setOnMouseClicked(ev->imgVw.setImage(image));
+            imgVw.setPreserveRatio(true);
+            imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
+            
+            String type = currentComponents.getType().name();
+            if(type.equals("FACES")) creatingEmoji.setFace(image);
+            if(type.equals("EYES")) creatingEmoji.setEyes(image);
+            if(type.equals("ACCESSORIES")) creatingEmoji.setAccessories(image);
+            if(type.equals("MOUTH")) creatingEmoji.setMouth(image);
+            if(type.equals("EYEBROWS")) creatingEmoji.setEyesbrows(image);
+            
+            History.historyBack.push(creatingEmoji);
+       
         }
     }
 
@@ -192,7 +210,17 @@ public class EmojiSectionController implements Initializable {
                 break;
         }
         
-    return null;
+        return null;
     }
-  
+    
+    @FXML
+    public void goForward(){
+        History.advance(creatingEmoji);
+    }
+    
+    @FXML
+    public void goBack(){
+        History.back(creatingEmoji);
+    }
+    
 }

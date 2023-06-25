@@ -19,7 +19,7 @@
       </ImageView>
       <Pane fx:id="PaneEmoji" layoutX="106.0" layoutY="159.0" prefHeight="257.0" prefWidth="288.0" style="-fx-background-color: #e5e8ee;">
          <children>
-            <StackPane fx:id="SPEmoji" layoutY="-1.0" prefHeight="263.0" prefWidth="288.0" />
+            <StackPane fx:id="SPEmoji" layoutY="14.0" prefHeight="263.0" prefWidth="288.0" />
          </children></Pane>
       <Pane fx:id="PaneBar" layoutX="73.0" layoutY="427.0" prefHeight="46.0" prefWidth="354.0" style="-fx-border-color: #212a3e; -fx-border-width: 3;">
          <children>
@@ -66,6 +66,16 @@
       <ImageView fx:id="ImgLogOut" fitHeight="31.144" fitWidth="32.0" layoutX="10.0" layoutY="7.0" onMouseClicked="#LogOutMethod" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/LogOutIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="forward" fitHeight="40.0" fitWidth="55.0" layoutX="326.0" layoutY="70.0" onMouseClicked="#goForward" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/ArrowR.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="back" fitHeight="40.0" fitWidth="55.0" layoutX="113.0" layoutY="70.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/ArrowL.png" />
          </image>
       </ImageView>
    </children>
