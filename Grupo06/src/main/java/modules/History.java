@@ -2,6 +2,7 @@ package modules;
 
 import java.util.Stack;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,28 +15,43 @@ import javafx.scene.image.Image;
  */
 public class History {
     
-    public static Stack<Emoji> historyBack = new Stack<>();
-    public static Stack<Emoji> historyForward = new Stack<>();
+    private Stack<Emoji> historyBack;
+    private Stack<Emoji> historyForward;
+    private Emoji actual;
     
+    public History(Emoji a){
+        historyBack = new Stack<>();
+        historyForward= new Stack<>();
+        this.actual = a;
+    }
     
-    public static Emoji back(Emoji actualEmoji){
-        
+    public Emoji back(){
+        System.out.println(this.historyBack);
         if(!historyBack.isEmpty()){
-            historyForward.push(actualEmoji);
+            historyForward.push(this.actual);
             System.out.println("patras");
-            return historyBack.pop();
+            actual = historyBack.pop();
+            return actual;
        }
        return null;
        
     }
     
-    public static Emoji advance(Emoji actualEmoji){
-       
+    public Emoji advance(){
+       System.out.println(this.historyForward);
        if(!historyForward.isEmpty()){
-            historyBack.push(actualEmoji);
+            historyBack.push(actual);
             System.out.println("palante");
-            return historyForward.pop();
+            actual = historyForward.pop();
+            return actual;
        }
        return null;
     }
+    
+    public void setActual(Emoji newE){
+        Emoji old = this.actual;
+        this.historyBack.push(old);
+        this.actual = newE;
+    }
+   
 }
