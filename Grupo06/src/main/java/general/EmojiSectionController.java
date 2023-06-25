@@ -4,11 +4,14 @@
  */
 package general;
 
+import TDAs.ArrayList;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -93,7 +96,6 @@ public class EmojiSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
         SPEmoji.getChildren().addAll(viewFace,viewEyes,viewEyebrows,viewMouth,viewAccessory);
         
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
@@ -101,8 +103,7 @@ public class EmojiSectionController implements Initializable {
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
         initializeIcon("/resources/DefaultIconMouth.png", "/resources/HoverIconMouth.png", btMouth);
         initializeIcon("/resources/DefaultIconAccessories.png", "/resources/HoverIconAccessories.png", btAccessories);
-
-    }
+    }   
 
     @FXML
     private void closeWindow() throws IOException {
@@ -119,7 +120,6 @@ public class EmojiSectionController implements Initializable {
         int sizeHBox = HBoxEmojis.getChildren().size();
 
         if (sizeHBox > 0) {
-
             ImageView img = (ImageView) HBoxEmojis.getChildren().get(sizeHBox - 1);
             Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
             ImageView imgVw = new ImageView(nextImage);
@@ -137,7 +137,6 @@ public class EmojiSectionController implements Initializable {
         int sizeHBox = HBoxEmojis.getChildren().size();
 
         if (sizeHBox > 0) {
-
             ImageView img = (ImageView) HBoxEmojis.getChildren().get(0);
             Image nextImage = currentComponents.getResourcesList().getPrevious(img.getImage());
             ImageView imgVw = new ImageView(nextImage);
@@ -152,9 +151,7 @@ public class EmojiSectionController implements Initializable {
 
     private void loadEmojiSelected(Resource resource) {
         HBoxEmojis.getChildren().clear();
-
         currentComponents = resource;
-
         for (int i = 0; i < 8; i++) {
             ImageView img = new ImageView(resource.getResourcesList().get(i));
             img.setPreserveRatio(true);
@@ -162,19 +159,19 @@ public class EmojiSectionController implements Initializable {
             HBoxEmojis.getChildren().addAll(img);
         }
         showEmoji();
-
     }
 
     private void showEmoji() {
 
-        ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
+        for (int i = 0; i < 8; i++) {
+        ImageView img = (ImageView) HBoxEmojis.getChildren().get(i);
         Image image = img.getImage();
-        
         ImageView imgVw = currentImageView();
-        imgVw.setImage(image);
+        img.setOnMouseClicked(ev->imgVw.setImage(image));
         imgVw.setPreserveRatio(true);
         imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
-
+        
+        }
     }
 
     private ImageView currentImageView(){
@@ -195,9 +192,7 @@ public class EmojiSectionController implements Initializable {
                 break;
         }
         
-  return null;
+    return null;
     }
-    
-    
-    
+  
 }
