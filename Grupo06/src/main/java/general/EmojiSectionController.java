@@ -64,14 +64,21 @@ public class EmojiSectionController implements Initializable {
     @FXML
     private HBox HBoxEmojis;
 
+    private ImageView viewAccessory= new ImageView();
+    private ImageView viewFace = new ImageView();
+    private ImageView viewEyes = new ImageView();
+    private ImageView viewEyebrows = new ImageView();
+    private ImageView viewMouth = new ImageView();
+    
+    
+    
     private Resource currentComponents;
+    
+
 
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
-
-        System.out.println(resources);
-
         Image defaultIcon = new Image(getClass().getResource(iconPathDefault).toExternalForm());
         Image hoverIcon = new Image(this.getClass().getResource(iconPathHover).toExternalForm());
         button.getStyleClass().add("icon-button");
@@ -86,6 +93,9 @@ public class EmojiSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        
+        SPEmoji.getChildren().addAll(viewFace,viewEyes,viewEyebrows,viewMouth,viewAccessory);
+        
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
@@ -159,11 +169,35 @@ public class EmojiSectionController implements Initializable {
 
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
-        ImageView imgVw = new ImageView(image);
+        
+        ImageView imgVw = currentImageView();
+        imgVw.setImage(image);
         imgVw.setPreserveRatio(true);
         imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
 
-        SPEmoji.getChildren().add(imgVw);
     }
 
+    private ImageView currentImageView(){
+        String type = currentComponents.getType().name();
+        
+        switch (type) {
+            case "FACES":
+                return viewFace;
+            case "EYES":
+                return viewEyes;
+            case "ACCESSORIES":
+                return viewAccessory;
+            case "EYEBROWS":
+                return viewEyebrows;
+            case "MOUTH":
+                return viewMouth;
+            default:
+                break;
+        }
+        
+  return null;
+    }
+    
+    
+    
 }
