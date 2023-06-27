@@ -9,16 +9,25 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import modules.Emoji;
 import modules.History;
 import utils.Resource;
@@ -70,10 +79,21 @@ public class EmojiSectionController implements Initializable {
     private HBox HBoxEmojis;
 
     @FXML
-    private ImageView forward;
+    private Button forward;
 
     @FXML
-    private ImageView back;
+    private Button back;
+
+    @FXML
+    private GridPane GpDirect;
+
+    @FXML
+    private RadioButton RBdirect;
+
+    @FXML
+    private RadioButton RBsequential;
+
+    private ToggleGroup group;
 
     private ImageView viewAccessory = new ImageView();
     private ImageView viewFace = new ImageView();
@@ -112,6 +132,12 @@ public class EmojiSectionController implements Initializable {
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
         initializeIcon("/resources/DefaultIconMouth.png", "/resources/HoverIconMouth.png", btMouth);
         initializeIcon("/resources/DefaultIconAccessories.png", "/resources/HoverIconAccessories.png", btAccessories);
+
+        //Inizialize gridpane false and panebar true
+        GpDirect.setVisible(false);
+        PaneBar.setVisible(true);
+        ImgArrowL.setVisible(true);
+        ImgArrowR.setVisible(true);
 
     }
 
@@ -163,9 +189,12 @@ public class EmojiSectionController implements Initializable {
         HBoxEmojis.getChildren().clear();
         currentComponents = resource;
         for (int i = 0; i < 8; i++) {
+            //Pane pane = new Pane();
             ImageView img = new ImageView(resource.getResourcesList().get(i));
             img.setPreserveRatio(true);
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            //pane.getChildren().add(img);
+            //HBoxEmojis.getChildren().addAll(pane);
             HBoxEmojis.getChildren().addAll(img);
         }
         showEmoji();
@@ -182,8 +211,8 @@ public class EmojiSectionController implements Initializable {
                 updateEmoji(imgVw, image);
             });
 
-            imgVw.setPreserveRatio(true);
-            imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
+            //imgVw.setPreserveRatio(true);
+            //imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
         }
 
     }
@@ -212,25 +241,25 @@ public class EmojiSectionController implements Initializable {
     @FXML
     public void goForward() {
         Emoji emoji = history.advance();
-        if(emoji!=null) {
-        viewEyes.setImage(emoji.getEyes());
-        viewMouth.setImage(emoji.getMouth());
-        viewFace.setImage(emoji.getFace());
-        viewEyebrows.setImage(emoji.getEyesbrows());
-        viewAccessory.setImage(emoji.getAccessories());
+        if (emoji != null) {
+            viewEyes.setImage(emoji.getEyes());
+            viewMouth.setImage(emoji.getMouth());
+            viewFace.setImage(emoji.getFace());
+            viewEyebrows.setImage(emoji.getEyesbrows());
+            viewAccessory.setImage(emoji.getAccessories());
         }
     }
 
     @FXML
     public void goBack() {
-        
+
         Emoji emoji = history.back();
-        if(emoji!=null){
-        viewEyes.setImage(emoji.getEyes());
-        viewMouth.setImage(emoji.getMouth());
-        viewFace.setImage(emoji.getFace());
-        viewEyebrows.setImage(emoji.getEyesbrows());
-        viewAccessory.setImage(emoji.getAccessories());
+        if (emoji != null) {
+            viewEyes.setImage(emoji.getEyes());
+            viewMouth.setImage(emoji.getMouth());
+            viewFace.setImage(emoji.getFace());
+            viewEyebrows.setImage(emoji.getEyesbrows());
+            viewAccessory.setImage(emoji.getAccessories());
         }
     }
 
@@ -252,5 +281,37 @@ public class EmojiSectionController implements Initializable {
         if(type.equals("EYEBROWS")) e.setEyesbrows(img); imgV.setImage(img);
         history.setActual(e);
          */
+    }
+
+    @FXML
+    public void showSequentialOrDirect() {
+        if (RBsequential.isSelected()) {
+            GpDirect.setVisible(false);
+            PaneBar.setVisible(true);
+            ImgArrowL.setVisible(true);
+            ImgArrowR.setVisible(true);
+        } else if (RBdirect.isSelected()) {
+            GpDirect.setVisible(true);
+            PaneBar.setVisible(false);
+            ImgArrowL.setVisible(false);
+            ImgArrowR.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void openProfile() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Profile.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setTitle("Profile window");
+        newStage.setScene(new Scene(root));
+        newStage.show();
     }
 }
