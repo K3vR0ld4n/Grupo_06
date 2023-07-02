@@ -241,16 +241,6 @@ public class EmojiSectionController implements Initializable {
 
         history.setActual(e);
 
-        /*
- 
-        String type = currentComponents.getType().name();
-        Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
-        if(type.equals("FACES")) e.setFace(img) ; imgV.setImage(img);
-        if(type.equals("EYES")) e.setEyes(img); imgV.setImage(img);
-        if(type.equals("ACCESSORIES")) e.setAccessories(img); imgV.setImage(img);
-        if(type.equals("MOUTH")) e.setMouth(img); imgV.setImage(img);
-        if(type.equals("EYEBROWS")) e.setEyesbrows(img); imgV.setImage(img);
-        history.setActual(e);
-         */
+
     }
 }
