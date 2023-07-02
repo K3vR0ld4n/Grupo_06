@@ -4,12 +4,14 @@ modules\Emoji.class
 TDAs\Node.class
 utils\Serialization.class
 module-info.class
+general\EmojiSectionController$Delta.class
 utils\Resource.class
 utils\Resource$CurrentType.class
 general\App.class
 modules\Profile.class
 general\RegisterController.class
 TDAs\ArrayList.class
+general\EmojiSectionController$ResizeData.class
 modules\History.class
 general\ProjectController.class
 utils\Alertas.class

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,29 +11,33 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="general.ProjectController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.ProjectController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="30.0" prefHeight="53.0" prefWidth="227.0" text="My proyects" textFill="#212a3e">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="30.0" prefHeight="53.0" prefWidth="227.0" text="My projects" textFill="#212a3e">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
       </Label>
-      <GridPane fx:id="GpProject" layoutX="54.0" layoutY="89.0" prefHeight="273.0" prefWidth="593.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
       <Button fx:id="BtSelect" layoutX="284.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Select" />
       <ImageView fitHeight="23.0" fitWidth="29.0" layoutX="241.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/projectIcon.png" />
          </image>
       </ImageView>
+      <ScrollPane fx:id="SpProject" layoutX="73.0" layoutY="84.0" prefHeight="282.0" prefWidth="554.0">
+         <content>
+            <GridPane fx:id="GpProject" prefHeight="282.0" prefWidth="554.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

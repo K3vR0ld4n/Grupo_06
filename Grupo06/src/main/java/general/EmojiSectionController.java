@@ -13,11 +13,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -93,6 +95,9 @@ public class EmojiSectionController implements Initializable {
     @FXML
     private RadioButton RBsequential;
 
+    @FXML
+    private ScrollPane SpEmoji;
+
     private ToggleGroup group;
 
     private ImageView viewAccessory = new ImageView();
@@ -115,7 +120,7 @@ public class EmojiSectionController implements Initializable {
         button.setGraphic(new ImageView(defaultIcon));
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
-
+        
         button.setOnAction(event -> loadEmojiSelected(resources));
 
     }
@@ -134,11 +139,12 @@ public class EmojiSectionController implements Initializable {
         initializeIcon("/resources/DefaultIconAccessories.png", "/resources/HoverIconAccessories.png", btAccessories);
 
         //Inizialize gridpane false and panebar true
-        GpDirect.setVisible(false);
+        SpEmoji.setVisible(false);
         PaneBar.setVisible(true);
         ImgArrowL.setVisible(true);
         ImgArrowR.setVisible(true);
 
+        //Make stackpane draggable
     }
 
     @FXML
@@ -188,7 +194,7 @@ public class EmojiSectionController implements Initializable {
     private void loadEmojiSelected(Resource resource) {
         HBoxEmojis.getChildren().clear();
         currentComponents = resource;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             //Pane pane = new Pane();
             ImageView img = new ImageView(resource.getResourcesList().get(i));
             img.setPreserveRatio(true);
@@ -202,7 +208,7 @@ public class EmojiSectionController implements Initializable {
 
     private void showEmoji() {
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             ImageView img = (ImageView) HBoxEmojis.getChildren().get(i);
             Image image = img.getImage();
             ImageView imgVw = currentImageView();
@@ -210,7 +216,7 @@ public class EmojiSectionController implements Initializable {
             img.setOnMouseClicked(ev -> {
                 updateEmoji(imgVw, image);
             });
-
+            makeResizableAndDraggable(imgVw);
             //imgVw.setPreserveRatio(true);
             //imgVw.setFitHeight(SPEmoji.getPrefHeight() - 20);
         }
@@ -286,15 +292,16 @@ public class EmojiSectionController implements Initializable {
     @FXML
     public void showSequentialOrDirect() {
         if (RBsequential.isSelected()) {
-            GpDirect.setVisible(false);
+            SpEmoji.setVisible(false);
             PaneBar.setVisible(true);
             ImgArrowL.setVisible(true);
             ImgArrowR.setVisible(true);
         } else if (RBdirect.isSelected()) {
-            GpDirect.setVisible(true);
+            SpEmoji.setVisible(true);
             PaneBar.setVisible(false);
             ImgArrowL.setVisible(false);
             ImgArrowR.setVisible(false);
+
         }
     }
 
@@ -313,5 +320,83 @@ public class EmojiSectionController implements Initializable {
         newStage.setTitle("Profile window");
         newStage.setScene(new Scene(root));
         newStage.show();
+    }
+
+
+    //método para hacer la imagen redimensionar y arrastrar una imagen
+    private void makeResizableAndDraggable(ImageView imageView) {
+        double minX = 50;
+        double minY = 50;
+        double maxX = 250;
+        double maxY = 250;
+
+        Delta dragDelta = new Delta();
+        ResizeData resizeData = new ResizeData();
+
+        imageView.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
+                dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
+                imageView.setCursor(Cursor.SE_RESIZE);
+                resizeData.isResizing = true;
+                event.consume();
+            } else {
+                dragDelta.x = event.getSceneX() - imageView.getTranslateX();
+                dragDelta.y = event.getSceneY() - imageView.getTranslateY();
+                imageView.setCursor(Cursor.MOVE);
+                event.consume();
+            }
+        });
+
+        imageView.setOnMouseReleased(event -> {
+            imageView.setCursor(Cursor.DEFAULT);
+            resizeData.isResizing = false;
+            event.consume();
+        });
+
+        imageView.setOnMouseDragged(event -> {
+            if (resizeData.isResizing) {
+                double newX = event.getX() + dragDelta.x;
+                double newY = event.getY() + dragDelta.y;
+
+                if (newX > minX && newX < maxX) {
+                    imageView.setFitWidth(newX);
+                }
+
+                if (newY > minY && newY < maxY) {
+                    imageView.setFitHeight(newY);
+                }
+            } else {
+                imageView.setTranslateX(event.getSceneX() - dragDelta.x);
+                imageView.setTranslateY(event.getSceneY() - dragDelta.y);
+            }
+
+            event.consume();
+        });
+
+        imageView.setOnMouseEntered(event -> {
+            if (!event.isPrimaryButtonDown()) {
+                imageView.setCursor(Cursor.DEFAULT);
+            }
+        });
+
+        imageView.setOnMouseExited(event -> {
+            if (!event.isPrimaryButtonDown()) {
+                imageView.setCursor(Cursor.DEFAULT);
+            }
+        });
+    }
+
+    //Clase estática que almacena las coordenadas x, y del desplazamiento de un evento de ratón respecto a la imagen.
+    private static class Delta {
+
+        double x;
+        double y;
+    }
+
+    //Clase estática que tiene un atributo booleano que se utiliza para indicar si se está redimensionando la imagen.
+    private static class ResizeData {
+
+        boolean isResizing;
     }
 }
