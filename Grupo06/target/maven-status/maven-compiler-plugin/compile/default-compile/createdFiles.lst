@@ -1,4 +1,5 @@
 module-info.class
-modules/History.class
-utils/Resource$CurrentType.class
-general/EmojiSectionController.class
+general/ProfileController.class
+general/ProjectController.class
+general/EmojiSectionController$ResizeData.class
+general/EmojiSectionController$Delta.class

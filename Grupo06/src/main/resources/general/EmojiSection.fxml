@@ -2,40 +2,47 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f1f6f9;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
+<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/FondoEmojis.png" />
          </image>
       </ImageView>
-      <Pane fx:id="PaneEmoji" layoutX="106.0" layoutY="159.0" prefHeight="257.0" prefWidth="288.0" style="-fx-background-color: #e5e8ee;">
+      <Pane fx:id="PaneEmoji" layoutX="42.0" layoutY="159.0" prefHeight="257.0" prefWidth="288.0" style="-fx-background-color: #e5e8ee;">
          <children>
-            <StackPane fx:id="SPEmoji" layoutY="14.0" prefHeight="263.0" prefWidth="288.0" />
+            <StackPane fx:id="SPEmoji" prefHeight="263.0" prefWidth="288.0" style="-fx-border-width: 2px;" />
          </children></Pane>
-      <Pane fx:id="PaneBar" layoutX="73.0" layoutY="427.0" prefHeight="46.0" prefWidth="354.0" style="-fx-border-color: #212a3e; -fx-border-width: 3;">
+      <Pane fx:id="PaneBar" layoutX="231.0" layoutY="430.0" prefHeight="46.0" prefWidth="451.0" style="-fx-border-color: #212a3e; -fx-border-width: 3;">
          <children>
-            <HBox fx:id="HBoxEmojis" alignment="CENTER" prefHeight="46.0" prefWidth="354.0" spacing="5.0" style="-fx-background-color: #e5e8ee;" />
+            <HBox fx:id="HBoxEmojis" alignment="CENTER" prefHeight="46.0" prefWidth="451.0" spacing="5.0" style="-fx-background-color: #e5e8ee;" />
          </children></Pane>
-      <ImageView fx:id="ImgArrowL" fitHeight="40.0" fitWidth="55.0" layoutX="44.0" layoutY="430.0" onMouseClicked="#getPreviousElement" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="clicked" fx:id="ImgArrowL" fitHeight="40.0" fitWidth="55.0" layoutX="202.0" layoutY="433.0" onMouseClicked="#getPreviousElement" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/ArrowL.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ImgArrowR" fitHeight="40.0" fitWidth="55.0" layoutX="433.0" layoutY="430.0" onMouseClicked="#getNextElement" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="clicked" fx:id="ImgArrowR" fitHeight="40.0" fitWidth="55.0" layoutX="689.0" layoutY="433.0" onMouseClicked="#getNextElement" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/ArrowR.png" />
          </image>
       </ImageView>
-      <Pane fx:id="PaneOptions" layoutX="411.0" layoutY="159.0" prefHeight="257.0" prefWidth="382.0" style="-fx-background-color: #e5e8ee;">
+      <Pane fx:id="PaneOptions" layoutX="356.0" layoutY="159.0" prefHeight="257.0" prefWidth="382.0" style="-fx-background-color: #e5e8ee;">
          <children>
             <Label alignment="CENTER" layoutX="158.0" layoutY="4.0" text="Create" textFill="#212a3e">
                <font>
@@ -53,30 +60,77 @@
             <Button fx:id="btEyesBrows" layoutX="99.0" layoutY="138.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="71.0" />
             <Button fx:id="btAccessories" layoutX="220.0" layoutY="138.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="71.0" />
          </children></Pane>
-      <ImageView fx:id="ImgClose" fitHeight="32.0" fitWidth="32.0" layoutX="861.0" layoutY="7.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="clicked" fx:id="ImgClose" fitHeight="32.0" fitWidth="32.0" layoutX="861.0" layoutY="7.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/closeIcon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="117.0" fitWidth="165.0" layoutX="175.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="117.0" fitWidth="165.0" layoutX="122.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ImgLogOut" fitHeight="31.144" fitWidth="32.0" layoutX="10.0" layoutY="7.0" onMouseClicked="#LogOutMethod" pickOnBounds="true" preserveRatio="true">
+      <VBox layoutX="747.0" layoutY="165.0" prefHeight="61.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <RadioButton fx:id="RBsequential" mnemonicParsing="false" onMouseClicked="#showSequentialOrDirect" selected="true" text="Sequential" textFill="#212a3e">
+               <font>
+                  <Font name="Berlin Sans FB" size="14.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="group" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="RBdirect" mnemonicParsing="false" onMouseClicked="#showSequentialOrDirect" text="Direct" textFill="#212a3e" toggleGroup="$group">
+               <font>
+                  <Font name="Berlin Sans FB" size="14.0" />
+               </font>
+            </RadioButton>
+         </children>
+      </VBox>
+      <Button id="btForwardBack" fx:id="back" layoutX="547.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="27.0" prefWidth="87.0" text="Undo">
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/undoIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btForwardBack" fx:id="forward" layoutX="646.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goForward" prefHeight="27.0" prefWidth="87.0" text="Redo">
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/redoIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView id="clicked" fx:id="imgProfile" fitHeight="35.0" fitWidth="35.0" layoutX="6.0" layoutY="4.0" onMouseClicked="#openProfile" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../resources/LogOutIcon.png" />
+            <Image url="@../resources/profileIcon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="forward" fitHeight="40.0" fitWidth="55.0" layoutX="326.0" layoutY="70.0" onMouseClicked="#goForward" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/ArrowR.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="back" fitHeight="40.0" fitWidth="55.0" layoutX="113.0" layoutY="70.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/ArrowL.png" />
-         </image>
-      </ImageView>
+      <ScrollPane fx:id="SpEmoji" layoutX="151.0" layoutY="428.0" prefHeight="167.0" prefWidth="606.0">
+         <content>
+            <GridPane fx:id="GpDirect" prefHeight="167.0" prefWidth="606.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
