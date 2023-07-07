@@ -58,6 +58,9 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private ImageView ImgClose;
+    
+    @FXML
+    private ImageView imgSelect;
 
     @FXML
     private Pane PaneEmoji;
@@ -147,6 +150,7 @@ public class EmojiSectionController implements Initializable {
         PaneBar.setVisible(true);
         ImgArrowL.setVisible(true);
         ImgArrowR.setVisible(true);
+        imgSelect.setVisible(true);
 
         //Make ImageView draggable
         makeResizableAndDraggable(viewEyes);
@@ -341,11 +345,13 @@ public class EmojiSectionController implements Initializable {
             PaneBar.setVisible(true);
             ImgArrowL.setVisible(true);
             ImgArrowR.setVisible(true);
+            imgSelect.setVisible(true);
         } else if (RBdirect.isSelected()) {
             SpEmoji.setVisible(true);
             PaneBar.setVisible(false);
             ImgArrowL.setVisible(false);
             ImgArrowR.setVisible(false);
+            imgSelect.setVisible(false);
 
         }
     }
