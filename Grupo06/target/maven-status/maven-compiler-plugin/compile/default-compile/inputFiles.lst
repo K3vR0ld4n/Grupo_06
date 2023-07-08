@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/utils/Alertas.java
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/module-info.java
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/utils/Resource.java
@@ -16,3 +17,23 @@
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/modules/History.java
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/TDAs/DoubleCircularList.java
 /home/lancervs/Desktop/Grupo_06/Grupo06/src/main/java/general/EmojiSectionController.java
+=======
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/utils/Resource.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/modules/Emoji.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/RegisterController.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/TDAs/DoubleCircularList.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/App.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/ProjectController.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/TDAs/List.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/modules/Library.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/module-info.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/TDAs/ArrayList.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/ProfileController.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/modules/History.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/TDAs/Node.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/utils/Alertas.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/EmojiSectionController.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/general/LoginController.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/modules/Profile.java
+/home/kev-roldan/DiscoWindows/Users/Usuario/Desktop/Estructura/Proyecto/Grupo_06/Grupo06/src/main/java/utils/Serialization.java
+>>>>>>> 2ae40b01f12ac993916349fd808621a3bcc4912b
