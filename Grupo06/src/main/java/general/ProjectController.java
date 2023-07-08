@@ -61,23 +61,23 @@ public class ProjectController implements Initializable {
 
                     ImageView accesory = new ImageView();
                     if (e.haveAccessories()) {
-                        accesory.setImage(e.getAccessories());
+                        accesory.setImage(Emoji.toImage(e.getAccessoriesPath()));
                     }
                     ImageView face = new ImageView();
                     if (e.haveFace()) {
-                        face.setImage(e.getFace());
+                        face.setImage(Emoji.toImage(e.getFacePath()));
                     }
                     ImageView eyes = new ImageView();
                     if (e.haveEyes()) {
-                        eyes.setImage(e.getEyes());
+                        eyes.setImage(Emoji.toImage(e.getEyesPath()));
                     }
                     ImageView eyebrow = new ImageView();
                     if (e.haveEyeBrows()) {
-                        eyebrow.setImage(e.getEyesbrows());
+                        eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
                     }
                     ImageView mouth = new ImageView();
                     if (e.haveMouth()) {
-                        mouth.setImage(e.getMouth());
+                        mouth.setImage(Emoji.toImage(e.getMouthPath()));
                     }
                     SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accesory);
                     double cellWidth = gp.getPrefWidth() / columns;
@@ -96,19 +96,7 @@ public class ProjectController implements Initializable {
                         }
                     }
 
-                    /*if (countC < columns) {
-                        gp.add(SPEmoji, countC, countR);
-                        countC++;
-                    } else if (countR < rows) {
-                        countR++;
-                        countC = 0;
-                        gp.add(SPEmoji, countC, countR);
 
-                    } else if (countR == rows) {
-                        gp.addRow(1);
-                        gp.add(SPEmoji, countC, countR);
-                        countR++;
-                    }*/
                 }
             }
         }

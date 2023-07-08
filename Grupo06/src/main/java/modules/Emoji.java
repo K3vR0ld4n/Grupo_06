@@ -3,88 +3,117 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modules;
+
 import java.io.Serializable;
 import javafx.scene.image.Image;
-
 
 /**
  *
  * @author kev-roldan
  */
-public class Emoji implements Serializable{
-    private Image eyes;
-    private Image mouth;
-    private Image face;
-    private Image eyesbrows;
-    private Image accessories;
+public class Emoji implements Serializable {
 
+    private String mouthPath;
+    private String facePath;
+    private String eyesbrowsPath;
+    private String eyesPath;
+    private String accessoriesPath;
+    private String currentEmojiPath;
+
+    public Emoji(String mouthPath, String facePath, String eyesbrowsPath, String eyesPath, String accessoriesPath) {
+        this.mouthPath = mouthPath;
+        this.facePath = facePath;
+        this.eyesbrowsPath = eyesbrowsPath;
+        this.eyesPath = eyesPath;
+        this.accessoriesPath = accessoriesPath;
+    }
+
+    
     public Emoji(Image eyes, Image mouth, Image face, Image eyesbrows, Image accessories) {
-        this.eyes = eyes;
-        this.mouth = mouth;
-        this.face = face;
-        this.accessories = accessories;
-        this.eyesbrows = eyesbrows;
+
+
+
+        this.eyesPath = buildWithoutNull(eyes);
+        this.mouthPath = buildWithoutNull(mouth);
+        this.facePath = buildWithoutNull(face);
+        this.accessoriesPath = buildWithoutNull(accessories);
+        this.eyesbrowsPath = buildWithoutNull(eyesbrows);
     }
-    
-    public boolean haveFace(){
-        return this.face != null;
-    }
-    
-    public boolean haveEyes(){
-        return this.eyes != null;
-    }
-    
-    public boolean haveMouth(){
-        return this.mouth != null;
-    }
-    
-    public boolean haveEyeBrows(){
-        return this.eyesbrows != null;
-    }
-    
-    public boolean haveAccessories(){
-        return this.accessories != null;
-    }
-    
-    public Image getEyes() {
-        return eyes;
+    public static Image toImage(String path) {
+        if(path.equals("")) return null;
+        return new Image(path);
     }
 
-    public void setEyes(Image eyes) {
-        this.eyes = eyes;
+    private static String buildWithoutNull(Image img){
+        if(img!=null) return img.getUrl();
+        return "";
+    }
+    public String getMouthPath() {
+        return mouthPath;
     }
 
-    public Image getMouth() {
-        return mouth;
+    public void setMouthPath(String mouthPath) {
+        this.mouthPath = mouthPath;
     }
 
-    public void setMouth(Image mouth) {
-        this.mouth = mouth;
+    public String getFacePath() {
+        return facePath;
     }
 
-    public Image getFace() {
-        return face;
+    public void setFacePath(String facePath) {
+        this.facePath = facePath;
     }
 
-    public void setFace(Image face) {
-        this.face = face;
+    public String getEyesbrowsPath() {
+        return eyesbrowsPath;
     }
 
-    public Image getEyesbrows() {
-        return eyesbrows;
+    public void setEyesbrowsPath(String eyesbrowsPath) {
+        this.eyesbrowsPath = eyesbrowsPath;
     }
 
-    public void setEyesbrows(Image eyesbrows) {
-        this.eyesbrows = eyesbrows;
+    public String getEyesPath() {
+        return eyesPath;
     }
 
-    public Image getAccessories() {
-        return accessories;
+    public void setEyesPath(String eyesPath) {
+        this.eyesPath = eyesPath;
     }
 
-    public void setAccessories(Image accessories) {
-        this.accessories = accessories;
+    public String getAccessoriesPath() {
+        return accessoriesPath;
     }
-    
-    
+
+    public void setAccessoriesPath(String accessoriesPath) {
+        this.accessoriesPath = accessoriesPath;
+    }
+
+    public String getCurrentEmojiPath() {
+        return currentEmojiPath;
+    }
+
+    public void setCurrentEmojiPath(String currentEmojiPath) {
+        this.currentEmojiPath = currentEmojiPath;
+    }
+
+    public boolean haveFace() {
+        return this.facePath != null;
+    }
+
+    public boolean haveEyes() {
+        return this.eyesPath != null;
+    }
+
+    public boolean haveMouth() {
+        return this.mouthPath != null;
+    }
+
+    public boolean haveEyeBrows() {
+        return this.eyesbrowsPath != null;
+    }
+
+    public boolean haveAccessories() {
+        return this.accessoriesPath != null;
+    }
+
 }

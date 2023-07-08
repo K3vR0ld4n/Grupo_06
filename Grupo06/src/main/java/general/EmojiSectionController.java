@@ -148,9 +148,11 @@ public class EmojiSectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows, viewMouth, viewAccessory);
+        SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
+                viewMouth, viewAccessory);
 
-        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
+        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), 
+                viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
 
         if (profile == null) {
             profile = new Profile("ElPepe", "1234", "batman@DC.com");
@@ -340,11 +342,11 @@ public class EmojiSectionController implements Initializable {
     public void goForward() {
         Emoji emoji = history.advance();
         if (emoji != null) {
-            viewEyes.setImage(emoji.getEyes());
-            viewMouth.setImage(emoji.getMouth());
-            viewFace.setImage(emoji.getFace());
-            viewEyebrows.setImage(emoji.getEyesbrows());
-            viewAccessory.setImage(emoji.getAccessories());
+            viewEyes.setImage(Emoji.toImage(emoji.getEyesPath()));
+            viewMouth.setImage(Emoji.toImage(emoji.getMouthPath()));
+            viewFace.setImage(Emoji.toImage(emoji.getFacePath()));
+            viewEyebrows.setImage(Emoji.toImage(emoji.getEyesbrowsPath()));
+            viewAccessory.setImage(Emoji.toImage(emoji.getAccessoriesPath()));
         }
     }
 
@@ -353,18 +355,19 @@ public class EmojiSectionController implements Initializable {
 
         Emoji emoji = history.back();
         if (emoji != null) {
-            viewEyes.setImage(emoji.getEyes());
-            viewMouth.setImage(emoji.getMouth());
-            viewFace.setImage(emoji.getFace());
-            viewEyebrows.setImage(emoji.getEyesbrows());
-            viewAccessory.setImage(emoji.getAccessories());
+            viewEyes.setImage(Emoji.toImage(emoji.getEyesPath()));
+            viewMouth.setImage(Emoji.toImage(emoji.getMouthPath()));
+            viewFace.setImage(Emoji.toImage(emoji.getFacePath()));
+            viewEyebrows.setImage(Emoji.toImage(emoji.getEyesbrowsPath()));
+            viewAccessory.setImage(Emoji.toImage(emoji.getAccessoriesPath()));
         }
     }
 
     public void updateEmoji(ImageView imgV, Image img) {
 
         imgV.setImage(img);
-        Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage());
+        Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(),
+                viewEyebrows.getImage(), viewAccessory.getImage());
 
         history.setActual(e);
 
@@ -377,7 +380,7 @@ public class EmojiSectionController implements Initializable {
             ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
             lb.addLast(actualEmoji);
             System.out.println(profile.getLibrary().getUserEmoji());
-            //Serialization.serialize(Profile.arrayProfile, "profile");
+            Serialization.serialize(Profile.arrayProfile, "profile");
         } else {
             System.out.println("unu");
         }

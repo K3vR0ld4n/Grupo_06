@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 public class Library implements Serializable{
     public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
     private ArrayList<Emoji> userEmoji;
-    private ArrayList<Image> userComponents;
+    private transient ArrayList<Image> userComponents;
 
     public Library() {
         this.userEmoji = new ArrayList<>();
