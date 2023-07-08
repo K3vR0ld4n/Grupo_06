@@ -2,7 +2,7 @@ package TDAs;
 
 import java.io.Serializable;
 
-public interface List<E> extends Serializable {
+public interface List<E> extends Iterable<E> {
     
 
     public boolean addFirst(E e); // inserta el elemento e al inicio
@@ -28,5 +28,7 @@ public interface List<E> extends Serializable {
     public E set(int index, E element); // setea el element en la posición index
     
     public String toString(); // retorna una cadena de caracteres representando los elementos que la lista contiene*/
+    
+    public boolean addAll(List<E> elements);
 
 }

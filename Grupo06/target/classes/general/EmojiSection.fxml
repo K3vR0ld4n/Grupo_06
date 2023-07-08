@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
+<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -81,6 +81,8 @@
                   <Font name="Berlin Sans FB" size="14.0" />
                </font>
             </RadioButton>
+            <Button fx:id="BtUpload" mnemonicParsing="false" onAction="#uploadImageResource" text="Upload" />
+            <Button fx:id="BtDeleate" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
          </children>
       </VBox>
       <Button id="btForwardBack" fx:id="back" layoutX="547.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="27.0" prefWidth="87.0" text="Undo">

@@ -6,6 +6,7 @@ package modules;
 
 import TDAs.ArrayList;
 import java.io.Serializable;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -14,9 +15,19 @@ import java.io.Serializable;
 public class Library implements Serializable{
     public static ArrayList<Emoji> defaultEmoji=loadDefaults();
     private ArrayList<Emoji> userEmoji;
+    private ArrayList<Image> userComponents;
 
     public Library() {
         this.userEmoji = new ArrayList<>();
+        this.userComponents=new ArrayList<>();
+    }
+
+    public ArrayList<Image> getUserComponents() {
+        return userComponents;
+    }
+
+    public void setUserComponents(ArrayList<Image> userComponents) {
+        this.userComponents = userComponents;
     }
 
     public ArrayList<Emoji> getUserEmoji() {

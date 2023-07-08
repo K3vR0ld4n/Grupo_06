@@ -1,6 +1,9 @@
 package TDAs;
 
-public class DoubleCircularList<E> implements List<E> {
+import java.io.Serializable;
+import java.util.Iterator;
+
+public class DoubleCircularList<E> implements List<E>, Serializable {
 
     private Node<E> last;
 
@@ -190,6 +193,22 @@ public class DoubleCircularList<E> implements List<E> {
     private boolean isInRange(int index) {
         return index >= 0 && index < this.size();
 
+    }
+
+    @Override
+    public boolean addAll(List<E> elements) {
+       if(!elements.isEmpty()){
+        for(E element: elements){
+            this.addLast(element);
+        }
+        return true;
+       }
+       return false;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

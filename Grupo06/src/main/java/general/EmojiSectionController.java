@@ -4,17 +4,15 @@
  */
 package general;
 
-import TDAs.ArrayList;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,15 +21,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modules.Emoji;
 import modules.History;
+import modules.Profile;
 import utils.Resource;
 
 /**
@@ -40,6 +39,12 @@ import utils.Resource;
  * @author Jorge Daniel
  */
 public class EmojiSectionController implements Initializable {
+
+    @FXML
+    private Button BtDeleate;
+
+    @FXML
+    private Button BtUpload;
 
     @FXML
     private Button btFacce;
@@ -58,7 +63,7 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private ImageView ImgClose;
-    
+
     @FXML
     private ImageView imgSelect;
 
@@ -103,6 +108,7 @@ public class EmojiSectionController implements Initializable {
 
     private ToggleGroup group;
 
+    private final FileChooser fc = new FileChooser();
     private ImageView viewAccessory = new ImageView();
     private ImageView viewFace = new ImageView();
     private ImageView viewEyes = new ImageView();
@@ -111,6 +117,8 @@ public class EmojiSectionController implements Initializable {
     private History history;
     private Resource currentComponents;
 
+    private  Profile profile = new Profile("ElPepe", "1234", "batman@DC.com");
+    
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
@@ -127,7 +135,6 @@ public class EmojiSectionController implements Initializable {
             } else {
                 loadEmojiDirect(resources);
             }
-
         });
 
     }
@@ -176,15 +183,32 @@ public class EmojiSectionController implements Initializable {
 
         if (sizeHBox > 0) {
             changeHBoxElements(sizeHBox - 1, 0);
-//            ImageView img = (ImageView) HBoxEmojis.getChildren().get(sizeHBox - 1);
-//            Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
-//            ImageView imgVw = new ImageView(nextImage);
-//            imgVw.setPreserveRatio(true);
-//            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
-//            HBoxEmojis.getChildren().remove(0);
-//            HBoxEmojis.getChildren().add(sizeHBox-1,imgVw);
-//            showEmoji();
         }
+
+    }
+
+    @FXML
+    void uploadImageResource() throws MalformedURLException, IOException {
+
+        FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
+        FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
+        FileChooser.ExtensionFilter jpegFilter = new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpeg");
+        fc.getExtensionFilters().addAll(pngFilter, jpegFilter, jpgFilter);
+
+        File file = fc.showOpenDialog(new Stage());
+        if (file.isFile()) {
+            String imagePath = file.getCanonicalPath();
+           
+            profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
+            currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+            
+        }
+        if(RBdirect.isSelected()) loadEmojiDirect(currentComponents);
+
+    }
+
+    @FXML
+    void deleateImageResource() {
 
     }
 
@@ -207,14 +231,6 @@ public class EmojiSectionController implements Initializable {
 
         if (sizeHBox > 0) {
             changeHBoxElements(0, sizeHBox - 1);
-//            ImageView img = (ImageView) HBoxEmojis.getChildren().get(0);
-//            Image nextImage = currentComponents.getResourcesList().getPrevious(img.getImage());
-//            ImageView imgVw = new ImageView(nextImage);
-//            imgVw.setPreserveRatio(true);
-//            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
-//            HBoxEmojis.getChildren().remove(sizeHBox - 1);
-//            HBoxEmojis.getChildren().add(0, imgVw);
-//            showEmoji();
         }
 
     }
@@ -236,11 +252,12 @@ public class EmojiSectionController implements Initializable {
 
     private void loadEmojiDirect(Resource resource) {
         GpDirect.getChildren().clear();
+        currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
         currentComponents = resource;
-        int columns=0;
-        int rows=0;
-        
-        int gpRows=GpDirect.getRowCount();
+        int columns = 0;
+        int rows = 0;
+
+        int gpRows = GpDirect.getRowCount();
         for (int i = 0; i < resource.getResourcesList().size(); i++) {
             ImageView img = new ImageView(resource.getResourcesList().get(i));
             img.setPreserveRatio(true);
@@ -251,35 +268,27 @@ public class EmojiSectionController implements Initializable {
             });
 
             GpDirect.add(img, columns, rows);
-            if(columns<8) {
+            if (columns < 8) {
                 columns++;
-            }
-            else{
+            } else {
                 columns = 0;
                 rows++;
-                if(rows>gpRows-1) GpDirect.addRow(rows-1);
+                if (rows > gpRows - 1) {
+                    GpDirect.addRow(rows - 1);
+                }
             }
-           
-           
 
-            
         }
 
     }
 
     private void showEmoji() {
-
-//        for (int i = 0; i < 9; i++) {
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-
-//            img.setOnMouseClicked(ev -> {
+        
         updateEmoji(imgVw, image);
-//            });
-//            makeResizableAndDraggable(imgVw);
 
-//        }
     }
 
     private ImageView currentImageView() {
@@ -375,6 +384,9 @@ public class EmojiSectionController implements Initializable {
 
     //método para hacer la imagen redimensionar y arrastrar una imagen
     private void makeResizableAndDraggable(ImageView imageView) {
+       
+        
+        
         double minX = 50;
         double minY = 50;
         double maxX = 250;

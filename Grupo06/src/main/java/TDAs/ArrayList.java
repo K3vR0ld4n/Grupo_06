@@ -4,13 +4,14 @@
  */
 package TDAs;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
  *
  * @author kev-roldan
  */
-public class ArrayList<E> implements List<E>, Iterable<E> {
+public class ArrayList<E> implements List<E>, Serializable {
 
     private E[] elements;
     private int MAX_SIZE = 100;
@@ -186,6 +187,11 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
                 return element;
             }
         };
+    }
+
+    @Override
+    public boolean addAll(List<E> elements) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

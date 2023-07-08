@@ -16,28 +16,28 @@ import javafx.scene.image.Image;
  * @author kev-roldan
  */
 public class Resource {
-
+    
     public enum CurrentType {
         FACES, EYES, EYEBROWS, ACCESSORIES, MOUTH
     };
-
+    
     private DoubleCircularList<Image> resourcesList;
     CurrentType type;
-
+    
     public CurrentType getType() {
         return type;
     }
-
+    
     public void setType(CurrentType type) {
         this.type = type;
     }
-
+    
     public Resource(String type) {
         this.resourcesList = loadResources(type);
         this.type = CurrentType.valueOf(type.toUpperCase());
-
+        
     }
-
+    
     private DoubleCircularList<Image> loadResources(String typeList) {
         //carga listas de imagenes a travez de archivos
         DoubleCircularList<Image> resourceList = new DoubleCircularList<>();
@@ -51,27 +51,44 @@ public class Resource {
             elementsSize = 0;
             System.out.println("Error al acceder a la carpeta: " + e.getMessage());
         }
-
+        
         for (int i = 0; i < elementsSize; i++) {
             String rout = "/images/" + typeList.toLowerCase() + "/" + typeList.toLowerCase() + "_" + (i + 1) + ".png";
             Image img = new Image(getClass().getResource(rout).toExternalForm());
             resourceList.addLast(img);
         }
-
+        
         return resourceList;
     }
-
+    
     public DoubleCircularList<Image> getResourcesList() {
         return resourcesList;
     }
-
+    
     public void setResourcesList(DoubleCircularList<Image> resourcesList) {
         this.resourcesList = resourcesList;
     }
-
+    
     @Override
     public String toString() {
         return "Resource{" + "resourcesList=" + resourcesList + '}';
     }
+    
+    public static boolean createResourceDirectory(String resourcePath) {
+        
+        try {
+            //Path path = Paths.get("src/main/resources/Profile/"+resourcePath).toUri().getPath();
+            String directoryPath = "src/main/resources/Profiles/" + resourcePath;
+            Path path = Paths.get(directoryPath);
+            Files.createDirectory(path);
 
+            return true;
+        } catch (IOException e) {
+          
+            e.printStackTrace();
+            return false;
+        }
+        
+    }
+    
 }
