@@ -96,7 +96,7 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private Button back;
-    
+
     @FXML
     private Button bttonSave;
 
@@ -123,8 +123,8 @@ public class EmojiSectionController implements Initializable {
     private History history;
     private Resource currentComponents;
 
-    static  Profile profile;
-    
+    static Profile profile;
+
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
@@ -151,8 +151,11 @@ public class EmojiSectionController implements Initializable {
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows, viewMouth, viewAccessory);
 
         history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
-        if (profile == null) profile = new Profile("ElPepe", "1234", "batman@DC.com");
-        
+
+        if (profile == null) {
+            profile = new Profile("ElPepe", "1234", "batman@DC.com");
+        }
+
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
@@ -195,7 +198,7 @@ public class EmojiSectionController implements Initializable {
     }
 
     @FXML
-    void uploadImageResource() throws MalformedURLException, IOException {
+    void uploadImageResource() {
 
         FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
         FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
@@ -204,13 +207,21 @@ public class EmojiSectionController implements Initializable {
 
         File file = fc.showOpenDialog(new Stage());
         if (file.isFile()) {
-            String imagePath = file.getCanonicalPath();
-           
-            profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
-            currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-            
+
+            try {
+                String imagePath = file.getCanonicalPath();
+
+                profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        if(RBdirect.isSelected()) loadEmojiDirect(currentComponents);
+
+        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+
+        if (RBdirect.isSelected()) {
+            loadEmojiDirect(currentComponents);
+        }
 
     }
 
@@ -243,8 +254,11 @@ public class EmojiSectionController implements Initializable {
     }
 
     private void loadEmojiSequential(Resource resource) {
+
         HBoxEmojis.getChildren().clear();
         currentComponents = resource;
+        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+
         for (int i = 0; i < 9; i++) {
 
             ImageView img = new ImageView(resource.getResourcesList().get(i));
@@ -259,8 +273,9 @@ public class EmojiSectionController implements Initializable {
 
     private void loadEmojiDirect(Resource resource) {
         GpDirect.getChildren().clear();
-        currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
         currentComponents = resource;
+        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+
         int columns = 0;
         int rows = 0;
 
@@ -293,7 +308,7 @@ public class EmojiSectionController implements Initializable {
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-        
+
         updateEmoji(imgVw, image);
 
     }
@@ -352,16 +367,16 @@ public class EmojiSectionController implements Initializable {
         history.setActual(e);
 
     }
-    
+
     @FXML
-    public void saveProject(){
+    public void saveProject() {
         Emoji actualEmoji = history.getActual();
         ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
         lb.addLast(actualEmoji);
         System.out.println(profile.getLibrary().getUserEmoji());
         //Serialization.serialize(Profile.arrayProfile, "profile");
     }
-    
+
     @FXML
     public void showSequentialOrDirect() {
         if (RBsequential.isSelected()) {
@@ -400,9 +415,7 @@ public class EmojiSectionController implements Initializable {
 
     //método para hacer la imagen redimensionar y arrastrar una imagen
     private void makeResizableAndDraggable(ImageView imageView) {
-       
-        
-        
+
         double minX = 50;
         double minY = 50;
         double maxX = 250;

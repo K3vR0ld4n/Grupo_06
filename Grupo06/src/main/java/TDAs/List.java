@@ -30,5 +30,9 @@ public interface List<E> extends Iterable<E> {
     public String toString(); // retorna una cadena de caracteres representando los elementos que la lista contiene*/
     
     public boolean addAll(List<E> elements);
+    
+    public boolean union(List<E> elements);
+    
+    public boolean contains(E element);
 
 }

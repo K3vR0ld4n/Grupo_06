@@ -3,7 +3,7 @@ package TDAs;
 import java.io.Serializable;
 import java.util.Iterator;
 
-public class DoubleCircularList<E> implements List<E>, Serializable{
+public class DoubleCircularList<E> implements List<E>, Serializable {
 
     private Node<E> last;
 
@@ -197,13 +197,13 @@ public class DoubleCircularList<E> implements List<E>, Serializable{
 
     @Override
     public boolean addAll(List<E> elements) {
-       if(!elements.isEmpty()){
-        for(E element: elements){
-            this.addLast(element);
+        if (!elements.isEmpty()) {
+            for (E element : elements) {
+                this.addLast(element);
+            }
+            return true;
         }
-        return true;
-       }
-       return false;
+        return false;
     }
 
     @Override
@@ -211,5 +211,38 @@ public class DoubleCircularList<E> implements List<E>, Serializable{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public boolean union(List<E> elements) {
+
+        if (!elements.isEmpty()) {
+            for (E elemento : elements) {
+                if (!this.contains(elemento)) {
+                    this.addLast(elemento);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean contains(E element) {
+        if (element != null) {
+            Node<E> traveler = this.last.getNext();
+
+            while (traveler != this.last) {
+                E content = traveler.getContent();
+                traveler = traveler.getNext();
+                if (content.equals(element)) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
 
 }
