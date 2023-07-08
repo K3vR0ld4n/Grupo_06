@@ -21,72 +21,97 @@ import modules.Library;
 import modules.Profile;
 import utils.Alertas;
 
-
 public class ProjectController implements Initializable {
 
     @FXML
     private GridPane GpProject;
-    
+
     @FXML
     private Button BtSelect;
-    
+
     Alertas alert = new Alertas();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadProjects(GpProject, Library.defaultEmoji);
-        loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());        
+        loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
     }
-    
+
     @FXML
-    private void selectMethod(){
+    private void selectMethod() {
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
-        
+
         // CODIGO AL PRESIONAR EL BOTON SELECT
     }
-    
-    private void loadProjects(GridPane gp, ArrayList<Emoji> l){
+
+    private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
         int columns = gp.getColumnCount();
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
-        
-        if(l.size() > 0){
+
+        if (l.size() > 0) {
             System.out.println(l);
-            
-            for(Emoji e: l){
-                StackPane SPEmoji = new StackPane();
-                
-                ImageView accesory = new ImageView();
-                if(e.haveAccessories()) accesory.setImage(e.getAccessories());
-                ImageView face = new ImageView();
-                if(e.haveFace()) face.setImage(e.getFace());
-                ImageView eyes = new ImageView();
-                if(e.haveEyes()) eyes.setImage(e.getEyes());
-                ImageView eyebrow = new ImageView();
-                if(e.haveEyeBrows()) eyebrow.setImage(e.getEyesbrows());
-                ImageView mouth = new ImageView();
-                if(e.haveMouth()) mouth.setImage(e.getMouth());
-                SPEmoji.getChildren().addAll(face,eyes,eyebrow, mouth, accesory);
-                
-                if(countC < columns){
+
+            for (Emoji e : l) {
+                if (e != null) { // Add a null check for the Emoji object
+                    StackPane SPEmoji = new StackPane();
+
+                    ImageView accesory = new ImageView();
+                    if (e.haveAccessories()) {
+                        accesory.setImage(e.getAccessories());
+                    }
+                    ImageView face = new ImageView();
+                    if (e.haveFace()) {
+                        face.setImage(e.getFace());
+                    }
+                    ImageView eyes = new ImageView();
+                    if (e.haveEyes()) {
+                        eyes.setImage(e.getEyes());
+                    }
+                    ImageView eyebrow = new ImageView();
+                    if (e.haveEyeBrows()) {
+                        eyebrow.setImage(e.getEyesbrows());
+                    }
+                    ImageView mouth = new ImageView();
+                    if (e.haveMouth()) {
+                        mouth.setImage(e.getMouth());
+                    }
+                    SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accesory);
+                    double cellWidth = gp.getPrefWidth() / columns;
+                    double cellHeight = gp.getPrefHeight() / rows;
+                    System.out.println(cellWidth);
+                    System.out.println(cellHeight);
+                    SPEmoji.setPrefSize(cellWidth, cellHeight);
                     gp.add(SPEmoji, countC, countR);
-                    countC++;
+                    if (countC < 5) {
+                        countC++;
+                    } else {
+                        countC = 0;
+                        countR++;
+                        if (countR > rows - 1) {
+                            gp.addRow(countR - 1);
+                        }
+                    }
+
+                    /*if (countC < columns) {
+                        gp.add(SPEmoji, countC, countR);
+                        countC++;
+                    } else if (countR < rows) {
+                        countR++;
+                        countC = 0;
+                        gp.add(SPEmoji, countC, countR);
+
+                    } else if (countR == rows) {
+                        gp.addRow(1);
+                        gp.add(SPEmoji, countC, countR);
+                        countR++;
+                    }*/
                 }
-                else if(countR < rows){
-                    countR++;
-                    gp.add(SPEmoji, countC, countR);
-                }
-                else if(countR == rows){
-                    gp.addRow(1);
-                    gp.add(SPEmoji, countC, countR);
-                    countR++;
-                }
-                
             }
         }
     }
-    
+
 }

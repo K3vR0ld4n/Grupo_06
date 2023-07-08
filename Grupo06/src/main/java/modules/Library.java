@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
  * @author kev-roldan
  */
 public class Library implements Serializable{
-    public static ArrayList<Emoji> defaultEmoji=loadDefaults();
+    public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
     private ArrayList<Emoji> userEmoji;
     private ArrayList<Image> userComponents;
 
