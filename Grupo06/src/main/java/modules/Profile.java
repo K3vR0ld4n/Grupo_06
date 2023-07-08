@@ -53,7 +53,8 @@ public class Profile implements Serializable {
             
             Image img = new Image(getClass().getResource(newImagePath).toExternalForm());
             
-            //Image img = new Image(getClass().getResource(profilePath.substring(18)).toExternalForm());
+            
+           // Image img = new Image(getClass().getResource(profilePath.substring(18)).toExternalForm());
            
             
             this.library.getUserComponents().addLast(img);
