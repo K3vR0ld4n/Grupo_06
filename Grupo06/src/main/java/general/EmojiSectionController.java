@@ -359,7 +359,7 @@ public class EmojiSectionController implements Initializable {
         ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
         lb.addLast(actualEmoji);
         System.out.println(profile.getLibrary().getUserEmoji());
-        //Serialization.serialize(Profile.arrayProfile, "profile");
+        Serialization.serialize(Profile.arrayProfile, "profile");
     }
     
     @FXML

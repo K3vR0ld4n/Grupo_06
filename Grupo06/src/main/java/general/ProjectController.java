@@ -4,6 +4,7 @@
  */
 package general;
 
+import TDAs.ArrayList;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -33,8 +34,8 @@ public class ProjectController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadProjectsDefault(GpProject);
-        
+        loadProjects(GpProject, Library.defaultEmoji);
+        loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());        
     }
     
     @FXML
@@ -46,27 +47,28 @@ public class ProjectController implements Initializable {
         // CODIGO AL PRESIONAR EL BOTON SELECT
     }
     
-    private void loadProjectsDefault(GridPane gp){
+    private void loadProjects(GridPane gp, ArrayList<Emoji> l){
         int columns = gp.getColumnCount();
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
         
-        if(Library.defaultEmoji.size() > 0){
+        if(l.size() > 0){
+            System.out.println(l);
             
-            for(Emoji e: Library.defaultEmoji){
+            for(Emoji e: l){
                 StackPane SPEmoji = new StackPane();
                 
                 ImageView accesory = new ImageView();
-                accesory.setImage(e.getAccessories());
+                if(e.haveAccessories()) accesory.setImage(e.getAccessories());
                 ImageView face = new ImageView();
-                face.setImage(e.getFace());
+                if(e.haveFace()) face.setImage(e.getFace());
                 ImageView eyes = new ImageView();
-                eyes.setImage(e.getEyes());
+                if(e.haveEyes()) eyes.setImage(e.getEyes());
                 ImageView eyebrow = new ImageView();
-                eyebrow.setImage(e.getEyesbrows());
+                if(e.haveEyeBrows()) eyebrow.setImage(e.getEyesbrows());
                 ImageView mouth = new ImageView();
-                mouth.setImage(e.getMouth());
+                if(e.haveMouth()) mouth.setImage(e.getMouth());
                 SPEmoji.getChildren().addAll(face,eyes,eyebrow, mouth, accesory);
                 
                 if(countC < columns){
