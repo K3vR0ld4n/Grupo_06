@@ -151,7 +151,10 @@ public class EmojiSectionController implements Initializable {
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows, viewMouth, viewAccessory);
 
         history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 45bf36006cf7cc3d58b48a1df608cb5c73d470c1
         if (profile == null) {
             profile = new Profile("ElPepe", "1234", "batman@DC.com");
         }
@@ -207,6 +210,7 @@ public class EmojiSectionController implements Initializable {
 
         File file = fc.showOpenDialog(new Stage());
         if (file.isFile()) {
+<<<<<<< HEAD
 
             try {
                 String imagePath = file.getCanonicalPath();
@@ -219,6 +223,14 @@ public class EmojiSectionController implements Initializable {
 
         currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
 
+=======
+            String imagePath = file.getCanonicalPath();
+
+            profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
+            currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+
+        }
+>>>>>>> 45bf36006cf7cc3d58b48a1df608cb5c73d470c1
         if (RBdirect.isSelected()) {
             loadEmojiDirect(currentComponents);
         }
@@ -371,10 +383,14 @@ public class EmojiSectionController implements Initializable {
     @FXML
     public void saveProject() {
         Emoji actualEmoji = history.getActual();
-        ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
-        lb.addLast(actualEmoji);
-        System.out.println(profile.getLibrary().getUserEmoji());
-        //Serialization.serialize(Profile.arrayProfile, "profile");
+        if (actualEmoji != null) {
+            ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+            lb.addLast(actualEmoji);
+            System.out.println(profile.getLibrary().getUserEmoji());
+            //Serialization.serialize(Profile.arrayProfile, "profile");
+        } else {
+            System.out.println("unu");
+        }
     }
 
     @FXML

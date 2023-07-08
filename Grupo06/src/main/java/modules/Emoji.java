@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modules;
+import java.io.Serializable;
 import javafx.scene.image.Image;
 
 
@@ -10,7 +11,7 @@ import javafx.scene.image.Image;
  *
  * @author kev-roldan
  */
-public class Emoji {
+public class Emoji implements Serializable{
     private Image eyes;
     private Image mouth;
     private Image face;
