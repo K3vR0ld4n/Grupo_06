@@ -7,10 +7,12 @@ package modules;
 import TDAs.ArrayList;
 import TDAs.List;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javafx.scene.image.Image;
 import utils.Resource;
@@ -41,27 +43,21 @@ public class Profile implements Serializable {
     public void saveUserComponent(String imagePath, String type) {
 
         String profilePath = "src/main/resources/Profiles/" + this.mail + "/" + type + this.library.getUserComponents().size() + imagePath.substring(imagePath.length() - 4);
-        
         String newImagePath = profilePath.substring(18);
         System.out.println(newImagePath);
         try {
             Path sourcePath = Path.of(imagePath);
             Path destinationPath = Path.of(profilePath);
+            Path targetDestinationPath = Path.of("target/classes/" + newImagePath);
+
             //copy image
             Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(sourcePath, targetDestinationPath, StandardCopyOption.REPLACE_EXISTING);
 
-            
             Image img = new Image(getClass().getResource(newImagePath).toExternalForm());
-            
-            
-           // Image img = new Image(getClass().getResource(profilePath.substring(18)).toExternalForm());
-           
-            
-            this.library.getUserComponents().addLast(img);
-            // Rename image
-            //    Files.move(destinationPath, destinationPath.resolveSibling(type+this.library.getUserComponents().size()+imagePath.substring(imagePath.length()-4)));
 
-            // System.out.println("Imagen copiada y renombrada exitosamente.");
+            this.library.getUserComponents().addLast(img);
+
         } catch (Exception e) {
             System.out.println(getClass().getResource(newImagePath));
             e.printStackTrace();
@@ -74,7 +70,9 @@ public class Profile implements Serializable {
         ArrayList<Image> userComponents = this.library.getUserComponents();
         if (!userComponents.isEmpty()) {
             for (int i = 0; i < userComponents.size(); i++) {
-                if(userComponents.get(i).getUrl().contains(type)) toLoad.addLast(userComponents.get(i));
+                if (userComponents.get(i).getUrl().contains(type)) {
+                    toLoad.addLast(userComponents.get(i));
+                }
             }
 
         }
