@@ -51,6 +51,7 @@ public class LoginController {
                 if (nameInput.equals(p.getName()) && passwordInput.equals(p.getPassword())) {
                     userName = p.getName();
                     email = p.getMail();
+                    EmojiSectionController.profile = p;
                     App.setRoot("EmojiSection");
                 }
             }

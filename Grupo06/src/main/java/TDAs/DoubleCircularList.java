@@ -3,7 +3,7 @@ package TDAs;
 import java.io.Serializable;
 import java.util.Iterator;
 
-public class DoubleCircularList<E> implements List<E>, Serializable {
+public class DoubleCircularList<E> implements List<E>, Serializable{
 
     private Node<E> last;
 
@@ -210,5 +210,6 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
     public Iterator<E> iterator() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 
 }

@@ -4,6 +4,7 @@
  */
 package general;
 
+import TDAs.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -30,8 +31,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modules.Emoji;
 import modules.History;
+import modules.Library;
 import modules.Profile;
 import utils.Resource;
+import utils.Serialization;
 
 /**
  * FXML Controller class
@@ -93,6 +96,9 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     private Button back;
+    
+    @FXML
+    private Button bttonSave;
 
     @FXML
     private GridPane GpDirect;
@@ -117,7 +123,7 @@ public class EmojiSectionController implements Initializable {
     private History history;
     private Resource currentComponents;
 
-    private  Profile profile = new Profile("ElPepe", "1234", "batman@DC.com");
+    static  Profile profile;
     
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
@@ -145,7 +151,8 @@ public class EmojiSectionController implements Initializable {
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows, viewMouth, viewAccessory);
 
         history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
-
+        if (profile == null) profile = new Profile("ElPepe", "1234", "batman@DC.com");
+        
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
         initializeIcon("/resources/DefaultIconEyeBrows.png", "/resources/HoverIconEyeBrows.png", btEyesBrows);
@@ -345,7 +352,16 @@ public class EmojiSectionController implements Initializable {
         history.setActual(e);
 
     }
-
+    
+    @FXML
+    public void saveProject(){
+        Emoji actualEmoji = history.getActual();
+        ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+        lb.addLast(actualEmoji);
+        System.out.println(profile.getLibrary().getUserEmoji());
+        //Serialization.serialize(Profile.arrayProfile, "profile");
+    }
+    
     @FXML
     public void showSequentialOrDirect() {
         if (RBsequential.isSelected()) {
@@ -447,6 +463,7 @@ public class EmojiSectionController implements Initializable {
                 imageView.setCursor(Cursor.DEFAULT);
             }
         });
+
     }
 
     //Clase estática que almacena las coordenadas x, y del desplazamiento de un evento de ratón respecto a la imagen.

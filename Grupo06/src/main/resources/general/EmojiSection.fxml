@@ -82,7 +82,6 @@
                </font>
             </RadioButton>
             <Button fx:id="BtUpload" mnemonicParsing="false" onAction="#uploadImageResource" text="Upload" />
-            <Button fx:id="BtDeleate" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
          </children>
       </VBox>
       <Button id="btForwardBack" fx:id="back" layoutX="547.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="27.0" prefWidth="87.0" text="Undo">
@@ -139,5 +138,7 @@
             <Image url="@../resources/selection.png" />
          </image>
       </ImageView>
+      <Button fx:id="BtDeleate" layoutX="746.0" layoutY="256.0" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
+      <Button fx:id="bttonSave" layoutX="44.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveProject" text="SAVE" />
    </children>
 </AnchorPane>
