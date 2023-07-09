@@ -17,7 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modules.Profile;
 import utils.Alertas;
+import utils.Serialization;
 
 /**
  * FXML Controller class
@@ -50,6 +52,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     private void logOutMethod() throws IOException {
+        Serialization.serialize(Profile.arrayProfile, "profile");
         Stage currentStage = (Stage) btnLogout.getScene().getWindow();
         currentStage.close();
         App.setRoot("Login");
