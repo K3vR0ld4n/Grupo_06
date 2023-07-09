@@ -20,15 +20,14 @@ public class Emoji implements Serializable {
     private Component eyesbrowsComponent;
     private Component eyeComponent;
     private Component accessoriesComponent;
-    private Component currentEmojiPath;
+    private String currentEmojiPath;
 
-    public Emoji(Component mouthPath, Component facePath, Component eyesbrowsPath, Component eyesPath, Component accessoriesPath, Component currentEmojiPath) {
+    public Emoji(Component mouthPath, Component facePath, Component eyesbrowsPath, Component eyesPath, Component accessoriesPath) {
         this.mouthComponent = mouthPath;
         this.faceComponent = facePath;
         this.eyesbrowsComponent = eyesbrowsPath;
         this.eyeComponent = eyesPath;
         this.accessoriesComponent = accessoriesPath;
-        this.currentEmojiPath = currentEmojiPath;
     }
 
     public Emoji(ImageView eyes, ImageView mouth, ImageView face, ImageView eyesbrows, ImageView accessories) {
@@ -39,6 +38,10 @@ public class Emoji implements Serializable {
         this.eyesbrowsComponent = buildWithoutNull(eyesbrows);
     }
 
+    public Emoji() {
+    }
+    
+    
     public static Image toImage(String path) {
         if (path.equals("")) {
             return null;
@@ -53,7 +56,11 @@ public class Emoji implements Serializable {
         }
         return new Component("", 0, 0, 0, 0);
     }
-
+    
+    public void setCurrentEmojiPath(String path){
+        this.currentEmojiPath = path;
+    }
+    
     public String getMouthPath() {
         return mouthComponent.getPath();
     }
@@ -75,7 +82,7 @@ public class Emoji implements Serializable {
     }
 
     public String getCurrentEmojiPath() {
-        return currentEmojiPath.getPath();
+        return currentEmojiPath;
     }
 
     public boolean haveFace() {

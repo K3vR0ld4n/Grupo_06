@@ -5,14 +5,17 @@
 package general;
 
 import TDAs.ArrayList;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -20,6 +23,10 @@ import modules.Emoji;
 import modules.Library;
 import modules.Profile;
 import utils.Alertas;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import javafx.embed.swing.SwingFXUtils;
 
 public class ProjectController implements Initializable {
 
@@ -35,7 +42,7 @@ public class ProjectController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        selectedEmoji = new Emoji(null,null,null,null,null);
+        selectedEmoji = new Emoji();
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
@@ -43,19 +50,18 @@ public class ProjectController implements Initializable {
 
     @FXML
     private void selectMethod() {
-        
+
         EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
         EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
         EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
         EmojiSectionController.updateImageView(selectedEmoji.getEyesbrowsComponent(), EmojiSectionController.viewEyebrows);
         EmojiSectionController.updateImageView(selectedEmoji.getMouthComponent(), EmojiSectionController.viewMouth);
-        
+
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
         // CODIGO AL PRESIONAR EL BOTON SELECT
     }
-
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
         int columns = gp.getColumnCount();
@@ -69,38 +75,44 @@ public class ProjectController implements Initializable {
             for (Emoji e : l) {
                 if (e != null) { // Add a null check for the Emoji object
                     StackPane SPEmoji = new StackPane();
-
-                    ImageView accessory = new ImageView();
-                    if (e.haveAccessories()) {
-                        accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
-                        accessory.setFitHeight(e.getAccessoriesComponent().getHeight() / 4);
-                        accessory.setFitWidth(e.getAccessoriesComponent().getWidth()/ 4);
-                    }
-                    ImageView face = new ImageView();
-                    if (e.haveFace()) {
-                        face.setImage(Emoji.toImage(e.getFacePath()));
-                        face.setFitHeight(e.getFaceComponent().getHeight()/4);
-                        face.setFitWidth(e.getFaceComponent().getWidth()/4);
-                    }
-                    ImageView eyes = new ImageView();
-                    if (e.haveEyes()) {
-                        eyes.setImage(Emoji.toImage(e.getEyesPath()));
-                        eyes.setFitHeight(e.getEyeComponent().getHeight()/4);
-                        eyes.setFitWidth(e.getEyeComponent().getWidth()/4);
-                    }
-                    ImageView eyebrow = new ImageView();
-                    if (e.haveEyeBrows()) {
-                        eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
-                        eyebrow.setFitHeight(e.getEyesbrowsComponent().getHeight()/4);
-                        eyebrow.setFitWidth(e.getEyesbrowsComponent().getWidth()/4);
-                    }
-                    ImageView mouth = new ImageView();
-                    if (e.haveMouth()) {
-                        mouth.setImage(Emoji.toImage(e.getMouthPath()));
-                        mouth.setFitHeight(e.getMouthComponent().getHeight()/4);
-                        mouth.setFitWidth(e.getMouthComponent().getWidth()/4);
-                    }
-                    SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accessory);
+//
+//                    ImageView accessory = new ImageView();
+//                    if (e.haveAccessories()) {
+//                        accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
+//                        accessory.setFitHeight(e.getAccessoriesComponent().getHeight() / 4);
+//                        accessory.setFitWidth(e.getAccessoriesComponent().getWidth() / 4);
+//                    }
+//                    ImageView face = new ImageView();
+//                    if (e.haveFace()) {
+//                        face.setImage(Emoji.toImage(e.getFacePath()));
+//                        face.setFitHeight(e.getFaceComponent().getHeight() / 4);
+//                        face.setFitWidth(e.getFaceComponent().getWidth() / 4);
+//                    }
+//                    ImageView eyes = new ImageView();
+//                    if (e.haveEyes()) {
+//                        eyes.setImage(Emoji.toImage(e.getEyesPath()));
+//                        eyes.setFitHeight(e.getEyeComponent().getHeight() / 4);
+//                        eyes.setFitWidth(e.getEyeComponent().getWidth() / 4);
+//                    }
+//                    ImageView eyebrow = new ImageView();
+//                    if (e.haveEyeBrows()) {
+//                        eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
+//                        eyebrow.setFitHeight(e.getEyesbrowsComponent().getHeight() / 4);
+//                        eyebrow.setFitWidth(e.getEyesbrowsComponent().getWidth() / 4);
+//                    }
+//                    ImageView mouth = new ImageView();
+//                    if (e.haveMouth()) {
+//                        mouth.setImage(Emoji.toImage(e.getMouthPath()));
+//                        mouth.setFitHeight(e.getMouthComponent().getHeight() / 4);
+//                        mouth.setFitWidth(e.getMouthComponent().getWidth() / 4);
+//                    }
+                    ImageView imgV = new ImageView();
+                    Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
+                    imgV.setImage(im);
+                    imgV.setFitHeight(70);
+                    imgV.setFitWidth(70);
+                    
+                    SPEmoji.getChildren().addAll(imgV);
                     gp.add(SPEmoji, countC, countR);
                     if (countC < 5) {
                         countC++;
@@ -121,4 +133,15 @@ public class ProjectController implements Initializable {
         }
     }
 
+    public static void exportStackPaneAsImage(StackPane stackPane, String filePath) {
+        WritableImage snapshot = stackPane.snapshot(new SnapshotParameters(), null);
+        File file = new File(filePath);
+        File file2 = new File("target/classes/" + filePath.substring(18));
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
+            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
