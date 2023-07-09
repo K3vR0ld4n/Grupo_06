@@ -46,7 +46,7 @@ import utils.Serialization;
  * @author Jorge Daniel
  */
 public class EmojiSectionController implements Initializable {
-    
+
     @FXML
     private Button BtDeleate;
 
@@ -121,7 +121,7 @@ public class EmojiSectionController implements Initializable {
     private final Alertas alert = new Alertas();
 
     private final FileChooser fc = new FileChooser();
-    
+
     public static ImageView viewAccessory = new ImageView();
     public static ImageView viewFace = new ImageView();
     public static ImageView viewEyes = new ImageView();
@@ -131,10 +131,7 @@ public class EmojiSectionController implements Initializable {
     private Resource currentComponents;
 
     static Profile profile;
-    
-    
 
-    
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
@@ -466,6 +463,7 @@ public class EmojiSectionController implements Initializable {
             imageView.setCursor(Cursor.DEFAULT);
             resizeData.isResizing = false;
             event.consume();
+            System.out.println("a");
         });
 
         imageView.setOnMouseDragged(event -> {
@@ -484,7 +482,7 @@ public class EmojiSectionController implements Initializable {
                 imageView.setTranslateX(event.getSceneX() - dragDelta.x);
                 imageView.setTranslateY(event.getSceneY() - dragDelta.y);
             }
-
+            
             event.consume();
         });
 
@@ -514,5 +512,5 @@ public class EmojiSectionController implements Initializable {
 
         boolean isResizing;
     }
-    
+
 }
