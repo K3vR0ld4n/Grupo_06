@@ -15,12 +15,6 @@ import javafx.scene.layout.StackPane;
  */
 public class Emoji implements Serializable {
 
-//    private String mouthPath;
-//    private String facePath;
-//    private String eyesbrowsPath;
-//    private String eyesPath;
-//    private String accessoriesPath;
-//    private String currentEmojiPath;
     private Component mouthComponent;
     private Component faceComponent;
     private Component eyesbrowsComponent;
@@ -28,13 +22,6 @@ public class Emoji implements Serializable {
     private Component accessoriesComponent;
     private Component currentEmojiPath;
 
-//    public Emoji(String mouthPath, String facePath, String eyesbrowsPath, String eyesPath, String accessoriesPath) {
-//        this.mouthPath = mouthPath;
-//        this.facePath = facePath;
-//        this.eyesbrowsPath = eyesbrowsPath;
-//        this.eyesPath = eyesPath;
-//        this.accessoriesPath = accessoriesPath;
-//    }
     public Emoji(Component mouthPath, Component facePath, Component eyesbrowsPath, Component eyesPath, Component accessoriesPath, Component currentEmojiPath) {
         this.mouthComponent = mouthPath;
         this.faceComponent = facePath;
@@ -61,7 +48,7 @@ public class Emoji implements Serializable {
 
     private static Component buildWithoutNull(ImageView img) {
         if (img != null && img.getImage() != null) {
-            Component c = new Component(img.getImage().getUrl(), img.getX(), img.getY(), img.getFitWidth(), img.getFitHeight());
+            Component c = new Component(img.getImage().getUrl(), img.getTranslateX(), img.getTranslateY(), img.getFitWidth(), img.getFitHeight());
             return c;
         }
         return new Component("", 0, 0, 0, 0);

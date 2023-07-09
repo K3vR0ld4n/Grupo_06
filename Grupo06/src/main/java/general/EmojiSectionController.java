@@ -47,7 +47,7 @@ import utils.Serialization;
  * @author Jorge Daniel
  */
 public class EmojiSectionController implements Initializable {
-    
+
     @FXML
     private Button BtDeleate;
 
@@ -122,7 +122,7 @@ public class EmojiSectionController implements Initializable {
     private final Alertas alert = new Alertas();
 
     private final FileChooser fc = new FileChooser();
-    
+
     public static ImageView viewAccessory = new ImageView();
     public static ImageView viewFace = new ImageView();
     public static ImageView viewEyes = new ImageView();
@@ -133,7 +133,6 @@ public class EmojiSectionController implements Initializable {
 
     static Profile profile;
 
-    
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
@@ -372,14 +371,14 @@ public class EmojiSectionController implements Initializable {
         }
     }
 
-    private void updateImageView(Component comp, ImageView imgV){
+    public static void updateImageView(Component comp, ImageView imgV) {
         imgV.setImage(Emoji.toImage(comp.getPath()));
-        imgV.setX(comp.getPositionX());
-        imgV.setY(comp.getPositionY());
+        imgV.setTranslateX(comp.getPositionX());
+        imgV.setTranslateY(comp.getPositionY());
         imgV.setFitHeight(comp.getHeight());
         imgV.setFitWidth(comp.getWidth());
     }
-    
+
     public void updateEmoji(ImageView imgV, Image img) {
 
         imgV.setImage(img);
@@ -444,73 +443,74 @@ public class EmojiSectionController implements Initializable {
     }
 
     //método para hacer la imagen redimensionar y arrastrar una imagen
-    private void makeResizableAndDraggable(ImageView imageView) {
+private void makeResizableAndDraggable(ImageView imageView) {
 
-        double minX = 50;
-        double minY = 50;
-        double maxX = 250;
-        double maxY = 250;
+    double minX = 50;
+    double minY = 50;
+    double maxX = 250;
+    double maxY = 250;
 
-        Delta dragDelta = new Delta();
-        ResizeData resizeData = new ResizeData();
+    Delta dragDelta = new Delta();
+    ResizeData resizeData = new ResizeData();
 
-        imageView.setOnMousePressed(event -> {
-            if (event.isPrimaryButtonDown()) {
-                dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
-                dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
-                imageView.setCursor(Cursor.SE_RESIZE);
-                resizeData.isResizing = true;
-                event.consume();
-            } else {
-                dragDelta.x = event.getSceneX() - imageView.getTranslateX();
-                dragDelta.y = event.getSceneY() - imageView.getTranslateY();
-                imageView.setCursor(Cursor.MOVE);
-                event.consume();
+    imageView.setOnMousePressed(event -> {
+        if (event.isPrimaryButtonDown()) {
+            dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
+            dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
+            imageView.setCursor(Cursor.SE_RESIZE);
+            resizeData.isResizing = true;
+            event.consume();
+        } else {
+            dragDelta.x = event.getSceneX() - imageView.getTranslateX();
+            dragDelta.y = event.getSceneY() - imageView.getTranslateY();
+            imageView.setCursor(Cursor.MOVE);
+            event.consume();
+        }
+    });
+
+    imageView.setOnMouseReleased(event -> {
+        imageView.setCursor(Cursor.DEFAULT);
+        resizeData.isResizing = false;
+        event.consume();
+        System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
+        System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
+        System.out.println(imageView.getTranslateX() + "; " + imageView.getTranslateY());
+        updateEmoji(imageView, imageView.getImage());
+    });
+
+    imageView.setOnMouseDragged(event -> {
+        if (resizeData.isResizing) {
+            double newX = event.getX() + dragDelta.x;
+            double newY = event.getY() + dragDelta.y;
+
+            if (newX > minX && newX < maxX) {
+                imageView.setFitWidth(newX);
             }
-        });
 
-        imageView.setOnMouseReleased(event -> {
+            if (newY > minY && newY < maxY) {
+                imageView.setFitHeight(newY);
+            }
+        } else {
+            imageView.setTranslateX(event.getSceneX() - dragDelta.x);
+            imageView.setTranslateY(event.getSceneY() - dragDelta.y);
+        }
+
+        event.consume();
+    });
+
+    imageView.setOnMouseEntered(event -> {
+        if (!event.isPrimaryButtonDown()) {
             imageView.setCursor(Cursor.DEFAULT);
-            resizeData.isResizing = false;
-            event.consume();
-            System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
-            System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
-            updateEmoji(imageView, imageView.getImage());
-        });
+        }
+    });
 
-        imageView.setOnMouseDragged(event -> {
-            if (resizeData.isResizing) {
-                double newX = event.getX() + dragDelta.x;
-                double newY = event.getY() + dragDelta.y;
+    imageView.setOnMouseExited(event -> {
+        if (!event.isPrimaryButtonDown()) {
+            imageView.setCursor(Cursor.DEFAULT);
+        }
+    });
 
-                if (newX > minX && newX < maxX) {
-                    imageView.setFitWidth(newX);
-                }
-
-                if (newY > minY && newY < maxY) {
-                    imageView.setFitHeight(newY);
-                }
-            } else {
-                imageView.setTranslateX(event.getSceneX() - dragDelta.x);
-                imageView.setTranslateY(event.getSceneY() - dragDelta.y);
-            }
-
-            event.consume();
-        });
-
-        imageView.setOnMouseEntered(event -> {
-            if (!event.isPrimaryButtonDown()) {
-                imageView.setCursor(Cursor.DEFAULT);
-            }
-        });
-
-        imageView.setOnMouseExited(event -> {
-            if (!event.isPrimaryButtonDown()) {
-                imageView.setCursor(Cursor.DEFAULT);
-            }
-        });
-
-    }
+}
 
     //Clase estática que almacena las coordenadas x, y del desplazamiento de un evento de ratón respecto a la imagen.
     private static class Delta {
@@ -524,5 +524,5 @@ public class EmojiSectionController implements Initializable {
 
         boolean isResizing;
     }
-    
+
 }

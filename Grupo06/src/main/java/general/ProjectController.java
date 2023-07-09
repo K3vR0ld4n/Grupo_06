@@ -29,13 +29,13 @@ public class ProjectController implements Initializable {
     @FXML
     private Button BtSelect;
 
-    private StackPane sp;
+    private Emoji selectedEmoji;
 
     private final Alertas alert = new Alertas();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        sp = new StackPane();
+        selectedEmoji = new Emoji(null,null,null,null,null);
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
@@ -43,24 +43,19 @@ public class ProjectController implements Initializable {
 
     @FXML
     private void selectMethod() {
-        EmojiSectionController.viewFace.setImage(getSPImage(0));
-        EmojiSectionController.viewEyes.setImage(getSPImage(1));
-        EmojiSectionController.viewEyebrows.setImage(getSPImage(2));
-        EmojiSectionController.viewMouth.setImage(getSPImage(3));
-        EmojiSectionController.viewAccessory.setImage(getSPImage(4));
-
+        
+        EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
+        EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
+        EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
+        EmojiSectionController.updateImageView(selectedEmoji.getEyesbrowsComponent(), EmojiSectionController.viewEyebrows);
+        EmojiSectionController.updateImageView(selectedEmoji.getMouthComponent(), EmojiSectionController.viewMouth);
+        
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
-        //currentStage.close();
         // CODIGO AL PRESIONAR EL BOTON SELECT
     }
 
-    private Image getSPImage(int i) {
-        ImageView imgV = (ImageView) sp.getChildren().get(i);
-        Image img = imgV.getImage();
-        return img;
-    }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
         int columns = gp.getColumnCount();
@@ -78,32 +73,32 @@ public class ProjectController implements Initializable {
                     ImageView accessory = new ImageView();
                     if (e.haveAccessories()) {
                         accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
-                        accessory.setFitHeight(60);
-                        accessory.setFitWidth(60);
+                        accessory.setFitHeight(e.getAccessoriesComponent().getHeight() / 4);
+                        accessory.setFitWidth(e.getAccessoriesComponent().getWidth()/ 4);
                     }
                     ImageView face = new ImageView();
                     if (e.haveFace()) {
                         face.setImage(Emoji.toImage(e.getFacePath()));
-                        face.setFitHeight(60);
-                        face.setFitWidth(60);
+                        face.setFitHeight(e.getFaceComponent().getHeight()/4);
+                        face.setFitWidth(e.getFaceComponent().getWidth()/4);
                     }
                     ImageView eyes = new ImageView();
                     if (e.haveEyes()) {
                         eyes.setImage(Emoji.toImage(e.getEyesPath()));
-                        eyes.setFitHeight(60);
-                        eyes.setFitWidth(60);
+                        eyes.setFitHeight(e.getEyeComponent().getHeight()/4);
+                        eyes.setFitWidth(e.getEyeComponent().getWidth()/4);
                     }
                     ImageView eyebrow = new ImageView();
                     if (e.haveEyeBrows()) {
                         eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
-                        eyebrow.setFitHeight(60);
-                        eyebrow.setFitWidth(60);
+                        eyebrow.setFitHeight(e.getEyesbrowsComponent().getHeight()/4);
+                        eyebrow.setFitWidth(e.getEyesbrowsComponent().getWidth()/4);
                     }
                     ImageView mouth = new ImageView();
                     if (e.haveMouth()) {
                         mouth.setImage(Emoji.toImage(e.getMouthPath()));
-                        mouth.setFitHeight(60);
-                        mouth.setFitWidth(60);
+                        mouth.setFitHeight(e.getMouthComponent().getHeight()/4);
+                        mouth.setFitWidth(e.getMouthComponent().getWidth()/4);
                     }
                     SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accessory);
                     gp.add(SPEmoji, countC, countR);
@@ -118,7 +113,7 @@ public class ProjectController implements Initializable {
                     }
 //                    
                     SPEmoji.setOnMouseClicked(event -> {
-                        sp = SPEmoji;
+                        selectedEmoji = e;
                         System.out.println(SPEmoji.getChildren());
                     });
                 }
