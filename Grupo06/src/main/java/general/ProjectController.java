@@ -29,7 +29,7 @@ public class ProjectController implements Initializable {
     @FXML
     private Button BtSelect;
 
-    Alertas alert = new Alertas();
+    private final Alertas alert = new Alertas();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,8 +42,14 @@ public class ProjectController implements Initializable {
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
-
+        
+        
+        
         // CODIGO AL PRESIONAR EL BOTON SELECT
+        
+        
+        
+        
     }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {

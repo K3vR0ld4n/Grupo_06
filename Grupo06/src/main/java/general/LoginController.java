@@ -33,8 +33,7 @@ public class LoginController {
         System.exit(0);
     }
     
-    private static String userName = "";
-    private static String email = "";
+    private static final Profile guest = new Profile("Guest", "Guest@guest.com");
 
     @FXML
     private void logIn() {
@@ -49,8 +48,7 @@ public class LoginController {
 
             for (Profile p : Profile.arrayProfile) {
                 if (nameInput.equals(p.getName()) && passwordInput.equals(p.getPassword())) {
-                    userName = p.getName();
-                    email = p.getMail();
+
                     EmojiSectionController.profile = p;
                     App.setRoot("EmojiSection");
                 }
@@ -63,17 +61,10 @@ public class LoginController {
 
     @FXML
     private void GuessMethod() throws IOException {
-        userName = "Guess";
-        email = "Guess@guess.com";
+        EmojiSectionController.profile = guest;
         App.setRoot("EmojiSection");
     }
     
-    public static String getUserName(){
-        return userName;
-    }
-    
-    public static String getEmail(){
-        return email;
-    }
+
 
 }

@@ -15,20 +15,27 @@ import javafx.scene.image.Image;
 public class Library implements Serializable{
     public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
     private ArrayList<Emoji> userEmoji;
-    private transient ArrayList<Image> userComponents;
+   // private transient ArrayList<Image> userComponents;
+    private ArrayList<String> userComponentsPaths;
 
     public Library() {
         this.userEmoji = new ArrayList<>();
-        this.userComponents=new ArrayList<>();
+        //this.userComponents=new ArrayList<>();
+        this.userComponentsPaths = new ArrayList<>();
     }
 
-    public ArrayList<Image> getUserComponents() {
-        return userComponents;
+    public ArrayList<String> getUserComponentsPaths() {
+        return userComponentsPaths;
     }
 
-    public void setUserComponents(ArrayList<Image> userComponents) {
-        this.userComponents = userComponents;
-    }
+//
+//    public ArrayList<Image> getUserComponents() {
+//        return userComponents;
+//    }
+
+//    public void setUserComponents(ArrayList<Image> userComponents) {
+//        this.userComponents = userComponents;
+//    }
 
     public ArrayList<Emoji> getUserEmoji() {
         return userEmoji;

@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -33,6 +34,7 @@ import modules.Emoji;
 import modules.History;
 import modules.Library;
 import modules.Profile;
+import utils.Alertas;
 import utils.Resource;
 import utils.Serialization;
 
@@ -114,6 +116,8 @@ public class EmojiSectionController implements Initializable {
 
     private ToggleGroup group;
 
+    private final Alertas alert = new Alertas();
+
     private final FileChooser fc = new FileChooser();
     private ImageView viewAccessory = new ImageView();
     private ImageView viewFace = new ImageView();
@@ -151,12 +155,8 @@ public class EmojiSectionController implements Initializable {
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
                 viewMouth, viewAccessory);
 
-        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(), 
+        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(),
                 viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
-
-        if (profile == null) {
-            profile = new Profile("ElPepe", "1234", "batman@DC.com");
-        }
 
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
@@ -201,32 +201,32 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     void uploadImageResource() {
+        if (profile.getName().equals("Guest")) {
+            alert.AlertInfo("You must log in to perform this action");
+        } else {
+            FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
+            FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
+            FileChooser.ExtensionFilter jpegFilter = new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpeg");
+            fc.getExtensionFilters().addAll(pngFilter, jpegFilter, jpgFilter);
 
-        FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
-        FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
-        FileChooser.ExtensionFilter jpegFilter = new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpeg");
-        fc.getExtensionFilters().addAll(pngFilter, jpegFilter, jpgFilter);
+            File file = fc.showOpenDialog(new Stage());
+            if (file.isFile()) {
 
-        File file = fc.showOpenDialog(new Stage());
-        if (file.isFile()) {
+                try {
+                    String imagePath = file.getCanonicalPath();
 
+                    profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-            try {
-                String imagePath = file.getCanonicalPath();
+            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
 
-                profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (RBdirect.isSelected()) {
+                loadEmojiDirect(currentComponents);
             }
         }
-
-        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-
-
-        if (RBdirect.isSelected()) {
-            loadEmojiDirect(currentComponents);
-        }
-
     }
 
     @FXML
@@ -261,7 +261,9 @@ public class EmojiSectionController implements Initializable {
 
         HBoxEmojis.getChildren().clear();
         currentComponents = resource;
-        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+        if (!profile.getName().equals("Guest")) {
+            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+        }
 
         for (int i = 0; i < 9; i++) {
 
@@ -278,7 +280,9 @@ public class EmojiSectionController implements Initializable {
     private void loadEmojiDirect(Resource resource) {
         GpDirect.getChildren().clear();
         currentComponents = resource;
-        currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+        if (!profile.getName().equals("Guest")) {
+            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+        }
 
         int columns = 0;
         int rows = 0;
@@ -375,14 +379,18 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     public void saveProject() {
-        Emoji actualEmoji = history.getActual();
-        if (actualEmoji != null) {
-            ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
-            lb.addLast(actualEmoji);
-            System.out.println(profile.getLibrary().getUserEmoji());
-            Serialization.serialize(Profile.arrayProfile, "profile");
+        if (profile.getName().equals("Guest")) {
+            alert.AlertInfo("You must log in to perform this action");
         } else {
-            System.out.println("unu");
+            Emoji actualEmoji = history.getActual();
+            if (actualEmoji != null) {
+                ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+                lb.addLast(actualEmoji);
+                System.out.println(profile.getLibrary().getUserEmoji());
+                Serialization.serialize(Profile.arrayProfile, "profile");
+            } else {
+                System.out.println("unu");
+            }
         }
     }
 

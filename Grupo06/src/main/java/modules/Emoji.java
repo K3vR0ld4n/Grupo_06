@@ -30,9 +30,6 @@ public class Emoji implements Serializable {
 
     
     public Emoji(Image eyes, Image mouth, Image face, Image eyesbrows, Image accessories) {
-
-
-
         this.eyesPath = buildWithoutNull(eyes);
         this.mouthPath = buildWithoutNull(mouth);
         this.facePath = buildWithoutNull(face);
