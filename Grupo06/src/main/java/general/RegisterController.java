@@ -65,7 +65,7 @@ public class RegisterController implements Initializable {
         Profile newRegister = new Profile(name, password, mail);
         
        
-        //Serialization.serialize(Profile.arrayProfile, "profile");
+//        Serialization.serialize(Profile.arrayProfile, "profile");
         
         App.setRoot("Login");
     }

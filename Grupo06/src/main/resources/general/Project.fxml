@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.ProjectController">
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.ProjectController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="30.0" prefHeight="53.0" prefWidth="227.0" text="My projects" textFill="#212a3e">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="BtSelect" layoutX="284.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Select" />
+      <Button fx:id="BtSelect" layoutX="429.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Select" />
       <ImageView fitHeight="23.0" fitWidth="29.0" layoutX="241.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/projectIcon.png" />

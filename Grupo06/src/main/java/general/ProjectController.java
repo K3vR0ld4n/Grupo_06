@@ -28,13 +28,18 @@ public class ProjectController implements Initializable {
 
     @FXML
     private Button BtSelect;
-
+    
+    private StackPane sp;
     private final Alertas alert = new Alertas();
+    
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        sp = new StackPane();
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
+        
     }
 
     @FXML
@@ -42,14 +47,8 @@ public class ProjectController implements Initializable {
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
-        
-        
-        
+        currentStage.close();
         // CODIGO AL PRESIONAR EL BOTON SELECT
-        
-        
-        
-        
     }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
@@ -57,7 +56,7 @@ public class ProjectController implements Initializable {
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
-
+        
         if (l.size() > 0) {
             System.out.println(l);
 
@@ -68,27 +67,32 @@ public class ProjectController implements Initializable {
                     ImageView accessory = new ImageView();
                     if (e.haveAccessories()) {
                         accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
-                        accessory.setFitHeight(60);accessory.setFitWidth(60);
+                        accessory.setFitHeight(60);
+                        accessory.setFitWidth(60);
                     }
                     ImageView face = new ImageView();
                     if (e.haveFace()) {
                         face.setImage(Emoji.toImage(e.getFacePath()));
-                        face.setFitHeight(60);face.setFitWidth(60);
+                        face.setFitHeight(60);
+                        face.setFitWidth(60);
                     }
                     ImageView eyes = new ImageView();
                     if (e.haveEyes()) {
                         eyes.setImage(Emoji.toImage(e.getEyesPath()));
-                        eyes.setFitHeight(60);eyes.setFitWidth(60);
+                        eyes.setFitHeight(60);
+                        eyes.setFitWidth(60);
                     }
                     ImageView eyebrow = new ImageView();
                     if (e.haveEyeBrows()) {
                         eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
-                        eyebrow.setFitHeight(60);eyebrow.setFitWidth(60);
+                        eyebrow.setFitHeight(60);
+                        eyebrow.setFitWidth(60);
                     }
                     ImageView mouth = new ImageView();
                     if (e.haveMouth()) {
                         mouth.setImage(Emoji.toImage(e.getMouthPath()));
-                        mouth.setFitHeight(60);mouth.setFitWidth(60);
+                        mouth.setFitHeight(60);
+                        mouth.setFitWidth(60);
                     }
                     SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accessory);
                     gp.add(SPEmoji, countC, countR);
@@ -101,11 +105,15 @@ public class ProjectController implements Initializable {
                             gp.addRow(countR - 1);
                         }
                     }
-
-
+//                    
+                    SPEmoji.setOnMouseClicked(event -> {
+                        sp = SPEmoji;
+                        System.out.println(SPEmoji.getChildren());
+                    });
                 }
             }
         }
     }
+    
 
 }

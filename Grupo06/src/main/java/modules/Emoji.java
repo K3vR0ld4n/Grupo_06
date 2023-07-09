@@ -6,6 +6,8 @@ package modules;
 
 import java.io.Serializable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 /**
  *

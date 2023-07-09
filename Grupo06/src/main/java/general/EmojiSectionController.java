@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -44,7 +46,7 @@ import utils.Serialization;
  * @author Jorge Daniel
  */
 public class EmojiSectionController implements Initializable {
-
+    
     @FXML
     private Button BtDeleate;
 
@@ -88,7 +90,7 @@ public class EmojiSectionController implements Initializable {
     private ImageView ImgArrowR;
 
     @FXML
-    private StackPane SPEmoji;
+    private StackPane SPEmoji = new StackPane();
 
     @FXML
     private HBox HBoxEmojis;
@@ -128,7 +130,27 @@ public class EmojiSectionController implements Initializable {
     private Resource currentComponents;
 
     static Profile profile;
+    
+    
+    public void setEmojiSelected(StackPane sp) {
+        //face, eyes, eyebrow, mouth, accessory
+//        ImageView VAcc = (ImageView) sp.getChildren().get(4);
+//        ImageView Vf = (ImageView) sp.getChildren().get(0);
+//        ImageView Ve = (ImageView) sp.getChildren().get(1);   
+//        ImageView Vm = (ImageView) sp.getChildren().get(3);
+//        ImageView Veb= (ImageView) sp.getChildren().get(2);
+//        
+//        this.viewAccessory.setImage(VAcc.getImage());
+//        this.viewEyes.setImage(Ve.getImage());
+//        this.viewFace.setImage(Vf.getImage());
+//        this.viewMouth.setImage(Vm.getImage());
+//        this.viewEyebrows.setImage(Veb.getImage());
+        SPEmoji.getChildren().clear();
+        SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
+                viewMouth, viewAccessory);
 
+    }
+    
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
@@ -154,7 +176,6 @@ public class EmojiSectionController implements Initializable {
 
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
                 viewMouth, viewAccessory);
-
         history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(),
                 viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
 
@@ -509,4 +530,5 @@ public class EmojiSectionController implements Initializable {
 
         boolean isResizing;
     }
+    
 }
