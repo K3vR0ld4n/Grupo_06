@@ -65,32 +65,32 @@ public class ProjectController implements Initializable {
                 if (e != null) { // Add a null check for the Emoji object
                     StackPane SPEmoji = new StackPane();
 
-                    ImageView accesory = new ImageView();
+                    ImageView accessory = new ImageView();
                     if (e.haveAccessories()) {
-                        accesory.setImage(Emoji.toImage(e.getAccessoriesPath()));
+                        accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
+                        accessory.setFitHeight(60);accessory.setFitWidth(60);
                     }
                     ImageView face = new ImageView();
                     if (e.haveFace()) {
                         face.setImage(Emoji.toImage(e.getFacePath()));
+                        face.setFitHeight(60);face.setFitWidth(60);
                     }
                     ImageView eyes = new ImageView();
                     if (e.haveEyes()) {
                         eyes.setImage(Emoji.toImage(e.getEyesPath()));
+                        eyes.setFitHeight(60);eyes.setFitWidth(60);
                     }
                     ImageView eyebrow = new ImageView();
                     if (e.haveEyeBrows()) {
                         eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
+                        eyebrow.setFitHeight(60);eyebrow.setFitWidth(60);
                     }
                     ImageView mouth = new ImageView();
                     if (e.haveMouth()) {
                         mouth.setImage(Emoji.toImage(e.getMouthPath()));
+                        mouth.setFitHeight(60);mouth.setFitWidth(60);
                     }
-                    SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accesory);
-                    double cellWidth = gp.getPrefWidth() / columns;
-                    double cellHeight = gp.getPrefHeight() / rows;
-                    System.out.println(cellWidth);
-                    System.out.println(cellHeight);
-                    SPEmoji.setPrefSize(cellWidth, cellHeight);
+                    SPEmoji.getChildren().addAll(face, eyes, eyebrow, mouth, accessory);
                     gp.add(SPEmoji, countC, countR);
                     if (countC < 5) {
                         countC++;
