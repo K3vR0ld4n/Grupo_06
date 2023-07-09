@@ -1,5 +1,7 @@
 package modules;
 
+import TDAs.ArrayList;
+import TDAs.List;
 import java.util.Stack;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +32,7 @@ public class History {
         if(!historyBack.isEmpty()){
             historyForward.push(this.actual);
             System.out.println("patras");
+            System.out.println(actual.getFaceComponent());
             actual = historyBack.pop();
             return actual;
        }

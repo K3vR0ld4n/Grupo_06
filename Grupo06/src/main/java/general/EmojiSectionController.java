@@ -33,6 +33,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modules.Emoji;
+import modules.Component;
 import modules.History;
 import modules.Library;
 import modules.Profile;
@@ -131,8 +132,6 @@ public class EmojiSectionController implements Initializable {
     private Resource currentComponents;
 
     static Profile profile;
-    
-    
 
     
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
@@ -160,8 +159,8 @@ public class EmojiSectionController implements Initializable {
 
         SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
                 viewMouth, viewAccessory);
-        history = new History(new Emoji(viewEyes.getImage(), viewMouth.getImage(),
-                viewFace.getImage(), viewEyebrows.getImage(), viewAccessory.getImage()));
+        history = new History(new Emoji(viewEyes, viewMouth,
+                viewFace, viewEyebrows, viewAccessory));
 
         initializeIcon("/resources/DefaultIconFaces.png", "/resources/HoverIconFaces.png", btFacce);
         initializeIcon("/resources/DefaultIconEyes.png", "/resources/HoverIconEyes.png", btEyes);
@@ -352,11 +351,11 @@ public class EmojiSectionController implements Initializable {
     public void goForward() {
         Emoji emoji = history.advance();
         if (emoji != null) {
-            viewEyes.setImage(Emoji.toImage(emoji.getEyesPath()));
-            viewMouth.setImage(Emoji.toImage(emoji.getMouthPath()));
-            viewFace.setImage(Emoji.toImage(emoji.getFacePath()));
-            viewEyebrows.setImage(Emoji.toImage(emoji.getEyesbrowsPath()));
-            viewAccessory.setImage(Emoji.toImage(emoji.getAccessoriesPath()));
+            updateImageView(emoji.getAccessoriesComponent(), viewAccessory);
+            updateImageView(emoji.getEyeComponent(), viewEyes);
+            updateImageView(emoji.getFaceComponent(), viewFace);
+            updateImageView(emoji.getMouthComponent(), viewMouth);
+            updateImageView(emoji.getEyesbrowsComponent(), viewEyebrows);
         }
     }
 
@@ -365,19 +364,27 @@ public class EmojiSectionController implements Initializable {
 
         Emoji emoji = history.back();
         if (emoji != null) {
-            viewEyes.setImage(Emoji.toImage(emoji.getEyesPath()));
-            viewMouth.setImage(Emoji.toImage(emoji.getMouthPath()));
-            viewFace.setImage(Emoji.toImage(emoji.getFacePath()));
-            viewEyebrows.setImage(Emoji.toImage(emoji.getEyesbrowsPath()));
-            viewAccessory.setImage(Emoji.toImage(emoji.getAccessoriesPath()));
+            updateImageView(emoji.getAccessoriesComponent(), viewAccessory);
+            updateImageView(emoji.getEyeComponent(), viewEyes);
+            updateImageView(emoji.getFaceComponent(), viewFace);
+            updateImageView(emoji.getMouthComponent(), viewMouth);
+            updateImageView(emoji.getEyesbrowsComponent(), viewEyebrows);
         }
     }
 
+    private void updateImageView(Component comp, ImageView imgV){
+        imgV.setImage(Emoji.toImage(comp.getPath()));
+        imgV.setX(comp.getPositionX());
+        imgV.setY(comp.getPositionY());
+        imgV.setFitHeight(comp.getHeight());
+        imgV.setFitWidth(comp.getWidth());
+    }
+    
     public void updateEmoji(ImageView imgV, Image img) {
 
         imgV.setImage(img);
-        Emoji e = new Emoji(viewEyes.getImage(), viewMouth.getImage(), viewFace.getImage(),
-                viewEyebrows.getImage(), viewAccessory.getImage());
+        Emoji e = new Emoji(viewEyes, viewMouth, viewFace,
+                viewEyebrows, viewAccessory);
 
         history.setActual(e);
 
@@ -466,6 +473,9 @@ public class EmojiSectionController implements Initializable {
             imageView.setCursor(Cursor.DEFAULT);
             resizeData.isResizing = false;
             event.consume();
+            System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
+            System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
+            updateEmoji(imageView, imageView.getImage());
         });
 
         imageView.setOnMouseDragged(event -> {
