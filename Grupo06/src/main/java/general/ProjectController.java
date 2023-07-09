@@ -28,27 +28,38 @@ public class ProjectController implements Initializable {
 
     @FXML
     private Button BtSelect;
-    
-    private StackPane sp;
-    private final Alertas alert = new Alertas();
-    
 
+    private StackPane sp;
+
+    private final Alertas alert = new Alertas();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sp = new StackPane();
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
-        
+
     }
 
     @FXML
     private void selectMethod() {
+        EmojiSectionController.viewFace.setImage(getSPImage(0));
+        EmojiSectionController.viewEyes.setImage(getSPImage(1));
+        EmojiSectionController.viewEyebrows.setImage(getSPImage(2));
+        EmojiSectionController.viewMouth.setImage(getSPImage(3));
+        EmojiSectionController.viewAccessory.setImage(getSPImage(4));
+
         alert.AlertConfirmation("Are you sure you want to load this emoji?");
         Stage currentStage = (Stage) BtSelect.getScene().getWindow();
         currentStage.close();
-        currentStage.close();
+        //currentStage.close();
         // CODIGO AL PRESIONAR EL BOTON SELECT
+    }
+
+    private Image getSPImage(int i) {
+        ImageView imgV = (ImageView) sp.getChildren().get(i);
+        Image img = imgV.getImage();
+        return img;
     }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
@@ -56,7 +67,7 @@ public class ProjectController implements Initializable {
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
-        
+
         if (l.size() > 0) {
             System.out.println(l);
 
@@ -114,6 +125,5 @@ public class ProjectController implements Initializable {
             }
         }
     }
-    
 
 }

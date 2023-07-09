@@ -35,7 +35,12 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = 0; i < effectiveSize; i++) {
+            elements[i] = null;
+
+        }
+        effectiveSize = 0;
+
     }
 
     @Override
@@ -67,13 +72,12 @@ public class ArrayList<E> implements List<E>, Serializable {
         if (isFull()) {
             addCapacity();
         }
-        if(this.isEmpty()){
+        if (this.isEmpty()) {
             addFirst(element);
             return true;
         }
         elements[effectiveSize++] = element;
         return true;
-        
 
     }
 
@@ -167,21 +171,34 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     @Override
     public boolean remove(E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody        
+        if (element != null&&contains(element)) {
+            int index = 0;
+            for (int i = 0; i < effectiveSize; i++) {
+                E e = elements[i];
+                if (e.equals(element)) {
+                    index = i;
+                    i=effectiveSize;
+                }
+            }
+            remove(index);
+            return true;
+        }
+        return false;
+
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>(){
+        return new Iterator<E>() {
             private int index;
-            
+
             @Override
-            public boolean hasNext(){
+            public boolean hasNext() {
                 return index < elements.length;
             }
-            
+
             @Override
-            public E next(){
+            public E next() {
                 E element = elements[index];
                 index++;
                 return element;
@@ -201,8 +218,14 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     @Override
     public boolean contains(E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        for (int i = 0; i < effectiveSize; i++) {
+            if(elements[i].equals(element)){
+                return true;
+            }
+        }
+        return false;
 
+
+    }
 
 }

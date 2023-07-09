@@ -52,6 +52,13 @@ public class ProfileController implements Initializable {
 
     @FXML
     private void logOutMethod() throws IOException {
+        
+        EmojiSectionController.viewFace.setImage(null);
+        EmojiSectionController.viewEyes.setImage(null);
+        EmojiSectionController.viewEyebrows.setImage(null);
+        EmojiSectionController.viewMouth.setImage(null);
+        EmojiSectionController.viewAccessory.setImage(null);
+        
         Serialization.serialize(Profile.arrayProfile, "profile");
         Stage currentStage = (Stage) btnLogout.getScene().getWindow();
         currentStage.close();

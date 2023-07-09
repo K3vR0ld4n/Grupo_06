@@ -121,35 +121,19 @@ public class EmojiSectionController implements Initializable {
     private final Alertas alert = new Alertas();
 
     private final FileChooser fc = new FileChooser();
-    private ImageView viewAccessory = new ImageView();
-    private ImageView viewFace = new ImageView();
-    private ImageView viewEyes = new ImageView();
-    private ImageView viewEyebrows = new ImageView();
-    private ImageView viewMouth = new ImageView();
+    
+    public static ImageView viewAccessory = new ImageView();
+    public static ImageView viewFace = new ImageView();
+    public static ImageView viewEyes = new ImageView();
+    public static ImageView viewEyebrows = new ImageView();
+    public static ImageView viewMouth = new ImageView();
     private History history;
     private Resource currentComponents;
 
     static Profile profile;
     
     
-    public void setEmojiSelected(StackPane sp) {
-        //face, eyes, eyebrow, mouth, accessory
-//        ImageView VAcc = (ImageView) sp.getChildren().get(4);
-//        ImageView Vf = (ImageView) sp.getChildren().get(0);
-//        ImageView Ve = (ImageView) sp.getChildren().get(1);   
-//        ImageView Vm = (ImageView) sp.getChildren().get(3);
-//        ImageView Veb= (ImageView) sp.getChildren().get(2);
-//        
-//        this.viewAccessory.setImage(VAcc.getImage());
-//        this.viewEyes.setImage(Ve.getImage());
-//        this.viewFace.setImage(Vf.getImage());
-//        this.viewMouth.setImage(Vm.getImage());
-//        this.viewEyebrows.setImage(Veb.getImage());
-        SPEmoji.getChildren().clear();
-        SPEmoji.getChildren().addAll(viewFace, viewEyes, viewEyebrows,
-                viewMouth, viewAccessory);
 
-    }
     
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
         int pathLength = iconPathDefault.length();
