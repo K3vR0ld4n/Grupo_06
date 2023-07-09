@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modules.Profile;
@@ -53,11 +54,12 @@ public class ProfileController implements Initializable {
     @FXML
     private void logOutMethod() throws IOException {
         
-        EmojiSectionController.viewFace.setImage(null);
-        EmojiSectionController.viewEyes.setImage(null);
-        EmojiSectionController.viewEyebrows.setImage(null);
-        EmojiSectionController.viewMouth.setImage(null);
-        EmojiSectionController.viewAccessory.setImage(null);
+        resetImagesViews(EmojiSectionController.viewAccessory);
+        resetImagesViews(EmojiSectionController.viewFace);
+        resetImagesViews(EmojiSectionController.viewEyes);
+        resetImagesViews(EmojiSectionController.viewMouth);
+        resetImagesViews(EmojiSectionController.viewEyebrows);
+        
         
         Serialization.serialize(Profile.arrayProfile, "profile");
         Stage currentStage = (Stage) btnLogout.getScene().getWindow();
@@ -87,6 +89,14 @@ public class ProfileController implements Initializable {
             Stage currentStage = (Stage) btnLogout.getScene().getWindow();
             currentStage.close();
         }
+    }
+    
+    private void resetImagesViews(ImageView imgV){
+        imgV.setImage(null);
+        imgV.setFitHeight(0);
+        imgV.setFitWidth(0);
+        imgV.setTranslateX(0);
+        imgV.setTranslateY(0);
     }
 
 }
