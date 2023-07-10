@@ -75,16 +75,6 @@ public class Profile implements Serializable {
     public List<Image> loadUserComponents(String type) {
         ArrayList<Image> toLoad = new ArrayList<>();
 
-        //ArrayList<Image> userComponents = this.library.getUserComponents();
-        
-//        if (!userComponents.isEmpty()) {
-//            for (int i = 0; i < userComponents.size(); i++) {
-//                if (userComponents.get(i).getUrl().contains(type)) {
-//                    toLoad.addLast(userComponents.get(i));
-//                }
-//            }
-//
-//        }
         ArrayList<String> userComponentsPaths = this.library.getUserComponentsPaths();
 
         if (!userComponentsPaths.isEmpty()) {

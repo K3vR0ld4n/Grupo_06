@@ -134,6 +134,7 @@ public class EmojiSectionController implements Initializable {
     static Profile profile;
 
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
+
         int pathLength = iconPathDefault.length();
         Resource resources = new Resource(iconPathHover.substring(20, pathLength - 6));
         Image defaultIcon = new Image(getClass().getResource(iconPathDefault).toExternalForm());
@@ -142,6 +143,10 @@ public class EmojiSectionController implements Initializable {
         button.setGraphic(new ImageView(defaultIcon));
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
+
+        if (!profile.getName().equals("Guest")) {
+            resources.getResourcesList().addAll(profile.loadUserComponents(resources.getType().name().toLowerCase()));
+        }
 
         button.setOnAction(event -> {
             if (RBsequential.isSelected()) {
@@ -225,7 +230,7 @@ public class EmojiSectionController implements Initializable {
                 }
             }
 
-            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+            currentComponents.getResourcesList().addLast(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()).get(profile.getLibrary().getUserComponentsPaths().size()-1));
 
             if (RBdirect.isSelected()) {
                 loadEmojiDirect(currentComponents);
@@ -265,9 +270,9 @@ public class EmojiSectionController implements Initializable {
 
         HBoxEmojis.getChildren().clear();
         currentComponents = resource;
-        if (!profile.getName().equals("Guest")) {
-            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-        }
+//        if (!profile.getName().equals("Guest")) {
+//            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+//        }
 
         for (int i = 0; i < 9; i++) {
 
@@ -284,9 +289,9 @@ public class EmojiSectionController implements Initializable {
     private void loadEmojiDirect(Resource resource) {
         GpDirect.getChildren().clear();
         currentComponents = resource;
-        if (!profile.getName().equals("Guest")) {
-            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-        }
+//        if (!profile.getName().equals("Guest")) {
+//            currentComponents.getResourcesList().union(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
+//        }
 
         int columns = 0;
         int rows = 0;
@@ -445,62 +450,60 @@ public class EmojiSectionController implements Initializable {
     }
 
     //método para hacer la imagen redimensionar y arrastrar una imagen
-private void makeResizableAndDraggable(ImageView imageView) {
+    private void makeResizableAndDraggable(ImageView imageView) {
 
-    double minX = 50;
-    double minY = 50;
-    double maxX = 250;
-    double maxY = 250;
+        double minX = 50;
+        double minY = 50;
+        double maxX = 250;
+        double maxY = 250;
 
-    Delta dragDelta = new Delta();
-    ResizeData resizeData = new ResizeData();
+        Delta dragDelta = new Delta();
+        ResizeData resizeData = new ResizeData();
 
-    imageView.setOnMousePressed(event -> {
-        if (event.isPrimaryButtonDown()) {
-            dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
-            dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
-            imageView.setCursor(Cursor.SE_RESIZE);
-            resizeData.isResizing = true;
+        imageView.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
+                dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
+                imageView.setCursor(Cursor.SE_RESIZE);
+                resizeData.isResizing = true;
+                event.consume();
+            } else {
+                dragDelta.x = event.getSceneX() - imageView.getTranslateX();
+                dragDelta.y = event.getSceneY() - imageView.getTranslateY();
+                imageView.setCursor(Cursor.MOVE);
+                event.consume();
+            }
+        });
+
+        imageView.setOnMouseReleased(event -> {
+            imageView.setCursor(Cursor.DEFAULT);
+            resizeData.isResizing = false;
             event.consume();
-        } else {
-            dragDelta.x = event.getSceneX() - imageView.getTranslateX();
-            dragDelta.y = event.getSceneY() - imageView.getTranslateY();
-            imageView.setCursor(Cursor.MOVE);
-            event.consume();
-        }
-    });
+            System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
+            System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
+            System.out.println(imageView.getTranslateX() + "; " + imageView.getTranslateY());
+            updateEmoji(imageView, imageView.getImage());
+        });
 
-    imageView.setOnMouseReleased(event -> {
-        imageView.setCursor(Cursor.DEFAULT);
-        resizeData.isResizing = false;
-        event.consume();
-        System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
-        System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
-        System.out.println(imageView.getTranslateX() + "; " + imageView.getTranslateY());
-        updateEmoji(imageView, imageView.getImage());
-    });
+        imageView.setOnMouseDragged(event -> {
+            if (resizeData.isResizing) {
+                double newX = event.getX() + dragDelta.x;
+                double newY = event.getY() + dragDelta.y;
 
-    imageView.setOnMouseDragged(event -> {
-        if (resizeData.isResizing) {
-            double newX = event.getX() + dragDelta.x;
-            double newY = event.getY() + dragDelta.y;
+                if (newX > minX && newX < maxX) {
+                    imageView.setFitWidth(newX);
+                }
 
-            if (newX > minX && newX < maxX) {
-                imageView.setFitWidth(newX);
+                if (newY > minY && newY < maxY) {
+                    imageView.setFitHeight(newY);
+                }
+            } else {
+                imageView.setTranslateX(event.getSceneX() - dragDelta.x);
+                imageView.setTranslateY(event.getSceneY() - dragDelta.y);
             }
 
-            if (newY > minY && newY < maxY) {
-                imageView.setFitHeight(newY);
-            }
-        } else {
-            imageView.setTranslateX(event.getSceneX() - dragDelta.x);
-            imageView.setTranslateY(event.getSceneY() - dragDelta.y);
-        }
-
-        event.consume();
-    });
-
-
+            event.consume();
+        });
 
         imageView.setOnMouseEntered(event -> {
             if (!event.isPrimaryButtonDown()) {
