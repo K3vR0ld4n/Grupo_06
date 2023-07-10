@@ -26,6 +26,12 @@
             <version>20</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>20-ea+3</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

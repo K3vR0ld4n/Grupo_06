@@ -396,10 +396,12 @@ public class EmojiSectionController implements Initializable {
         } else {
             Emoji actualEmoji = history.getActual();
             if (actualEmoji != null) {
+                String path = "src/main/resources/Profiles/" + profile.getMail() + "/proyecto" + profile.getLibrary().getUserEmoji().size() + ".png";
+                ProjectController.exportStackPaneAsImage(SPEmoji, path);
+                actualEmoji.setCurrentEmojiPath(path);
                 ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
                 lb.addLast(actualEmoji);
                 System.out.println(profile.getLibrary().getUserEmoji());
-                //Serialization.serialize(Profile.arrayProfile, "profile");
             } else {
                 System.out.println("unu");
             }
