@@ -5,11 +5,16 @@
 package utils;
 
 import TDAs.DoubleCircularList;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.scene.image.Image;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -80,7 +85,7 @@ public class Resource {
             String directoryPath = "src/main/resources/Profiles/" + resourcePath;
             Path path = Paths.get(directoryPath);
             Files.createDirectory(path);
-            
+
             String targetDirectoryPath = "target/classes/Profiles/" + resourcePath;
             Path targetPath = Paths.get(targetDirectoryPath);
             Files.createDirectory(targetPath);
@@ -92,6 +97,33 @@ public class Resource {
             return false;
         }
 
+    }
+
+    public static void deleteFilePath(String resourcePath) {
+//        try {
+//            URL resourceUrl = Resource.class.getResource(resourcePath);
+//            if (resourceUrl != null) {
+//                try (InputStream inputStream = resourceUrl.openStream()) {
+//                    Files.deleteIfExists(Paths.get(resourceUrl.toURI()));
+//                } catch (URISyntaxException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//            System.out.println("Archivo borrado exitosamente.");
+//        } catch (IOException e) {
+//            System.out.println("Error al borrar el archivo: " + e.getMessage());
+//        }
+        try {
+            // Convierte la ruta en un objeto Path
+            Path path = Paths.get(resourcePath);
+
+            // Borra el archivo utilizando el método delete de Files
+            Files.delete(path);
+
+            System.out.println("Archivo borrado exitosamente.");
+        } catch (IOException e) {
+            System.out.println("Error al borrar el archivo: " + resourcePath);
+        }
     }
 
 }

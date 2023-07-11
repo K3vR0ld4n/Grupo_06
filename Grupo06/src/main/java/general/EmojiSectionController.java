@@ -404,6 +404,7 @@ public class EmojiSectionController implements Initializable {
                 String path = "src/main/resources/Profiles/" + profile.getMail() + "/proyecto" + profile.getLibrary().getUserEmoji().size() + ".png";
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
                 actualEmoji.setCurrentEmojiPath(path);
+                System.out.println(actualEmoji.getCurrentEmojiPath());
                 ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
                 lb.addLast(actualEmoji);
                 System.out.println(profile.getLibrary().getUserEmoji());

@@ -26,7 +26,12 @@ import utils.Alertas;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.embed.swing.SwingFXUtils;
+import utils.Resource;
 
 public class ProjectController implements Initializable {
 
@@ -35,6 +40,12 @@ public class ProjectController implements Initializable {
 
     @FXML
     private Button BtSelect;
+
+    @FXML
+    private Button btDelete;
+
+    @FXML
+    private Button btClearAll;
 
     private Emoji selectedEmoji;
 
@@ -50,17 +61,36 @@ public class ProjectController implements Initializable {
 
     @FXML
     private void selectMethod() {
+        boolean b = alert.AlertConfirmation("Are you sure you want to LOAD this emoji?");
+        if (b) {
+            EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
+            EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
+            EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
+            EmojiSectionController.updateImageView(selectedEmoji.getEyesbrowsComponent(), EmojiSectionController.viewEyebrows);
+            EmojiSectionController.updateImageView(selectedEmoji.getMouthComponent(), EmojiSectionController.viewMouth);
+            Stage currentStage = (Stage) BtSelect.getScene().getWindow();
+            currentStage.close();
+        }
+    }
 
-        EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
-        EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
-        EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
-        EmojiSectionController.updateImageView(selectedEmoji.getEyesbrowsComponent(), EmojiSectionController.viewEyebrows);
-        EmojiSectionController.updateImageView(selectedEmoji.getMouthComponent(), EmojiSectionController.viewMouth);
+    @FXML
+    private void deleteMethod(){
+        boolean b = alert.AlertConfirmation("Are you sure you want to DELETE this emoji?");
+        if (b) {
+            System.out.println("EMOJI 0 "+EmojiSectionController.profile.getLibrary().getUserEmoji().get(0).getCurrentEmojiPath());
+            System.out.println("EMOJI 1"+EmojiSectionController.profile.getLibrary().getUserEmoji().get(1).getCurrentEmojiPath());
+            EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
+            System.out.println(selectedEmoji.getCurrentEmojiPath());
+            Resource.deleteFilePath(selectedEmoji.getCurrentEmojiPath());
+            Resource.deleteFilePath("target/classes"+selectedEmoji.getCurrentEmojiPath().substring(18));
+            Stage currentStage = (Stage) btDelete.getScene().getWindow();
+            currentStage.close();
+        }
+    }
 
-        alert.AlertConfirmation("Are you sure you want to load this emoji?");
-        Stage currentStage = (Stage) BtSelect.getScene().getWindow();
-        currentStage.close();
-        // CODIGO AL PRESIONAR EL BOTON SELECT
+    @FXML
+    private void clearAllMethod() {
+
     }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
@@ -72,46 +102,15 @@ public class ProjectController implements Initializable {
         if (l.size() > 0) {
             System.out.println(l);
 
-            for (Emoji e : l) {
+            for (Emoji e : l) {//arreglar uwu
                 if (e != null) { // Add a null check for the Emoji object
                     StackPane SPEmoji = new StackPane();
-//
-//                    ImageView accessory = new ImageView();
-//                    if (e.haveAccessories()) {
-//                        accessory.setImage(Emoji.toImage(e.getAccessoriesPath()));
-//                        accessory.setFitHeight(e.getAccessoriesComponent().getHeight() / 4);
-//                        accessory.setFitWidth(e.getAccessoriesComponent().getWidth() / 4);
-//                    }
-//                    ImageView face = new ImageView();
-//                    if (e.haveFace()) {
-//                        face.setImage(Emoji.toImage(e.getFacePath()));
-//                        face.setFitHeight(e.getFaceComponent().getHeight() / 4);
-//                        face.setFitWidth(e.getFaceComponent().getWidth() / 4);
-//                    }
-//                    ImageView eyes = new ImageView();
-//                    if (e.haveEyes()) {
-//                        eyes.setImage(Emoji.toImage(e.getEyesPath()));
-//                        eyes.setFitHeight(e.getEyeComponent().getHeight() / 4);
-//                        eyes.setFitWidth(e.getEyeComponent().getWidth() / 4);
-//                    }
-//                    ImageView eyebrow = new ImageView();
-//                    if (e.haveEyeBrows()) {
-//                        eyebrow.setImage(Emoji.toImage(e.getEyesbrowsPath()));
-//                        eyebrow.setFitHeight(e.getEyesbrowsComponent().getHeight() / 4);
-//                        eyebrow.setFitWidth(e.getEyesbrowsComponent().getWidth() / 4);
-//                    }
-//                    ImageView mouth = new ImageView();
-//                    if (e.haveMouth()) {
-//                        mouth.setImage(Emoji.toImage(e.getMouthPath()));
-//                        mouth.setFitHeight(e.getMouthComponent().getHeight() / 4);
-//                        mouth.setFitWidth(e.getMouthComponent().getWidth() / 4);
-//                    }
                     ImageView imgV = new ImageView();
                     Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
                     imgV.setImage(im);
                     imgV.setFitHeight(70);
                     imgV.setFitWidth(70);
-                    
+
                     SPEmoji.getChildren().addAll(imgV);
                     gp.add(SPEmoji, countC, countR);
                     if (countC < 5) {

@@ -18,7 +18,7 @@
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="BtSelect" layoutX="429.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Select" />
+      <Button fx:id="BtSelect" layoutX="334.0" layoutY="388.0" mnemonicParsing="false" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Select" />
       <ImageView fitHeight="23.0" fitWidth="29.0" layoutX="241.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/projectIcon.png" />
@@ -44,5 +44,7 @@
             </GridPane>
          </content>
       </ScrollPane>
+      <Button fx:id="btDelete" layoutX="476.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteMethod" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Delete" />
+      <Button fx:id="btClearAll" layoutX="48.0" layoutY="388.0" mnemonicParsing="false" onAction="#clearAllMethod" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Clear All" />
    </children>
 </AnchorPane>
