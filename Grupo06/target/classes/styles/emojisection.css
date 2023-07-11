@@ -23,19 +23,35 @@
     -fx-border-radius: 5px;
 }
 
-/*buttons undo and redo*/
+/*buttons whit a specific change*/
 
-#btForwardBack{
+#btSpecific{
     -fx-text-fill:  #212a3e;
     -fx-background-color: white;
 }
 
-#btForwardBack:hover{
+#btSpecific:hover{
     -fx-cursor: hand;
 
 }
 
-#btForwardBack:pressed{
+#btSpecific:pressed{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 0, 0, 2, 2);    
+}
+
+/*buttons whit a specific change*/
+
+#btSave{
+    -fx-text-fill:  #DDE6ED;
+    -fx-background-color: #212a3e;
+}
+
+#btSave:hover{
+    -fx-cursor: hand;
+
+}
+
+#btSave:pressed{
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 0, 0, 2, 2);    
 }
 
@@ -48,3 +64,10 @@
 #HBoxEmojis:hover ImageView {
     -fx-cursor: hand;
 }
+
+/*Gridpane*/
+#GpDirect:hover ImageView {
+    
+    -fx-cursor: hand;
+}
+

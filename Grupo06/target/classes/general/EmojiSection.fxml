@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
+<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -40,14 +40,14 @@
       </ImageView>
       <Pane fx:id="PaneOptions" layoutX="356.0" layoutY="159.0" prefHeight="257.0" prefWidth="382.0" style="-fx-background-color: #e5e8ee;">
          <children>
-            <Label alignment="CENTER" layoutX="158.0" layoutY="4.0" text="Create" textFill="#212a3e">
+            <Label alignment="CENTER" layoutX="153.0" layoutY="-2.0" text="Create" textFill="#212a3e">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+                  <Font name="Berlin Sans FB Bold" size="24.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="75.0" layoutY="31.0" text="Select the editing option of your emoji" textFill="#212a3e">
+            <Label alignment="CENTER" layoutX="80.0" layoutY="31.0" text="Select the editing option of your emoji" textFill="#212a3e">
                <font>
-                  <Font name="Bell MT Bold" size="14.0" />
+                  <Font name="Times New Roman Bold" size="14.0" />
                </font>
             </Label>
             <Button fx:id="btFacce" layoutX="40.0" layoutY="60.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="71.0" />
@@ -81,10 +81,9 @@
                   <Font name="Berlin Sans FB" size="14.0" />
                </font>
             </RadioButton>
-            <Button fx:id="BtUpload" mnemonicParsing="false" onAction="#uploadImageResource" text="Upload" />
          </children>
       </VBox>
-      <Button id="btForwardBack" fx:id="back" layoutX="547.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="27.0" prefWidth="87.0" text="Undo">
+      <Button id="btSpecific" fx:id="back" layoutX="547.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="27.0" prefWidth="87.0" text="Undo">
          <graphic>
             <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -93,7 +92,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button id="btForwardBack" fx:id="forward" layoutX="646.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goForward" prefHeight="27.0" prefWidth="87.0" text="Redo">
+      <Button id="btSpecific" fx:id="forward" layoutX="646.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#goForward" prefHeight="27.0" prefWidth="87.0" text="Redo">
          <graphic>
             <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -138,7 +137,8 @@
             <Image url="@../resources/selection.png" />
          </image>
       </ImageView>
-      <Button fx:id="BtDeleate" layoutX="746.0" layoutY="256.0" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
-      <Button fx:id="bttonSave" layoutX="44.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveProject" text="SAVE" />
+      <Button id="btSpecific" fx:id="BtDeleate" layoutX="754.0" layoutY="300.0" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
+      <Button id="btSave" fx:id="bttonSave" layoutX="44.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveProject" text="SAVE" />
+      <Button id="btSpecific" fx:id="BtUpload" layoutX="755.0" layoutY="249.0" mnemonicParsing="false" onAction="#uploadImageResource" text="Upload" />
    </children>
 </AnchorPane>
