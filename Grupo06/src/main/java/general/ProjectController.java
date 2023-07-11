@@ -130,6 +130,7 @@ public class ProjectController implements Initializable {
                 System.out.println(e);
                 if (e != null) { // Add a null check for the Emoji object
                     StackPane SPEmoji = new StackPane();
+                    SPEmoji.getStyleClass().add("stackpaneCss");
                     ImageView imgV = new ImageView();
                     Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
                     imgV.setImage(im);
