@@ -230,7 +230,7 @@ public class EmojiSectionController implements Initializable {
                 }
             }
 
-            currentComponents.getResourcesList().addLast(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()).get(profile.getLibrary().getUserComponentsPaths().size()-1));
+            currentComponents.getResourcesList().addLast(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()).get(profile.getLibrary().getUserComponentsPaths().size() - 1));
 
             if (RBdirect.isSelected()) {
                 loadEmojiDirect(currentComponents);
@@ -498,10 +498,15 @@ public class EmojiSectionController implements Initializable {
                     imageView.setFitHeight(newY);
                 }
             } else {
+
                 imageView.setTranslateX(event.getSceneX() - dragDelta.x);
                 imageView.setTranslateY(event.getSceneY() - dragDelta.y);
             }
-
+            if (imageView.getBoundsInParent().getMaxX() > 293 || imageView.getBoundsInParent().getMaxY() > 268 || imageView.getBoundsInParent().getMinX() < -5 || imageView.getBoundsInParent().getMinY() < -5) {
+                // Set the position to (0,0)
+                imageView.setTranslateX(0);
+                imageView.setTranslateY(0);
+            }
             event.consume();
         });
 

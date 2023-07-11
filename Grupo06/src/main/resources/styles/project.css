@@ -25,3 +25,9 @@
     -fx-background-color: #394867;
     -fx-border-color: #394867; 
 }
+
+/*Gridpane*/
+#GpProject:hover ImageView {
+    
+    -fx-cursor: hand;
+}
