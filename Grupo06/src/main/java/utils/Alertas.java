@@ -4,8 +4,10 @@
  */
 package utils;
 
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
 /**
@@ -14,18 +16,19 @@ import javafx.scene.control.DialogPane;
  */
 public class Alertas {
 
-    private String css=getClass().getResource("/styles/alertas.css").toExternalForm();
+    private String css = getClass().getResource("/styles/alertas.css").toExternalForm();
+
     @FXML
     public void AlertError(String texto) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle("Error");
         alert.setContentText(texto);
-        
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(css);
         dialogPane.getStyleClass().add("custom-alert");
-        
+
         alert.showAndWait();
     }
 
@@ -35,11 +38,11 @@ public class Alertas {
         alert.setHeaderText(null);
         alert.setTitle("Info");
         alert.setContentText(texto);
-        
+
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(css);      
+        dialogPane.getStylesheets().add(css);
         dialogPane.getStyleClass().add("custom-alert");
-        
+
         alert.showAndWait();
     }
 
@@ -49,26 +52,28 @@ public class Alertas {
         alert.setHeaderText(null);
         alert.setTitle("Info");
         alert.setContentText(texto);
-        
+
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(css);  
+        dialogPane.getStylesheets().add(css);
         dialogPane.getStyleClass().add("custom-alert");
-        
+
         alert.showAndWait();
     }
 
     @FXML
-    public void AlertConfirmation(String texto) {
+    public boolean AlertConfirmation(String texto) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle("Confirmacion");
         alert.setContentText(texto);
-        
+
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(css);       
+        dialogPane.getStylesheets().add(css);
         dialogPane.getStyleClass().add("custom-alert");
-        
-        alert.showAndWait();
+
+        Optional<ButtonType> result = alert.showAndWait();
+        System.out.println(result);
+        return result.isPresent() && result.get() == ButtonType.OK;
 
     }
 
