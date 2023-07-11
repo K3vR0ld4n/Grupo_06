@@ -194,7 +194,7 @@ public class ArrayList<E> implements List<E>, Serializable {
 
             @Override
             public boolean hasNext() {
-                return index < elements.length;
+                return index < effectiveSize;
             }
 
             @Override
@@ -218,10 +218,13 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     @Override
     public boolean contains(E element) {
+        
+        if(element!=null){
         for (int i = 0; i < effectiveSize; i++) {
             if(elements[i].equals(element)){
                 return true;
             }
+        }
         }
         return false;
 

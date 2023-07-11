@@ -400,10 +400,16 @@ public class EmojiSectionController implements Initializable {
             alert.AlertInfo("You must log in to perform this action");
         } else {
             Emoji actualEmoji = history.getActual();
-            if (actualEmoji != null) {
+            
+            if(profile.getLibrary().getUserEmoji().contains(actualEmoji)){
+                alert.AlertError("Cannot save the same project");
+            }
+            else if (actualEmoji != null) {
                 String path = "src/main/resources/Profiles/" + profile.getMail() + "/proyecto" + profile.getLibrary().getUserEmoji().size() + ".png";
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
+                
                 actualEmoji.setCurrentEmojiPath(path);
+                
                 System.out.println(actualEmoji.getCurrentEmojiPath());
                 ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
                 lb.addLast(actualEmoji);

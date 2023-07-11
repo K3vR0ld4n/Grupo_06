@@ -53,7 +53,7 @@ public class ProjectController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        selectedEmoji = new Emoji();
+        
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
@@ -61,8 +61,10 @@ public class ProjectController implements Initializable {
 
     @FXML
     private void selectMethod() {
-        boolean b = alert.AlertConfirmation("Are you sure you want to LOAD this emoji?");
-        if (b) {
+
+        if (selectedEmoji == null) {
+            alert.AlertInfo("You must to select a Emoji");
+        } else if (alert.AlertConfirmation("Are you sure you want to LOAD this emoji?")) {
             EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
             EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
             EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
@@ -71,18 +73,26 @@ public class ProjectController implements Initializable {
             Stage currentStage = (Stage) BtSelect.getScene().getWindow();
             currentStage.close();
         }
+
     }
 
     @FXML
-    private void deleteMethod(){
-        boolean b = alert.AlertConfirmation("Are you sure you want to DELETE this emoji?");
-        if (b) {
-            System.out.println("EMOJI 0 "+EmojiSectionController.profile.getLibrary().getUserEmoji().get(0).getCurrentEmojiPath());
-            System.out.println("EMOJI 1"+EmojiSectionController.profile.getLibrary().getUserEmoji().get(1).getCurrentEmojiPath());
+    private void deleteMethod() {
+        if (selectedEmoji == null) {
+            alert.AlertInfo("You must to select a Emoji");
+        } else if (alert.AlertConfirmation("Are you sure you want to DELETE this Emoji?")) {
+            //System.out.println("EMOJI 0 "+EmojiSectionController.profile.getLibrary().getUserEmoji().get(0).getCurrentEmojiPath());
+            //System.out.println("EMOJI 1"+EmojiSectionController.profile.getLibrary().getUserEmoji().get(1).getCurrentEmojiPath());
+            System.out.println(selectedEmoji.getCurrentEmojiPath());
             EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
             System.out.println(selectedEmoji.getCurrentEmojiPath());
             Resource.deleteFilePath(selectedEmoji.getCurrentEmojiPath());
-            Resource.deleteFilePath("target/classes"+selectedEmoji.getCurrentEmojiPath().substring(18));
+            Resource.deleteFilePath("target/classes" + selectedEmoji.getCurrentEmojiPath().substring(18));
+
+            for (Emoji em : EmojiSectionController.profile.getLibrary().getUserEmoji()) {
+                System.out.println(em);
+            }
+
             Stage currentStage = (Stage) btDelete.getScene().getWindow();
             currentStage.close();
         }
@@ -91,10 +101,24 @@ public class ProjectController implements Initializable {
     @FXML
     private void clearAllMethod() {
 
+        if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
+
+            ArrayList<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
+
+            for (Emoji em : emoji) {
+                Resource.deleteFilePath(em.getCurrentEmojiPath());
+                Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
+            }
+
+            emoji.clear();
+
+            Stage currentStage = (Stage) btDelete.getScene().getWindow();
+            currentStage.close();
+        }
     }
 
     private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
-        int columns = gp.getColumnCount();
+        //int columns = gp.getColumnCount();
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
@@ -103,6 +127,7 @@ public class ProjectController implements Initializable {
             System.out.println(l);
 
             for (Emoji e : l) {//arreglar uwu
+                System.out.println(e);
                 if (e != null) { // Add a null check for the Emoji object
                     StackPane SPEmoji = new StackPane();
                     ImageView imgV = new ImageView();

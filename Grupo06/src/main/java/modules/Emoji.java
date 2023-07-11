@@ -5,6 +5,7 @@
 package modules;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -30,6 +31,11 @@ public class Emoji implements Serializable {
         this.accessoriesComponent = accessoriesPath;
     }
 
+    @Override
+    public String toString() {
+        return "Emoji{" + "currentEmojiPath=" + currentEmojiPath + '}';
+    }
+
     public Emoji(ImageView eyes, ImageView mouth, ImageView face, ImageView eyesbrows, ImageView accessories) {
         this.eyeComponent = buildWithoutNull(eyes);
         this.mouthComponent = buildWithoutNull(mouth);
@@ -38,9 +44,7 @@ public class Emoji implements Serializable {
         this.eyesbrowsComponent = buildWithoutNull(eyesbrows);
     }
 
-    public Emoji() {
-    }
-    
+
     
     public static Image toImage(String path) {
         if (path.equals("")) {
@@ -124,4 +128,48 @@ public class Emoji implements Serializable {
     public Component getEyesbrowsComponent() {
         return this.eyesbrowsComponent;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.mouthComponent);
+        hash = 97 * hash + Objects.hashCode(this.faceComponent);
+        hash = 97 * hash + Objects.hashCode(this.eyesbrowsComponent);
+        hash = 97 * hash + Objects.hashCode(this.eyeComponent);
+        hash = 97 * hash + Objects.hashCode(this.accessoriesComponent);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Emoji other = (Emoji) obj;
+        if (!Objects.equals(this.mouthComponent, other.mouthComponent)) {
+            return false;
+        }
+        if (!Objects.equals(this.faceComponent, other.faceComponent)) {
+            return false;
+        }
+        if (!Objects.equals(this.eyesbrowsComponent, other.eyesbrowsComponent)) {
+            return false;
+        }
+        if (!Objects.equals(this.eyeComponent, other.eyeComponent)) {
+            return false;
+        }
+        return Objects.equals(this.accessoriesComponent, other.accessoriesComponent);
+    }
+    
+    
+    
+    
+    
+    
 }
