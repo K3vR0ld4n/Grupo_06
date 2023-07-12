@@ -9,6 +9,7 @@ import TDAs.DoubleCircularList;
 import TDAs.List;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,9 +88,24 @@ public class UserComponentsController implements Initializable {
                 System.out.println(em);
             }
 
-            
-            EmojiSectionController.resetResources();
-//            DoubleCircularList<Image> list = EmojiSectionController.currentComponents.getResourcesList();
+            //EmojiSectionController.resetResources();
+            DoubleCircularList<Image> list = EmojiSectionController.currentComponents.getResourcesList();
+
+            boolean iterable = true;
+            Iterator<Image> itr = list.iterator();
+
+            while (itr.hasNext() && iterable) {
+                Image img = itr.next();
+                if (img.getUrl().contains(selectedPath) ) {
+                    
+                    list.remove(img);
+                    
+                    iterable = false;
+                }
+                
+
+            }
+
 //            for(Image img: list){
 //                String path = img.getUrl();
 //                if(path.contains(selectedPath)){
@@ -97,8 +113,6 @@ public class UserComponentsController implements Initializable {
 //                }
 //                
 //            }
-
-
             Stage currentStage = (Stage) btDeleteImages.getScene().getWindow();
             currentStage.close();
         }

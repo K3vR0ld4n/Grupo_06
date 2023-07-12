@@ -250,18 +250,6 @@ public class EmojiSectionController implements Initializable {
         }
     }
 
-    public static void resetResources() {
-        String type = currentComponents.getType().name().toLowerCase();
-        currentComponents = new Resource(type);
-        
-        System.out.println("Resourrrrrrrrrrr");
-        System.out.println(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-        System.out.println(currentComponents.getResourcesList().size());
-        currentComponents.getResourcesList().addAll(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()));
-//        if (RBdirect.isSelected()) {
-//            loadEmojiDirect(currentComponents);
-//        }
-    }
 
     @FXML
     public void deleateImageResource() {

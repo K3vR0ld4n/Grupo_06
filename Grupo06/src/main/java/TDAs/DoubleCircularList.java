@@ -208,7 +208,21 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
 
     @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new Iterator<E>() {
+            Node<E> actualNode = last.getNext();
+
+            @Override
+            public boolean hasNext() {
+                return !isEmpty();
+            }
+
+            @Override
+            public E next() {
+                E element = actualNode.getContent();
+                actualNode = actualNode.getNext();
+                return element;
+            }
+        };
     }
 
     @Override
