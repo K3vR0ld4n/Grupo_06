@@ -9,22 +9,9 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E removeLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.last.setNext(null);
+        this.last.setPrev(null);
+        this.last = null;
     }
 
     @Override
@@ -73,7 +60,7 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
         }
         int cont = 1;
         Node<E> viajero = last.getNext();
-        while (viajero != last) {
+        while (viajero != last && viajero != null) {
             cont++;
             viajero = viajero.getNext();
         }
@@ -88,20 +75,29 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
     @Override
     public void add(int index, E element) {
         Node<E> nuevo = new Node<>(element);
-        if (element == null) {
-            System.out.println("Ingrese un elemento válido");
-        }
-        if (isEmpty()) {
-            last = nuevo;
-            last.setNext(nuevo);
-            last.setPrev(nuevo);
+        if (!isInRange(index) || element == null) {
+            System.out.println("Insercion Incorrecta");
+
         } else {
-            Node<E> nodoAnterior = last.getPrev();
-            nuevo.setNext(last);
-            nuevo.setPrev(nodoAnterior);
-            last.setPrev(nuevo);
-            nodoAnterior.setNext(nuevo);
+            if (isEmpty()) {
+                addFirst(element);
+            } else {
+                if (index == 0) {
+                    addFirst(element);
+                } else {
+                    Node<E> current = last.getNext();
+                    for (int i = 0; i < index - 1; i++) {
+                        current = current.getNext();
+                    }
+                    Node<E> nextNode = current.getNext();
+                    nuevo.setNext(nextNode);
+                    nuevo.setPrev(current);
+                    current.setNext(nuevo);
+                    nextNode.setPrev(nuevo);
+                }
+            }
         }
+
     }
 
     @Override
@@ -191,6 +187,9 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
     }
 
     private boolean isInRange(int index) {
+        if (isEmpty()) {
+            return index == 0;
+        }
         return index >= 0 && index < this.size();
 
     }
@@ -208,29 +207,28 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
 
     @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        return new Iterator<E>() {
+            Node<E> actualNode = last.getNext();
 
-    @Override
-    public boolean union(List<E> elements) {
-
-        if (!elements.isEmpty()) {
-            for (E elemento : elements) {
-                if (!this.contains(elemento)) {
-                    this.addLast(elemento);
-                }
+            @Override
+            public boolean hasNext() {
+                return !isEmpty();
             }
 
-            return true;
-        }
-
-        return false;
-
+            @Override
+            public E next() {
+                E element = actualNode.getContent();
+                actualNode = actualNode.getNext();
+                return element;
+            }
+        };
     }
 
     @Override
     public boolean contains(E element) {
-        if (element != null) {
+        if (element == null) {
+            return false;
+        } else if(!isEmpty()){
             Node<E> traveler = this.last.getNext();
 
             while (traveler != this.last) {
@@ -238,9 +236,11 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
                 traveler = traveler.getNext();
                 if (content.equals(element)) {
                     return true;
-                }
 
+                }
             }
+            return false;
+
         }
         return false;
     }

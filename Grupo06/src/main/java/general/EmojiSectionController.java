@@ -129,7 +129,7 @@ public class EmojiSectionController implements Initializable {
     public static ImageView viewEyes = new ImageView();
     public static ImageView viewEyebrows = new ImageView();
     public static ImageView viewMouth = new ImageView();
-    private History history;
+    public static History history;
     private Resource currentComponents;
 
     static Profile profile;
@@ -418,7 +418,7 @@ public class EmojiSectionController implements Initializable {
                 
                 System.out.println(actualEmoji.getCurrentEmojiPath());
                 
-                ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+                List<Emoji> lb = profile.getLibrary().getUserEmoji();
                 
                 lb.addLast(actualEmoji);
                 

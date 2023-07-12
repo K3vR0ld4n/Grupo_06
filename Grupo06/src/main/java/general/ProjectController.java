@@ -5,6 +5,7 @@
 package general;
 
 import TDAs.ArrayList;
+import TDAs.List;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import javafx.embed.swing.SwingFXUtils;
 import utils.Resource;
 
@@ -70,6 +72,7 @@ public class ProjectController implements Initializable {
             EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
             EmojiSectionController.updateImageView(selectedEmoji.getEyesbrowsComponent(), EmojiSectionController.viewEyebrows);
             EmojiSectionController.updateImageView(selectedEmoji.getMouthComponent(), EmojiSectionController.viewMouth);
+            EmojiSectionController.history.clear();
             Stage currentStage = (Stage) BtSelect.getScene().getWindow();
             currentStage.close();
         }
@@ -82,18 +85,12 @@ public class ProjectController implements Initializable {
             alert.AlertInfo("You must to select a Emoji");
         } else if (alert.AlertConfirmation("Are you sure you want to DELETE this Emoji?")) {
             System.out.println(selectedEmoji.getCurrentEmojiPath());
-            
-            EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
-            
-            System.out.println(selectedEmoji.getCurrentEmojiPath());
-            
-            Resource.deleteFilePath(selectedEmoji.getCurrentEmojiPath());
-            //Resource.deleteFilePath("target/classes" + selectedEmoji.getCurrentEmojiPath().substring(18));
 
-            //borrar el for
-            for (Emoji em : EmojiSectionController.profile.getLibrary().getUserEmoji()) {
-                System.out.println(em);
-            }
+            EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
+
+            System.out.println(selectedEmoji.getCurrentEmojiPath());
+
+            Resource.deleteFilePath(selectedEmoji.getCurrentEmojiPath());
 
             Stage currentStage = (Stage) btDelete.getScene().getWindow();
             currentStage.close();
@@ -105,11 +102,14 @@ public class ProjectController implements Initializable {
 
         if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
 
-            ArrayList<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
+            List<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
 
-            for (Emoji em : emoji) {
-                Resource.deleteFilePath(em.getCurrentEmojiPath());
-                //Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
+            Iterator<Emoji> itr = EmojiSectionController.profile.getLibrary().getUserEmoji().iterator();
+            int count = 0;
+
+            while (count < emoji.size()) {
+                Resource.deleteFilePath(itr.next().getCurrentEmojiPath());
+                count++;
             }
 
             emoji.clear();
@@ -119,67 +119,70 @@ public class ProjectController implements Initializable {
         }
     }
 
-    private void loadProjects(GridPane gp, ArrayList<Emoji> l) {
+    private void loadProjects(GridPane gp, List<Emoji> l) {
         //int columns = gp.getColumnCount();
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
 
+        Iterator<Emoji> itr = l.iterator();
+        boolean iterable = true;
+        int count = 0;
+
         if (l.size() > 0) {
             System.out.println(l);
 
-            for (Emoji e : l) {//arreglar uwu
-                System.out.println(e.getCurrentEmojiPath());
-                if (e != null) { // borrar condicion
-                    StackPane SPEmoji = new StackPane();
-                    SPEmoji.getStyleClass().add("stackpaneCss");
-                    ImageView imgV = new ImageView();
-                    
-                    
-                    Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
-                    
-                    //Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
-                    
-                    
-                    
-                    imgV.setImage(im);
-                    imgV.setFitHeight(70);
-                    imgV.setFitWidth(70);
-
-                    SPEmoji.getChildren().addAll(imgV);
-                    gp.add(SPEmoji, countC, countR);
-                    if (countC < 5) {
-                        countC++;
+            while (iterable) {
+                Emoji e = itr.next();
+                if (e != null) {
+                    if (count == l.size()) {
+                        iterable = false;
                     } else {
-                        countC = 0;
-                        countR++;
-                        if (countR > rows - 1) {
-                            gp.addRow(countR - 1);
+                        System.out.println(e.getCurrentEmojiPath());
+                        StackPane SPEmoji = new StackPane();
+                        SPEmoji.getStyleClass().add("stackpaneCss");
+                        ImageView imgV = new ImageView();
+
+                        Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
+                        imgV.setImage(im);
+                        imgV.setFitHeight(70);
+                        imgV.setFitWidth(70);
+
+                        SPEmoji.getChildren().addAll(imgV);
+                        gp.add(SPEmoji, countC, countR);
+                        if (countC < 5) {
+                            countC++;
+                        } else {
+                            countC = 0;
+                            countR++;
+                            if (countR > rows - 1) {
+                                gp.addRow(countR - 1);
+                            }
                         }
+                        SPEmoji.setOnMouseClicked(event -> {
+                            selectedEmoji = e;
+                            System.out.println(SPEmoji.getChildren());
+                        });
+                        count++;
                     }
-//                    
-                    SPEmoji.setOnMouseClicked(event -> {
-                        selectedEmoji = e;
-                        System.out.println(SPEmoji.getChildren());
-                    });
+
                 }
             }
+
         }
     }
 
     public static void exportStackPaneAsImage(StackPane stackPane, String filePath) {
-        
+
         WritableImage snapshot = stackPane.snapshot(new SnapshotParameters(), null);
         File file = new File(filePath);
         //File file2 = new File("target/classes/" + filePath.substring(18));
-        
-        
+
         try {
-            
+
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
-           // ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
-            
-            
+            // ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

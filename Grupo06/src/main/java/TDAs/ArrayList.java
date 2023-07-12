@@ -11,6 +11,13 @@ import java.util.Iterator;
  *
  * @author kev-roldan
  */
+import java.io.Serializable;
+import java.util.Iterator;
+
+/**
+ *
+ * @author kev-roldan
+ */
 public class ArrayList<E> implements List<E>, Serializable {
 
     private E[] elements;
@@ -18,7 +25,6 @@ public class ArrayList<E> implements List<E>, Serializable {
     private int effectiveSize;
 
     public ArrayList() {
-        // elements = new E[100]; // NO vale
         elements = (E[]) new Object[MAX_SIZE];
         effectiveSize = 0;
     }
@@ -46,7 +52,6 @@ public class ArrayList<E> implements List<E>, Serializable {
     @Override
     public boolean addFirst(E element) {
         if (element == null) {
-            //throw new NullPointerException("Null elements are not accepted");
             return false;
         } else if (isEmpty()) {
             elements[effectiveSize++] = element;
@@ -57,7 +62,7 @@ public class ArrayList<E> implements List<E>, Serializable {
         }
         // empujar para hacer espacio. Bit shifting
         for (int i = effectiveSize; i > 0; i--) {
-            elements[i + 1] = elements[i];
+            elements[i] = elements[i - 1];
         }
         elements[0] = element;
         effectiveSize++;
@@ -82,28 +87,26 @@ public class ArrayList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public E removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E removeLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void add(int index, E element) {
-        if (index < 0 || index > effectiveSize) {
-            System.out.println("Indice incorrecto");
+        if (!isInRange(index) || element == null) {
+            System.out.println("Insercion Incorrecta");
+        } else {
+            if (isFull()) {
+                addCapacity();
+            }
+            if (isEmpty()) {
+                elements[0] = element;
+                effectiveSize++;
+            } else {
+                for (int i = effectiveSize; i > index; i--) {
+                    elements[i] = elements[i - 1];
+                }
+                elements[index] = element;
+                effectiveSize++;
+            }
+
         }
-        if (isFull()) {
-            addCapacity();
-        }
-        for (int i = effectiveSize; i > index; i--) {
-            elements[i] = elements[i - 1];
-        }
-        elements[index] = element;
-        effectiveSize++;
+
     }
 //remueve el elemento en la posicion index y lo retorna
 
@@ -122,31 +125,25 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     @Override
     public E get(int index) {
-        if (index < 0 || index >= effectiveSize) {
+        if (!isInRange(index)) {
             return null;
         }
         return elements[index];
     }
 
-    @Override
-    public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     private void addCapacity() {
-        MAX_SIZE = MAX_SIZE * 2;
+        MAX_SIZE *= 2;
         E[] newElements = (E[]) new Object[MAX_SIZE];
-        // copiando los elementos del arreglo viejo al nuevo
-//        for (int i= 0; i<effectiveSize; i++) {
+
         for (int i = 0; i < elements.length; i++) {
             newElements[i] = elements[i];
         }
+
         this.elements = newElements;
     }
 
     private boolean isFull() {
         return effectiveSize == MAX_SIZE;
-
     }
 
     @Override
@@ -166,18 +163,21 @@ public class ArrayList<E> implements List<E>, Serializable {
 
     //Metodo creado para tener mayoe facilidad a la hora de validar un indice
     private boolean isInRange(int Idx) {
+        if (isEmpty()) {
+            return Idx == 0;
+        }
         return Idx >= 0 && Idx < effectiveSize;
     }
 
     @Override
     public boolean remove(E element) {
-        if (element != null&&contains(element)) {
+        if (element != null && contains(element)) {
             int index = 0;
             for (int i = 0; i < effectiveSize; i++) {
                 E e = elements[i];
                 if (e.equals(element)) {
                     index = i;
-                    i=effectiveSize;
+                    i = effectiveSize;
                 }
             }
             remove(index);
@@ -207,28 +207,36 @@ public class ArrayList<E> implements List<E>, Serializable {
     }
 
     @Override
-    public boolean addAll(List<E> elements) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public boolean addAll(List<E> elementsInput) {
+        if (elementsInput.isEmpty()) {
+            System.out.println("No se puede ingresar una lista vacia");
+            return false;
+        } else {
+            if (isFull()) {
+                addCapacity();
+            }
+            for (int i = 0; i < elementsInput.size(); i++) {
 
-    @Override
-    public boolean union(List<E> elements) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                this.elements[effectiveSize++] = elementsInput.get(i);
+                System.out.println("Elemento " + elementsInput.get(i) + " ingresado");
+            }
+            return true;
+        }
     }
 
     @Override
     public boolean contains(E element) {
-        
-        if(element!=null){
-        for (int i = 0; i < effectiveSize; i++) {
-            if(elements[i].equals(element)){
-                return true;
+
+        if (element != null) {
+            for (int i = 0; i < effectiveSize; i++) {
+                if (elements[i].equals(element)) {
+                    return true;
+                }
             }
         }
-        }
         return false;
-
 
     }
 
 }
+

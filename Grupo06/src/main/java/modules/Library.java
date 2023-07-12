@@ -5,6 +5,8 @@
 package modules;
 
 import TDAs.ArrayList;
+import TDAs.DoubleCircularList;
+import TDAs.List;
 import java.io.Serializable;
 import javafx.scene.image.Image;
 
@@ -14,12 +16,12 @@ import javafx.scene.image.Image;
  */
 public class Library implements Serializable{
     public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
-    private ArrayList<Emoji> userEmoji;
+    private List<Emoji> userEmoji;
    // private transient ArrayList<Image> userComponents;
     private ArrayList<String> userComponentsPaths;
 
     public Library() {
-        this.userEmoji = new ArrayList<>();
+        this.userEmoji = new DoubleCircularList<>();
         //this.userComponents=new ArrayList<>();
         this.userComponentsPaths = new ArrayList<>();
     }
@@ -37,7 +39,7 @@ public class Library implements Serializable{
 //        this.userComponents = userComponents;
 //    }
 
-    public ArrayList<Emoji> getUserEmoji() {
+    public List<Emoji> getUserEmoji() {
         return userEmoji;
     }
 

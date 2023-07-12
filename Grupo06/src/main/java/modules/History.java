@@ -60,5 +60,14 @@ public class History {
     public Emoji getActual() {
         return actual;
     }
+    
+    public void clear(){
+        while(!this.historyBack.isEmpty()){
+            this.historyBack.pop();
+        }
+        while(!this.historyForward.isEmpty()){
+            this.historyForward.pop();
+        }
+    }
    
 }

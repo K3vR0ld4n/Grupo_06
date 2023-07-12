@@ -1,6 +1,8 @@
 package TDAs;
 
-class Node<E> {
+import java.io.Serializable;
+
+class Node<E> implements Serializable{
     private E content;
     private Node<E> next;
     private Node<E> prev;
