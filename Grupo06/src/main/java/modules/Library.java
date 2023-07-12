@@ -16,12 +16,12 @@ import javafx.scene.image.Image;
  */
 public class Library implements Serializable{
     public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
-    private List<Emoji> userEmoji;
+    private ArrayList<Emoji> userEmoji;
    // private transient ArrayList<Image> userComponents;
     private ArrayList<String> userComponentsPaths;
 
     public Library() {
-        this.userEmoji = new DoubleCircularList<>();
+        this.userEmoji = new ArrayList<>();
         //this.userComponents=new ArrayList<>();
         this.userComponentsPaths = new ArrayList<>();
     }
@@ -39,7 +39,7 @@ public class Library implements Serializable{
 //        this.userComponents = userComponents;
 //    }
 
-    public List<Emoji> getUserEmoji() {
+    public ArrayList<Emoji> getUserEmoji() {
         return userEmoji;
     }
 

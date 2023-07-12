@@ -5,6 +5,7 @@
 package general;
 
 import TDAs.ArrayList;
+import TDAs.DoubleCircularList;
 import TDAs.List;
 import java.io.File;
 import java.io.IOException;
@@ -129,8 +130,10 @@ public class EmojiSectionController implements Initializable {
     public static ImageView viewEyes = new ImageView();
     public static ImageView viewEyebrows = new ImageView();
     public static ImageView viewMouth = new ImageView();
+
     public static History history;
-    private Resource currentComponents;
+    public static Resource currentComponents;
+
 
     static Profile profile;
 
@@ -186,6 +189,11 @@ public class EmojiSectionController implements Initializable {
         makeResizableAndDraggable(viewEyebrows);
         makeResizableAndDraggable(viewFace);
         makeResizableAndDraggable(viewMouth);
+
+        if (!profile.getLibrary().getUserComponentsPaths().isEmpty()) {
+            BtDeleate.setDisable(false);
+        }
+
     }
 
     @FXML
@@ -230,21 +238,41 @@ public class EmojiSectionController implements Initializable {
                     e.printStackTrace();
                 }
             }
-            
-            
+
             List<Image> userComponents = profile.loadUserComponents(currentComponents.getType().name().toLowerCase());
 
-            currentComponents.getResourcesList().addLast(userComponents.get(userComponents.size()-1));
+            currentComponents.getResourcesList().addLast(userComponents.get(userComponents.size() - 1));
 
- 
             if (RBdirect.isSelected()) {
                 loadEmojiDirect(currentComponents);
+            }
+            if (BtDeleate.isDisable()) {
+                BtDeleate.setDisable(false);
             }
         }
     }
 
+
     @FXML
-    void deleateImageResource() {
+    public void deleateImageResource() {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserComponents.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setTitle("User Components Window");
+        newStage.setScene(new Scene(root));
+        newStage.showAndWait();
+
+        if (RBdirect.isSelected()) {
+            loadEmojiDirect(currentComponents);
+        }
 
     }
 
@@ -405,27 +433,25 @@ public class EmojiSectionController implements Initializable {
             alert.AlertInfo("You must log in to perform this action");
         } else {
             Emoji actualEmoji = history.getActual();
-            
-            if(profile.getLibrary().getUserEmoji().contains(actualEmoji)){
+
+            if (profile.getLibrary().getUserEmoji().contains(actualEmoji)) {
                 alert.AlertError("Cannot save the same project");
-            }
-            else if (actualEmoji != null) {
+            } else if (actualEmoji != null) {
                 String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
-               
+
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
-                
+
                 actualEmoji.setCurrentEmojiPath(path);
-                
+
                 System.out.println(actualEmoji.getCurrentEmojiPath());
-                
-                List<Emoji> lb = profile.getLibrary().getUserEmoji();
-                
+
+                ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+
                 lb.addLast(actualEmoji);
-                
-                
+
                 System.out.println(profile.getLibrary().getUserEmoji());
-            } 
-  
+            }
+
         }
     }
 

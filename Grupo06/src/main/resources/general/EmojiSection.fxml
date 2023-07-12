@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
+<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -137,7 +137,7 @@
             <Image url="@../resources/selection.png" />
          </image>
       </ImageView>
-      <Button id="btSpecific" fx:id="BtDeleate" layoutX="754.0" layoutY="300.0" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
+      <Button id="btSpecific" fx:id="BtDeleate" disable="true" layoutX="754.0" layoutY="300.0" mnemonicParsing="false" onAction="#deleateImageResource" text="Deleate" />
       <Button id="btSave" fx:id="bttonSave" layoutX="44.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveProject" text="SAVE" />
       <Button id="btSpecific" fx:id="BtUpload" layoutX="755.0" layoutY="249.0" mnemonicParsing="false" onAction="#uploadImageResource" text="Upload" />
    </children>

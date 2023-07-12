@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.UserComponentsController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="30.0" prefHeight="53.0" prefWidth="227.0" text="My Images" textFill="#212a3e">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="23.0" fitWidth="29.0" layoutX="241.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/projectIcon.png" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="SpImages" hbarPolicy="NEVER" layoutX="73.0" layoutY="84.0" prefHeight="282.0" prefWidth="554.0">
+         <content>
+            <GridPane fx:id="GpComponents" prefHeight="282.0" prefWidth="554.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Button fx:id="btDeleteImages" layoutX="476.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteImages" prefHeight="40.0" prefWidth="132.0" text="Delete" />
+      <Button fx:id="btClearAllImages" layoutX="48.0" layoutY="388.0" mnemonicParsing="false" onAction="#clearAllImages" prefHeight="40.0" prefWidth="132.0" text="Clear All" />
+   </children>
+</AnchorPane>

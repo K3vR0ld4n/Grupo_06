@@ -33,6 +33,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import utils.Resource;
 
 public class ProjectController implements Initializable {
@@ -102,16 +104,18 @@ public class ProjectController implements Initializable {
 
         if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
 
-            List<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
+            ArrayList<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
 
-            Iterator<Emoji> itr = EmojiSectionController.profile.getLibrary().getUserEmoji().iterator();
-            int count = 0;
-
-            while (count < emoji.size()) {
-                Resource.deleteFilePath(itr.next().getCurrentEmojiPath());
-                count++;
+//            Iterator<Emoji> itr = EmojiSectionController.profile.getLibrary().getUserEmoji().iterator();
+//            int count = 0;
+//
+//            while (count < emoji.size()) {
+//                Resource.deleteFilePath(itr.next().getCurrentEmojiPath());
+//                count++;
+//            }
+            for (Emoji e : emoji) {
+                Resource.deleteFilePath(e.getCurrentEmojiPath());
             }
-
             emoji.clear();
 
             Stage currentStage = (Stage) btDelete.getScene().getWindow();
@@ -125,48 +129,36 @@ public class ProjectController implements Initializable {
         int countC = 0;
         int countR = 0;
 
-        Iterator<Emoji> itr = l.iterator();
-        boolean iterable = true;
-        int count = 0;
-
         if (l.size() > 0) {
             System.out.println(l);
 
-            while (iterable) {
-                Emoji e = itr.next();
-                if (e != null) {
-                    if (count == l.size()) {
-                        iterable = false;
-                    } else {
-                        System.out.println(e.getCurrentEmojiPath());
-                        StackPane SPEmoji = new StackPane();
-                        SPEmoji.getStyleClass().add("stackpaneCss");
-                        ImageView imgV = new ImageView();
+            for (Emoji e : l) {
 
-                        Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
-                        imgV.setImage(im);
-                        imgV.setFitHeight(70);
-                        imgV.setFitWidth(70);
+                System.out.println(e.getCurrentEmojiPath());
+                StackPane SPEmoji = new StackPane();
+                SPEmoji.getStyleClass().add("stackpaneCss");
+                ImageView imgV = new ImageView();
 
-                        SPEmoji.getChildren().addAll(imgV);
-                        gp.add(SPEmoji, countC, countR);
-                        if (countC < 5) {
-                            countC++;
-                        } else {
-                            countC = 0;
-                            countR++;
-                            if (countR > rows - 1) {
-                                gp.addRow(countR - 1);
-                            }
-                        }
-                        SPEmoji.setOnMouseClicked(event -> {
-                            selectedEmoji = e;
-                            System.out.println(SPEmoji.getChildren());
-                        });
-                        count++;
+                Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
+                imgV.setImage(im);
+                imgV.setFitHeight(70);
+                imgV.setFitWidth(70);
+
+                SPEmoji.getChildren().addAll(imgV);
+                gp.add(SPEmoji, countC, countR);
+                if (countC < 5) {
+                    countC++;
+                } else {
+                    countC = 0;
+                    countR++;
+                    if (countR > rows - 1) {
+                        gp.addRow(countR - 1);
                     }
-
                 }
+                SPEmoji.setOnMouseClicked(event -> {
+                    selectedEmoji = e;
+                    System.out.println(SPEmoji.getChildren());
+                });
             }
 
         }

@@ -226,9 +226,7 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
 
     @Override
     public boolean contains(E element) {
-        if (element == null) {
-            return false;
-        } else if(!isEmpty()){
+        if (element != null) {
             Node<E> traveler = this.last.getNext();
 
             while (traveler != this.last) {
@@ -236,11 +234,9 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
                 traveler = traveler.getNext();
                 if (content.equals(element)) {
                     return true;
-
                 }
-            }
-            return false;
 
+            }
         }
         return false;
     }
