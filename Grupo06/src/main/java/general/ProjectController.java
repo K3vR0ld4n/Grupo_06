@@ -53,7 +53,7 @@ public class ProjectController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
@@ -81,14 +81,16 @@ public class ProjectController implements Initializable {
         if (selectedEmoji == null) {
             alert.AlertInfo("You must to select a Emoji");
         } else if (alert.AlertConfirmation("Are you sure you want to DELETE this Emoji?")) {
-            //System.out.println("EMOJI 0 "+EmojiSectionController.profile.getLibrary().getUserEmoji().get(0).getCurrentEmojiPath());
-            //System.out.println("EMOJI 1"+EmojiSectionController.profile.getLibrary().getUserEmoji().get(1).getCurrentEmojiPath());
             System.out.println(selectedEmoji.getCurrentEmojiPath());
+            
             EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
+            
             System.out.println(selectedEmoji.getCurrentEmojiPath());
+            
             Resource.deleteFilePath(selectedEmoji.getCurrentEmojiPath());
-            Resource.deleteFilePath("target/classes" + selectedEmoji.getCurrentEmojiPath().substring(18));
+            //Resource.deleteFilePath("target/classes" + selectedEmoji.getCurrentEmojiPath().substring(18));
 
+            //borrar el for
             for (Emoji em : EmojiSectionController.profile.getLibrary().getUserEmoji()) {
                 System.out.println(em);
             }
@@ -107,7 +109,7 @@ public class ProjectController implements Initializable {
 
             for (Emoji em : emoji) {
                 Resource.deleteFilePath(em.getCurrentEmojiPath());
-                Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
+                //Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
             }
 
             emoji.clear();
@@ -127,12 +129,19 @@ public class ProjectController implements Initializable {
             System.out.println(l);
 
             for (Emoji e : l) {//arreglar uwu
-                System.out.println(e);
-                if (e != null) { // Add a null check for the Emoji object
+                System.out.println(e.getCurrentEmojiPath());
+                if (e != null) { // borrar condicion
                     StackPane SPEmoji = new StackPane();
                     SPEmoji.getStyleClass().add("stackpaneCss");
                     ImageView imgV = new ImageView();
-                    Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
+                    
+                    
+                    Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
+                    
+                    //Image im = new Image(getClass().getResource(e.getCurrentEmojiPath().substring(18)).toExternalForm());
+                    
+                    
+                    
                     imgV.setImage(im);
                     imgV.setFitHeight(70);
                     imgV.setFitWidth(70);
@@ -159,12 +168,18 @@ public class ProjectController implements Initializable {
     }
 
     public static void exportStackPaneAsImage(StackPane stackPane, String filePath) {
+        
         WritableImage snapshot = stackPane.snapshot(new SnapshotParameters(), null);
         File file = new File(filePath);
-        File file2 = new File("target/classes/" + filePath.substring(18));
+        //File file2 = new File("target/classes/" + filePath.substring(18));
+        
+        
         try {
+            
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
-            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
+           // ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
+            
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

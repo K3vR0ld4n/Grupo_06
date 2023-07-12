@@ -82,13 +82,13 @@ public class Resource {
     public static boolean createResourceDirectory(String resourcePath) {
 
         try {
-            String directoryPath = "src/main/resources/Profiles/" + resourcePath;
+            String directoryPath = "userData/profiles/" + resourcePath;
             Path path = Paths.get(directoryPath);
             Files.createDirectory(path);
 
-            String targetDirectoryPath = "target/classes/Profiles/" + resourcePath;
-            Path targetPath = Paths.get(targetDirectoryPath);
-            Files.createDirectory(targetPath);
+//            String targetDirectoryPath = "target/classes/Profiles/" + resourcePath;
+//            Path targetPath = Paths.get(targetDirectoryPath);
+//            Files.createDirectory(targetPath);
 
             return true;
         } catch (IOException e) {
@@ -100,19 +100,7 @@ public class Resource {
     }
 
     public static void deleteFilePath(String resourcePath) {
-//        try {
-//            URL resourceUrl = Resource.class.getResource(resourcePath);
-//            if (resourceUrl != null) {
-//                try (InputStream inputStream = resourceUrl.openStream()) {
-//                    Files.deleteIfExists(Paths.get(resourceUrl.toURI()));
-//                } catch (URISyntaxException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//            System.out.println("Archivo borrado exitosamente.");
-//        } catch (IOException e) {
-//            System.out.println("Error al borrar el archivo: " + e.getMessage());
-//        }
+
         try {
             // Convierte la ruta en un objeto Path
             Path path = Paths.get(resourcePath);

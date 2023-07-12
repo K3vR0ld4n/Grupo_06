@@ -5,6 +5,7 @@
 package general;
 
 import TDAs.ArrayList;
+import TDAs.List;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -229,9 +230,13 @@ public class EmojiSectionController implements Initializable {
                     e.printStackTrace();
                 }
             }
+            
+            
+            List<Image> userComponents = profile.loadUserComponents(currentComponents.getType().name().toLowerCase());
 
-            currentComponents.getResourcesList().addLast(profile.loadUserComponents(currentComponents.getType().name().toLowerCase()).get(profile.getLibrary().getUserComponentsPaths().size() - 1));
+            currentComponents.getResourcesList().addLast(userComponents.get(userComponents.size()-1));
 
+ 
             if (RBdirect.isSelected()) {
                 loadEmojiDirect(currentComponents);
             }
@@ -405,18 +410,22 @@ public class EmojiSectionController implements Initializable {
                 alert.AlertError("Cannot save the same project");
             }
             else if (actualEmoji != null) {
-                String path = "src/main/resources/Profiles/" + profile.getMail() + "/proyecto" + profile.getLibrary().getUserEmoji().size() + ".png";
+                String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
+               
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
                 
                 actualEmoji.setCurrentEmojiPath(path);
                 
                 System.out.println(actualEmoji.getCurrentEmojiPath());
+                
                 ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
+                
                 lb.addLast(actualEmoji);
+                
+                
                 System.out.println(profile.getLibrary().getUserEmoji());
-            } else {
-                System.out.println("unu");
-            }
+            } 
+  
         }
     }
 

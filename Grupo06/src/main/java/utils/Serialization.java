@@ -22,7 +22,7 @@ public class Serialization {
     
     public static void serialize(ArrayList array, String name) {
         try {
-            FileOutputStream fout = new FileOutputStream("src/main/java/serialized/"+name+".ser");
+            FileOutputStream fout = new FileOutputStream("userData/serialized/"+name+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fout);
             out.writeObject(array);
             out.flush();
@@ -38,7 +38,7 @@ public class Serialization {
     
     public static ArrayList unserialize(String name) {
         try {
-            FileInputStream file = new FileInputStream("src/main/java/serialized/"+name+".ser");
+            FileInputStream file = new FileInputStream("userData/serialized/"+name+".ser");
             ObjectInputStream in = new ObjectInputStream(file);
             ArrayList array = (ArrayList) in.readObject();
 

@@ -40,33 +40,41 @@ public class Profile implements Serializable {
 
     }
 
-    public Profile(String name, String mail){
-        this.name= name;
-        this.mail=mail;       
-        
+    public Profile(String name, String mail) {
+        this.name = name;
+        this.mail = mail;
+
     }
-    
-    
+
     public void saveUserComponent(String imagePath, String type) {
 
-        String profilePath = "src/main/resources/Profiles/" + this.mail + "/" + type + this.library.getUserComponentsPaths().size() + imagePath.substring(imagePath.length() - 4);
-        String newImagePath = profilePath.substring(18);
-        System.out.println(newImagePath);
+        String profilePath = "userData/profiles/" + this.mail + "/" + type + this.library.getUserComponentsPaths().size() + imagePath.substring(imagePath.length() - 4);
+//        String newImagePath = profilePath.substring(18);
+//
+//        System.out.println(newImagePath);
+
         try {
             Path sourcePath = Path.of(imagePath);
             Path destinationPath = Path.of(profilePath);
-            Path targetDestinationPath = Path.of("target/classes/" + newImagePath);
+            
 
             Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(sourcePath, targetDestinationPath, StandardCopyOption.REPLACE_EXISTING);
+            
 
-//            Image img = new Image(getClass().getResource(newImagePath).toExternalForm());
+            this.library.getUserComponentsPaths().addLast(profilePath);
+
+//            
+//            Path sourcePath = Path.of(imagePath);
+//            Path destinationPath = Path.of(profilePath);
+//            Path targetDestinationPath = Path.of("target/classes/" + newImagePath);
 //
-//            this.library.getUserComponents().addLast(img);
-            this.library.getUserComponentsPaths().addLast(getClass().getResource(newImagePath).toExternalForm());
-
+//            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+//            Files.copy(sourcePath, targetDestinationPath, StandardCopyOption.REPLACE_EXISTING);
+//
+//
+//            this.library.getUserComponentsPaths().addLast(getClass().getResource(newImagePath).toExternalForm());
         } catch (Exception e) {
-            System.out.println(getClass().getResource(newImagePath));
+
             e.printStackTrace();
         }
 
@@ -80,8 +88,9 @@ public class Profile implements Serializable {
         if (!userComponentsPaths.isEmpty()) {
             for (int i = 0; i < userComponentsPaths.size(); i++) {
                 if (userComponentsPaths.get(i).contains(type)) {
-                    Image img = new Image(userComponentsPaths.get(i));
-                    
+                    Image img = new Image(Paths.get(userComponentsPaths.get(i)).toAbsolutePath().toUri().toString());
+
+
                     toLoad.addLast(img);
                 }
             }

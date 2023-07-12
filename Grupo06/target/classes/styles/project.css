@@ -31,3 +31,15 @@
     
     -fx-cursor: hand;
 }
+
+.stackpaneCss:hover{
+    -fx-border-width: 5px;
+    -fx-border-color: black;
+    -fx-background-radius: 5px;
+}
+
+.stackpaneCss:pressed{
+    -fx-border-width: 5px;
+    -fx-border-color: black;
+    -fx-background-radius: 5px;
+}
