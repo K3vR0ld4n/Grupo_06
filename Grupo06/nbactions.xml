@@ -10,7 +10,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>--module-path "C:/Users/Jorge Daniel/Desktop/ESPOL/4to Semestre/ESTRUCTURAS DE DATOS/proyecto/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics  --module-path "/home/lancervs/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics</exec.vmArgs>
+=======
+                <exec.vmArgs>--module-path "C:\Users\ASUS\Documents\Cosas de Java (No Borrar)\openjfx-20.0.1_windows-x64_bin-sdk\javafx-sdk-20.0.1\lib"  --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics</exec.vmArgs>
+>>>>>>> 6eaf39336c0176d9e659361772466d774fc024d6
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
@@ -27,7 +31,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>--module-path "C:/Users/Jorge Daniel/Desktop/ESPOL/4to Semestre/ESTRUCTURAS DE DATOS/proyecto/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics  --module-path "/home/lancervs/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+=======
+                <exec.vmArgs>--module-path "C:\Users\ASUS\Documents\Cosas de Java (No Borrar)\openjfx-20.0.1_windows-x64_bin-sdk\javafx-sdk-20.0.1\lib"  --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+>>>>>>> 6eaf39336c0176d9e659361772466d774fc024d6
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
@@ -45,7 +53,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>--module-path "C:/Users/Jorge Daniel/Desktop/ESPOL/4to Semestre/ESTRUCTURAS DE DATOS/proyecto/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics  --module-path "/home/lancervs/javafx-sdk-20.0.1/lib" --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics</exec.vmArgs>
+=======
+                <exec.vmArgs>--module-path "C:\Users\ASUS\Documents\Cosas de Java (No Borrar)\openjfx-20.0.1_windows-x64_bin-sdk\javafx-sdk-20.0.1\lib"  --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics</exec.vmArgs>
+>>>>>>> 6eaf39336c0176d9e659361772466d774fc024d6
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
                 <exec.executable>java</exec.executable>

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -149,6 +150,9 @@ public class EmojiSectionController implements Initializable {
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
 
+        Image imgDefault = new Image(Paths.get("userData/defaultImage.png").toAbsolutePath().toUri().toString());
+        resources.getResourcesList().addFirst(imgDefault);
+
         if (!profile.getName().equals("Guest")) {
             resources.getResourcesList().addAll(profile.loadUserComponents(resources.getType().name().toLowerCase()));
         }
@@ -207,16 +211,6 @@ public class EmojiSectionController implements Initializable {
     @FXML
     private void LogOutMethod() throws IOException {
         App.setRoot("Login");
-    }
-
-    @FXML
-    private void getNextElement() {
-        int sizeHBox = HBoxEmojis.getChildren().size();
-
-        if (sizeHBox > 0) {
-            changeHBoxElements(sizeHBox - 1, 0);
-        }
-
     }
 
     @FXML
@@ -284,17 +278,23 @@ public class EmojiSectionController implements Initializable {
 
     }
 
-    private void changeHBoxElements(int position, int removePosition) {
+    @FXML
+    private void getNextElement() {
+        int sizeHBox = HBoxEmojis.getChildren().size();
 
-        ImageView img = (ImageView) HBoxEmojis.getChildren().get(position);
-        Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
-        ImageView imgVw = new ImageView(nextImage);
-        imgVw.setPreserveRatio(false);
-        imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
-        imgVw.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
-        HBoxEmojis.getChildren().remove(removePosition);
-        HBoxEmojis.getChildren().add(position, imgVw);
-        showEmoji();
+        if (sizeHBox > 0) {
+
+            ImageView img = (ImageView) HBoxEmojis.getChildren().get(sizeHBox - 1);
+            Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
+            ImageView imgVw = new ImageView(nextImage);
+            imgVw.setPreserveRatio(false);
+            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            imgVw.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
+            HBoxEmojis.getChildren().remove(0);
+            HBoxEmojis.getChildren().add(sizeHBox - 1, imgVw);
+            showEmoji();
+
+        }
 
     }
 
@@ -303,7 +303,17 @@ public class EmojiSectionController implements Initializable {
         int sizeHBox = HBoxEmojis.getChildren().size();
 
         if (sizeHBox > 0) {
-            changeHBoxElements(0, sizeHBox - 1);
+
+            ImageView img = (ImageView) HBoxEmojis.getChildren().get(0);
+            Image nextImage = currentComponents.getResourcesList().getPrevious(img.getImage());
+            ImageView imgVw = new ImageView(nextImage);
+            imgVw.setPreserveRatio(false);
+            imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            imgVw.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
+            HBoxEmojis.getChildren().remove(sizeHBox - 1);
+            HBoxEmojis.getChildren().add(0, imgVw);
+            showEmoji();
+
         }
 
     }
@@ -346,9 +356,18 @@ public class EmojiSectionController implements Initializable {
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
             img.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
 
-            img.setOnMouseClicked(ev -> {
-                updateEmoji(currentImageView(), img.getImage());
-            });
+            if (img.getImage().getUrl().contains("defaultImage.png")) {
+                img.setOnMouseClicked(ev -> {
+                   updateEmoji(currentImageView(), null);
+                });
+
+                
+            } else {
+
+                img.setOnMouseClicked(ev -> {
+                    updateEmoji(currentImageView(), img.getImage());
+                });
+            }
 
             GpDirect.add(img, columns, rows);
             if (columns < 8) {
@@ -366,12 +385,17 @@ public class EmojiSectionController implements Initializable {
     }
 
     private void showEmoji() {
+
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-        imgVw.setFitHeight(150);
-        imgVw.setFitWidth(150);
-        updateEmoji(imgVw, image);
+        if (image.getUrl().contains("defaultImage.png")) {
+            updateEmoji(imgVw, null);
+        } else {
+            imgVw.setFitHeight(150);
+            imgVw.setFitWidth(150);
+            updateEmoji(imgVw, image);
+        }
 
     }
 
@@ -441,7 +465,7 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     public void exportImage() {
-        fc.setInitialFileName("Emoji("+LocalTime.now().toString().substring(0, 8)+")");
+        fc.setInitialFileName("Emoji(" + LocalTime.now().toString().substring(0, 8) + ")");
         FileChooser.ExtensionFilter filesFilter = new FileChooser.ExtensionFilter("Carpetas", "*.");
         fc.getExtensionFilters().add(filesFilter);
         File file = fc.showSaveDialog(new Stage());
@@ -450,11 +474,11 @@ public class EmojiSectionController implements Initializable {
             try {
                 String filePath = file.getCanonicalPath();
                 System.out.println(filePath);
-                ProjectController.exportStackPaneAsImage(SPEmoji, filePath+".png");
+                ProjectController.exportStackPaneAsImage(SPEmoji, filePath + ".png");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } 
+        }
     }
 
     @FXML
