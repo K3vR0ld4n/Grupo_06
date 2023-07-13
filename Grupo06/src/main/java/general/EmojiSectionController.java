@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -149,6 +150,9 @@ public class EmojiSectionController implements Initializable {
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
 
+        Image imgDefault = new Image(Paths.get("userData/defaultImage.png").toAbsolutePath().toUri().toString());
+        resources.getResourcesList().addFirst(imgDefault);
+
         if (!profile.getName().equals("Guest")) {
             resources.getResourcesList().addAll(profile.loadUserComponents(resources.getType().name().toLowerCase()));
         }
@@ -273,7 +277,6 @@ public class EmojiSectionController implements Initializable {
 
     }
 
-
     @FXML
     private void getNextElement() {
         int sizeHBox = HBoxEmojis.getChildren().size();
@@ -352,9 +355,18 @@ public class EmojiSectionController implements Initializable {
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
             img.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
 
-            img.setOnMouseClicked(ev -> {
-                updateEmoji(currentImageView(), img.getImage());
-            });
+            if (img.getImage().getUrl().contains("defaultImage.png")) {
+                img.setOnMouseClicked(ev -> {
+                   updateEmoji(currentImageView(), null);
+                });
+
+                
+            } else {
+
+                img.setOnMouseClicked(ev -> {
+                    updateEmoji(currentImageView(), img.getImage());
+                });
+            }
 
             GpDirect.add(img, columns, rows);
             if (columns < 8) {
@@ -372,12 +384,17 @@ public class EmojiSectionController implements Initializable {
     }
 
     private void showEmoji() {
+
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-        imgVw.setFitHeight(150);
-        imgVw.setFitWidth(150);
-        updateEmoji(imgVw, image);
+        if (image.getUrl().contains("defaultImage.png")) {
+            updateEmoji(imgVw, null);
+        } else {
+            imgVw.setFitHeight(150);
+            imgVw.setFitWidth(150);
+            updateEmoji(imgVw, image);
+        }
 
     }
 
