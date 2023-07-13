@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -134,7 +136,6 @@ public class EmojiSectionController implements Initializable {
     public static History history;
     public static Resource currentComponents;
 
-
     static Profile profile;
 
     private void initializeIcon(String iconPathDefault, String iconPathHover, Button button) {
@@ -190,7 +191,7 @@ public class EmojiSectionController implements Initializable {
         makeResizableAndDraggable(viewFace);
         makeResizableAndDraggable(viewMouth);
 
-        if (!profile.getLibrary().getUserComponentsPaths().isEmpty()) {
+        if (!profile.getName().equals("Guest")) {
             BtDeleate.setDisable(false);
         }
 
@@ -221,6 +222,8 @@ public class EmojiSectionController implements Initializable {
     void uploadImageResource() {
         if (profile.getName().equals("Guest")) {
             alert.AlertInfo("You must log in to perform this action");
+        } else if (currentComponents == null) {
+            alert.AlertInfo("xd");
         } else {
             FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
             FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
@@ -228,7 +231,7 @@ public class EmojiSectionController implements Initializable {
             fc.getExtensionFilters().addAll(pngFilter, jpegFilter, jpgFilter);
 
             File file = fc.showOpenDialog(new Stage());
-            if (file.isFile()) {
+            if (file != null && file.isFile()) {
 
                 try {
                     String imagePath = file.getCanonicalPath();
@@ -237,6 +240,8 @@ public class EmojiSectionController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else {
+                alert.AlertInfo("No image selected");
             }
 
             List<Image> userComponents = profile.loadUserComponents(currentComponents.getType().name().toLowerCase());
@@ -252,26 +257,28 @@ public class EmojiSectionController implements Initializable {
         }
     }
 
-
     @FXML
     public void deleateImageResource() {
+        if (currentComponents == null) {
+            alert.AlertInfo("xd");
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserComponents.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            Stage newStage = new Stage();
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.setTitle("User Components Window");
+            newStage.setScene(new Scene(root));
+            newStage.showAndWait();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserComponents.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        Stage newStage = new Stage();
-        newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.setTitle("User Components Window");
-        newStage.setScene(new Scene(root));
-        newStage.showAndWait();
-
-        if (RBdirect.isSelected()) {
-            loadEmojiDirect(currentComponents);
+            if (RBdirect.isSelected()) {
+                loadEmojiDirect(currentComponents);
+            }
         }
 
     }
@@ -281,8 +288,9 @@ public class EmojiSectionController implements Initializable {
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(position);
         Image nextImage = currentComponents.getResourcesList().getNext(img.getImage());
         ImageView imgVw = new ImageView(nextImage);
-        imgVw.setPreserveRatio(true);
+        imgVw.setPreserveRatio(false);
         imgVw.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+        imgVw.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
         HBoxEmojis.getChildren().remove(removePosition);
         HBoxEmojis.getChildren().add(position, imgVw);
         showEmoji();
@@ -310,8 +318,9 @@ public class EmojiSectionController implements Initializable {
         for (int i = 0; i < 9; i++) {
 
             ImageView img = new ImageView(resource.getResourcesList().get(i));
-            img.setPreserveRatio(true);
+            img.setPreserveRatio(false);
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            img.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
 
             HBoxEmojis.getChildren().addAll(img);
 
@@ -332,8 +341,9 @@ public class EmojiSectionController implements Initializable {
         int gpRows = GpDirect.getRowCount();
         for (int i = 0; i < resource.getResourcesList().size(); i++) {
             ImageView img = new ImageView(resource.getResourcesList().get(i));
-            img.setPreserveRatio(true);
+            img.setPreserveRatio(false);
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
+            img.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
 
             img.setOnMouseClicked(ev -> {
                 updateEmoji(currentImageView(), img.getImage());
@@ -358,7 +368,8 @@ public class EmojiSectionController implements Initializable {
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-
+        imgVw.setFitHeight(150);
+        imgVw.setFitWidth(150);
         updateEmoji(imgVw, image);
 
     }
@@ -425,6 +436,24 @@ public class EmojiSectionController implements Initializable {
 
         history.setActual(e);
 
+    }
+
+    @FXML
+    public void exportImage() {
+        fc.setInitialFileName("Emoji("+LocalTime.now().toString().substring(0, 8)+")");
+        FileChooser.ExtensionFilter filesFilter = new FileChooser.ExtensionFilter("Carpetas", "*.");
+        fc.getExtensionFilters().add(filesFilter);
+        File file = fc.showSaveDialog(new Stage());
+        if (file != null) {
+            System.out.println("xddddd");
+            try {
+                String filePath = file.getCanonicalPath();
+                System.out.println(filePath);
+                ProjectController.exportStackPaneAsImage(SPEmoji, filePath+".png");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } 
     }
 
     @FXML
