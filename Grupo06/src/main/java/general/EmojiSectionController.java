@@ -150,8 +150,8 @@ public class EmojiSectionController implements Initializable {
         button.setOnMouseEntered(event -> button.setGraphic(new ImageView(hoverIcon)));
         button.setOnMouseExited(event -> button.setGraphic(new ImageView(defaultIcon)));
 
-        Image imgDefault = new Image(Paths.get("userData/defaultImage.png").toAbsolutePath().toUri().toString());
-        resources.getResourcesList().addFirst(imgDefault);
+        //Image imgDefault = new Image(Paths.get("userData/defaultImage.png").toAbsolutePath().toUri().toString());
+        //resources.getResourcesList().addFirst(imgDefault);
 
         if (!profile.getName().equals("Guest")) {
             resources.getResourcesList().addAll(profile.loadUserComponents(resources.getType().name().toLowerCase()));
@@ -248,6 +248,7 @@ public class EmojiSectionController implements Initializable {
             if (BtDeleate.isDisable()) {
                 BtDeleate.setDisable(false);
             }
+            fc.getExtensionFilters().clear();
         }
     }
 
@@ -355,7 +356,7 @@ public class EmojiSectionController implements Initializable {
             img.setFitHeight(HBoxEmojis.getPrefHeight() - 10);
             img.setFitWidth(HBoxEmojis.getPrefHeight() - 10);
 
-            if (img.getImage().getUrl().contains("defaultImage.png")) {
+            if (img.getImage().getUrl().contains("_0.png")) {
                 img.setOnMouseClicked(ev -> {
                     updateEmoji(currentImageView(), null);
                 });
@@ -387,7 +388,7 @@ public class EmojiSectionController implements Initializable {
         ImageView img = (ImageView) HBoxEmojis.getChildren().get(4);
         Image image = img.getImage();
         ImageView imgVw = currentImageView();
-        if (image.getUrl().contains("defaultImage.png")) {
+        if (image.getUrl().contains("_0.png")) {
             updateEmoji(imgVw, null);
         } else {
             imgVw.setFitHeight(150);
@@ -480,6 +481,7 @@ public class EmojiSectionController implements Initializable {
                     e.printStackTrace();
                 }
             }
+            fc.getExtensionFilters().remove(filesFilter);
         }
     }
 

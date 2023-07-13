@@ -58,7 +58,7 @@ public class Resource {
         }
 
         for (int i = 0; i < elementsSize; i++) {
-            String rout = "/images/" + typeList.toLowerCase() + "/" + typeList.toLowerCase() + "_" + (i + 1) + ".png";
+            String rout = "/images/" + typeList.toLowerCase() + "/" + typeList.toLowerCase() + "_" + i + ".png";
             Image img = new Image(getClass().getResource(rout).toExternalForm());
             resourceList.addLast(img);
         }
