@@ -164,7 +164,6 @@ public class EmojiSectionController implements Initializable {
                 loadEmojiDirect(resources);
             }
         });
-        
 
     }
 
@@ -358,10 +357,9 @@ public class EmojiSectionController implements Initializable {
 
             if (img.getImage().getUrl().contains("defaultImage.png")) {
                 img.setOnMouseClicked(ev -> {
-                   updateEmoji(currentImageView(), null);
+                    updateEmoji(currentImageView(), null);
                 });
 
-                
             } else {
 
                 img.setOnMouseClicked(ev -> {
@@ -465,18 +463,23 @@ public class EmojiSectionController implements Initializable {
 
     @FXML
     public void exportImage() {
-        fc.setInitialFileName("Emoji(" + LocalTime.now().toString().substring(0, 8) + ")");
-        FileChooser.ExtensionFilter filesFilter = new FileChooser.ExtensionFilter("Carpetas", "*.");
-        fc.getExtensionFilters().add(filesFilter);
-        File file = fc.showSaveDialog(new Stage());
-        if (file != null) {
-            System.out.println("xddddd");
-            try {
-                String filePath = file.getCanonicalPath();
-                System.out.println(filePath);
-                ProjectController.exportStackPaneAsImage(SPEmoji, filePath + ".png");
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (viewFace.getImage() == null && viewEyes.getImage() == null && viewAccessory.getImage() == null && viewMouth.getImage() == null && viewEyebrows.getImage() == null) {
+            alert.AlertError("You must to create a emoji yo perform this action");
+        } else {
+            fc.setInitialFileName("Emoji(" + LocalDateTime.now().getHour() + "-" + LocalDateTime.now().getMinute() + "-" + LocalDateTime.now().getSecond() + ")");
+            //fc.setInitialFileName("Emoji(" + LocalTime.now().toString().substring(0, 8) + ")");
+            FileChooser.ExtensionFilter filesFilter = new FileChooser.ExtensionFilter("Carpetas", "*.");
+            fc.getExtensionFilters().add(filesFilter);
+            File file = fc.showSaveDialog(new Stage());
+            if (file != null) {
+                System.out.println("xddddd");
+                try {
+                    String filePath = file.getCanonicalPath();
+                    System.out.println(filePath);
+                    ProjectController.exportStackPaneAsImage(SPEmoji, filePath + ".png");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -493,7 +496,7 @@ public class EmojiSectionController implements Initializable {
             } else if (actualEmoji != null) {
                 String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
-           
+
                 actualEmoji.setCurrentEmojiPath(path);
 
                 System.out.println(actualEmoji.getCurrentEmojiPath());
@@ -551,19 +554,19 @@ public class EmojiSectionController implements Initializable {
         double maxX = 250;
         double maxY = 250;
 
-        Delta dragDelta = new Delta();
-        ResizeData resizeData = new ResizeData();
+        double[] dragDelta = new double[2];
+        boolean[] isResizing = new boolean[1];
 
         imageView.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown()) {
-                dragDelta.x = imageView.getBoundsInParent().getWidth() - event.getX();
-                dragDelta.y = imageView.getBoundsInParent().getHeight() - event.getY();
+                dragDelta[0] = imageView.getBoundsInParent().getWidth() - event.getX();
+                dragDelta[1] = imageView.getBoundsInParent().getHeight() - event.getY();
                 imageView.setCursor(Cursor.SE_RESIZE);
-                resizeData.isResizing = true;
+                isResizing[0] = true;
                 event.consume();
             } else {
-                dragDelta.x = event.getSceneX() - imageView.getTranslateX();
-                dragDelta.y = event.getSceneY() - imageView.getTranslateY();
+                dragDelta[0] = event.getSceneX() - imageView.getTranslateX();
+                dragDelta[1] = event.getSceneY() - imageView.getTranslateY();
                 imageView.setCursor(Cursor.MOVE);
                 event.consume();
             }
@@ -571,7 +574,7 @@ public class EmojiSectionController implements Initializable {
 
         imageView.setOnMouseReleased(event -> {
             imageView.setCursor(Cursor.DEFAULT);
-            resizeData.isResizing = false;
+            isResizing[0] = false;
             event.consume();
             System.out.println(imageView.getFitHeight() + "; " + imageView.getFitWidth());
             System.out.println(imageView.getImage().getHeight() + ";" + imageView.getImage().getWidth());
@@ -580,9 +583,9 @@ public class EmojiSectionController implements Initializable {
         });
 
         imageView.setOnMouseDragged(event -> {
-            if (resizeData.isResizing) {
-                double newX = event.getX() + dragDelta.x;
-                double newY = event.getY() + dragDelta.y;
+            if (isResizing[0]) {
+                double newX = event.getX() + dragDelta[0];
+                double newY = event.getY() + dragDelta[1];
 
                 if (newX > minX && newX < maxX) {
                     imageView.setFitWidth(newX);
@@ -593,8 +596,8 @@ public class EmojiSectionController implements Initializable {
                 }
             } else {
 
-                imageView.setTranslateX(event.getSceneX() - dragDelta.x);
-                imageView.setTranslateY(event.getSceneY() - dragDelta.y);
+                imageView.setTranslateX(event.getSceneX() - dragDelta[0]);
+                imageView.setTranslateY(event.getSceneY() - dragDelta[1]);
             }
             if (imageView.getBoundsInParent().getMaxX() > 293 || imageView.getBoundsInParent().getMaxY() > 268 || imageView.getBoundsInParent().getMinX() < -5 || imageView.getBoundsInParent().getMinY() < -5) {
                 // Set the position to (0,0)
@@ -616,19 +619,6 @@ public class EmojiSectionController implements Initializable {
             }
         });
 
-    }
-
-    //Clase estática que almacena las coordenadas x, y del desplazamiento de un evento de ratón respecto a la imagen.
-    private static class Delta {
-
-        double x;
-        double y;
-    }
-
-    //Clase estática que tiene un atributo booleano que se utiliza para indicar si se está redimensionando la imagen.
-    private static class ResizeData {
-
-        boolean isResizing;
     }
 
 }
