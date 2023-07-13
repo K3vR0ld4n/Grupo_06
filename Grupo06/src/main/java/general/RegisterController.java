@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-
 public class RegisterController implements Initializable {
 
     @FXML
@@ -59,15 +58,28 @@ public class RegisterController implements Initializable {
         String password = TxtPassword.getText();
         String mail = TxtMail.getText();
         Alertas alert = new Alertas();
-        if (name.equals("") || password.equals("") || mail.equals("")) {
-            alert.AlertError("Rellenos todos los campos");
+        boolean foundName = false;
+        boolean foundMail = false;
+        for (Profile p : Profile.arrayProfile) {
+            if (name.equals(p.getName())) {
+                foundName = true;
+            } else if (mail.equals(p.getMail())) {
+                foundMail = true;
+            }
         }
-        Profile newRegister = new Profile(name, password, mail);
-        
-       
+        if (name.equals("") || password.equals("") || mail.equals("")) {
+            alert.AlertWarning("Fill in all the fields");
+        }else if (foundMail) {
+            alert.AlertWarning("Mail invalid");
+        } else if (foundName) {
+            alert.AlertWarning("Name invalid");
+        } else {
+            Profile newRegister = new Profile(name, password, mail);
+            App.setRoot("Login");
+        }
+
 //        Serialization.serialize(Profile.arrayProfile, "profile");
         
-        App.setRoot("Login");
     }
 
     @FXML

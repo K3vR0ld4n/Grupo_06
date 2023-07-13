@@ -11,7 +11,7 @@ import javafx.stage.StageStyle;
 import modules.Profile;
 
 /**
- * JavaFX App
+ * Author Grupo 6
  */
 public class App extends Application {
 

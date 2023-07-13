@@ -53,19 +53,23 @@ public class UserComponentsController implements Initializable {
 
     @FXML
     void clearAllImages() {
-        if (alert.AlertConfirmation("Are you sure you want to DELETE ALL COMPONENTS?")) {
+        if (GpComponents.getChildren().isEmpty()) {
+            alert.AlertInfo("There are no images to delete");
+        } else {
+            if (alert.AlertConfirmation("Are you sure you want to DELETE ALL COMPONENTS?")) {
 
-            List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
+                List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
 
-            for (String path : components) {
-                Resource.deleteFilePath(path);
-                //Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
+                for (String path : components) {
+                    Resource.deleteFilePath(path);
+                    //Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
+                }
+
+                components.clear();
+
+                Stage currentStage = (Stage) btDeleteImages.getScene().getWindow();
+                currentStage.close();
             }
-
-            components.clear();
-
-            Stage currentStage = (Stage) btDeleteImages.getScene().getWindow();
-            currentStage.close();
         }
 
     }

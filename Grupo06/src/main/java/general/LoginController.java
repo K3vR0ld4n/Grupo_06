@@ -32,7 +32,7 @@ public class LoginController {
     private void closeWindow() throws IOException {
         System.exit(0);
     }
-    
+
     private static final Profile guest = new Profile("Guest", "Guest@guest.com");
 
     @FXML
@@ -40,19 +40,24 @@ public class LoginController {
         try {
             String nameInput = this.Txtname.getText();
             String passwordInput = this.TxtPasword.getText();
-
+            Alertas alert = new Alertas();
             if (nameInput.equals("") || passwordInput.equals("")) {
-                Alertas alert = new Alertas();
-                alert.AlertWarning("Complete todos los campos");
-            }
-
-            for (Profile p : Profile.arrayProfile) {
-                if (nameInput.equals(p.getName()) && passwordInput.equals(p.getPassword())) {
-
-                    EmojiSectionController.profile = p;
-                    App.setRoot("EmojiSection");
+                alert.AlertWarning("Fill in all the fields");
+            } else {
+                boolean found = false;
+                for (Profile p : Profile.arrayProfile) {
+                    if (nameInput.equals(p.getName()) && passwordInput.equals(p.getPassword())) {
+                        found = true;
+                        EmojiSectionController.profile = p;
+                        App.setRoot("EmojiSection");
+                        break;
+                    }
+                }
+                if (!found) {
+                    alert.AlertWarning("User or password incorrect");
                 }
             }
+
         } catch (Exception e) {
             System.out.println("INTENTE DE NUEVO");
         }
@@ -64,7 +69,5 @@ public class LoginController {
         EmojiSectionController.profile = guest;
         App.setRoot("EmojiSection");
     }
-    
-
 
 }
