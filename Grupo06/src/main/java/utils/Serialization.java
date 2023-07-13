@@ -18,9 +18,9 @@ import modules.Profile;
  *
  * @author Jorge Daniel
  */
-public class Serialization {
+public class Serialization<E> {
     
-    public static void serialize(ArrayList array, String name) {
+    public static <E> void serialize(List<E> array, String name) {
         try {
             FileOutputStream fout = new FileOutputStream("userData/serialized/"+name+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fout);
@@ -36,11 +36,11 @@ public class Serialization {
         }
     }
     
-    public static ArrayList unserialize(String name) {
+    public static <E>List<E> unserialize(String name) {
         try {
             FileInputStream file = new FileInputStream("userData/serialized/"+name+".ser");
             ObjectInputStream in = new ObjectInputStream(file);
-            ArrayList array = (ArrayList) in.readObject();
+            List<E> array = (List<E>) in.readObject();
 
             in.close();
             file.close();

@@ -160,6 +160,7 @@ public class EmojiSectionController implements Initializable {
                 loadEmojiDirect(resources);
             }
         });
+        
 
     }
 
@@ -467,15 +468,13 @@ public class EmojiSectionController implements Initializable {
                 alert.AlertError("Cannot save the same project");
             } else if (actualEmoji != null) {
                 String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
-
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
-
+           
                 actualEmoji.setCurrentEmojiPath(path);
 
                 System.out.println(actualEmoji.getCurrentEmojiPath());
 
-                ArrayList<Emoji> lb = profile.getLibrary().getUserEmoji();
-
+                List<Emoji> lb = profile.getLibrary().getUserEmoji();
                 lb.addLast(actualEmoji);
 
                 System.out.println(profile.getLibrary().getUserEmoji());

@@ -28,7 +28,7 @@ public class Profile implements Serializable {
     private String password;
     private String mail;
     private Library library;
-    public static ArrayList<Profile> arrayProfile;
+    public static List<Profile> arrayProfile;
 
     public Profile(String name, String password, String mail) {
         this.name = name;
@@ -37,7 +37,6 @@ public class Profile implements Serializable {
         this.library = new Library();
         arrayProfile.addLast(this);
         Resource.createResourceDirectory(mail);
-
     }
 
     public Profile(String name, String mail) {
@@ -83,7 +82,7 @@ public class Profile implements Serializable {
     public List<Image> loadUserComponents(String type) {
         ArrayList<Image> toLoad = new ArrayList<>();
 
-        ArrayList<String> userComponentsPaths = this.library.getUserComponentsPaths();
+        List<String> userComponentsPaths = this.library.getUserComponentsPaths();
 
         if (!userComponentsPaths.isEmpty()) {
             for (int i = 0; i < userComponentsPaths.size(); i++) {
@@ -147,6 +146,4 @@ public class Profile implements Serializable {
         }
 
     }
-
-    //Si ....... no
 }

@@ -9,16 +9,18 @@ import TDAs.DoubleCircularList;
 import TDAs.List;
 import java.io.Serializable;
 import javafx.scene.image.Image;
+import utils.Serialization;
 
 /**
  *
  * @author kev-roldan
  */
-public class Library implements Serializable{
-    public static  ArrayList<Emoji> defaultEmoji=loadDefaults();
-    private ArrayList<Emoji> userEmoji;
-   // private transient ArrayList<Image> userComponents;
-    private ArrayList<String> userComponentsPaths;
+public class Library implements Serializable {
+
+    public static List<Emoji> defaultEmoji = loadDefaults();
+    private List<Emoji> userEmoji;
+    // private transient ArrayList<Image> userComponents;
+    private List<String> userComponentsPaths;
 
     public Library() {
         this.userEmoji = new ArrayList<>();
@@ -26,32 +28,21 @@ public class Library implements Serializable{
         this.userComponentsPaths = new ArrayList<>();
     }
 
-    public ArrayList<String> getUserComponentsPaths() {
+    public List<String> getUserComponentsPaths() {
         return userComponentsPaths;
     }
 
-//
-//    public ArrayList<Image> getUserComponents() {
-//        return userComponents;
-//    }
-
-//    public void setUserComponents(ArrayList<Image> userComponents) {
-//        this.userComponents = userComponents;
-//    }
-
-    public ArrayList<Emoji> getUserEmoji() {
+    public List<Emoji> getUserEmoji() {
         return userEmoji;
     }
 
-    public boolean addEmoji(Emoji emoji){
+    public boolean addEmoji(Emoji emoji) {
         return false;
     }
-    
-    private static ArrayList<Emoji> loadDefaults(){
-        ArrayList<Emoji> newArray = new ArrayList<>();
+
+    private static List<Emoji> loadDefaults() {
+        List<Emoji> newArray = Serialization.unserialize("defaulEmojis");
         return newArray;
     }
-    
-    
-    
-} 
+   
+}

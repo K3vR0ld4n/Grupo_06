@@ -58,7 +58,7 @@ public class ProjectController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        loadProjects(GpProject, Library.defaultEmoji);
+        //loadProjects(GpProject, Library.defaultEmoji);
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
     }
@@ -104,8 +104,8 @@ public class ProjectController implements Initializable {
 
         if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
 
-            ArrayList<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
-
+            List<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
+              //List<Emoji> emoji = Library.defaultEmoji;
 //            Iterator<Emoji> itr = EmojiSectionController.profile.getLibrary().getUserEmoji().iterator();
 //            int count = 0;
 //
@@ -124,7 +124,6 @@ public class ProjectController implements Initializable {
     }
 
     private void loadProjects(GridPane gp, List<Emoji> l) {
-        //int columns = gp.getColumnCount();
         int rows = gp.getRowCount();
         int countC = 0;
         int countR = 0;
@@ -140,7 +139,9 @@ public class ProjectController implements Initializable {
                 ImageView imgV = new ImageView();
 
                 Image im = new Image(Paths.get(e.getCurrentEmojiPath()).toAbsolutePath().toUri().toString());
+
                 imgV.setImage(im);
+
                 imgV.setFitHeight(70);
                 imgV.setFitWidth(70);
 
@@ -173,8 +174,6 @@ public class ProjectController implements Initializable {
         try {
 
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
-            // ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file2);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

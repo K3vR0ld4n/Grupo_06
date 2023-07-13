@@ -47,7 +47,7 @@ public class UserComponentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        ArrayList<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
+        List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
         loadProjects(GpComponents, loadCurrentUploadComponents(components, EmojiSectionController.currentComponents.getType().name().toLowerCase()));
     }
 
@@ -55,7 +55,7 @@ public class UserComponentsController implements Initializable {
     void clearAllImages() {
         if (alert.AlertConfirmation("Are you sure you want to DELETE ALL COMPONENTS?")) {
 
-            ArrayList<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
+            List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
 
             for (String path : components) {
                 Resource.deleteFilePath(path);
@@ -96,13 +96,12 @@ public class UserComponentsController implements Initializable {
 
             while (itr.hasNext() && iterable) {
                 Image img = itr.next();
-                if (img.getUrl().contains(selectedPath) ) {
-                    
+                if (img.getUrl().contains(selectedPath)) {
+
                     list.remove(img);
-                    
+
                     iterable = false;
                 }
-                
 
             }
 
