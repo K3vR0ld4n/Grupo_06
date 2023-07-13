@@ -101,8 +101,10 @@ public class ProjectController implements Initializable {
 
     @FXML
     private void clearAllMethod() {
-
-        if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
+        if (GpProject.getChildren().isEmpty()) {
+            alert.AlertInfo("There are no images to delete");
+        } else {
+            if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
 
             List<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
               //List<Emoji> emoji = Library.defaultEmoji;
@@ -121,6 +123,8 @@ public class ProjectController implements Initializable {
             Stage currentStage = (Stage) btDelete.getScene().getWindow();
             currentStage.close();
         }
+        }
+        
     }
 
     private void loadProjects(GridPane gp, List<Emoji> l) {

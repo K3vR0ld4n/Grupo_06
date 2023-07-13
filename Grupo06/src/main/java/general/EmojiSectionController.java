@@ -217,7 +217,7 @@ public class EmojiSectionController implements Initializable {
         if (profile.getName().equals("Guest")) {
             alert.AlertInfo("You must log in to perform this action");
         } else if (currentComponents == null) {
-            alert.AlertInfo("xd");
+            alert.AlertInfo("Select the component where you want to add the image");
         } else {
             FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Imagen PNG", "*.png");
             FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Imagen JPG", "*.jpg");
@@ -254,7 +254,7 @@ public class EmojiSectionController implements Initializable {
     @FXML
     public void deleateImageResource() {
         if (currentComponents == null) {
-            alert.AlertInfo("xd");
+            alert.AlertInfo("Select the component where you want to delete the image");
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserComponents.fxml"));
             Parent root;
@@ -464,7 +464,7 @@ public class EmojiSectionController implements Initializable {
     @FXML
     public void exportImage() {
         if (viewFace.getImage() == null && viewEyes.getImage() == null && viewAccessory.getImage() == null && viewMouth.getImage() == null && viewEyebrows.getImage() == null) {
-            alert.AlertError("You must to create a emoji yo perform this action");
+            alert.AlertError("You must to create a emoji to perform this action");
         } else {
             fc.setInitialFileName("Emoji(" + LocalDateTime.now().getHour() + "-" + LocalDateTime.now().getMinute() + "-" + LocalDateTime.now().getSecond() + ")");
             //fc.setInitialFileName("Emoji(" + LocalTime.now().toString().substring(0, 8) + ")");
@@ -472,7 +472,6 @@ public class EmojiSectionController implements Initializable {
             fc.getExtensionFilters().add(filesFilter);
             File file = fc.showSaveDialog(new Stage());
             if (file != null) {
-                System.out.println("xddddd");
                 try {
                     String filePath = file.getCanonicalPath();
                     System.out.println(filePath);
