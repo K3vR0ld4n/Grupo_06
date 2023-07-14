@@ -204,6 +204,7 @@ public class EmojiSectionController implements Initializable {
     @FXML
     private void closeWindow() throws IOException {
         Serialization.serialize(Profile.arrayProfile, "profile");
+       Serialization.serialize(Library.defaultEmoji, "defaultEmojis");
         System.exit(0);
     }
 
@@ -495,7 +496,9 @@ public class EmojiSectionController implements Initializable {
             if (profile.getLibrary().getUserEmoji().contains(actualEmoji)) {
                 alert.AlertError("Cannot save the same project");
             } else if (actualEmoji != null) {
+                
                 String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
+                //String path = "userData/defaultEmojis/" + Library.defaultEmoji.size() + ".png";
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);
 
                 actualEmoji.setCurrentEmojiPath(path);
@@ -503,6 +506,8 @@ public class EmojiSectionController implements Initializable {
                 System.out.println(actualEmoji.getCurrentEmojiPath());
 
                 List<Emoji> lb = profile.getLibrary().getUserEmoji();
+                //List<Emoji> lb = Library.defaultEmoji;
+                //System.out.println("PROYECTO GUARDADO: " + lb);
                 lb.addLast(actualEmoji);
 
                 System.out.println(profile.getLibrary().getUserEmoji());

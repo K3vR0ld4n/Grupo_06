@@ -40,8 +40,8 @@ public class Library implements Serializable {
         return false;
     }
 
-    private static List<Emoji> loadDefaults() {
-        List<Emoji> newArray = Serialization.unserialize("defaulEmojis");
+    public static List<Emoji> loadDefaults() {
+        List<Emoji> newArray = Serialization.unserialize("defaultEmojis");
         return newArray;
     }
    

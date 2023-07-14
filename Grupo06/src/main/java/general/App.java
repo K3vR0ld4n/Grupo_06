@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.stage.StageStyle;
+import modules.Library;
 import modules.Profile;
 
 /**
@@ -22,6 +23,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("Login"));
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
+        System.out.println(Library.defaultEmoji);
         stage.show();
     }
 
