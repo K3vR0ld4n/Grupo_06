@@ -50,7 +50,10 @@ public class ProjectController implements Initializable {
 
     @FXML
     private Button btClearAll;
-
+    
+    @FXML
+    private ImageView imgClose;
+    
     private Emoji selectedEmoji;
 
     private final Alertas alert = new Alertas();
@@ -125,7 +128,12 @@ public class ProjectController implements Initializable {
         }
         
     }
-
+    @FXML
+    private void closeWindow(){
+        Stage stage = (Stage) imgClose.getScene().getWindow();
+            stage.close();
+    }
+    
     private void loadProjects(GridPane gp, List<Emoji> l) {
         int rows = gp.getRowCount();
         int countC = 0;

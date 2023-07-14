@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modules.Profile;
 import utils.Alertas;
 import utils.Serialization;
@@ -40,6 +41,9 @@ public class ProfileController implements Initializable {
 
     @FXML
     private Button btnLogout;
+    
+    @FXML
+    private ImageView imgClose;
 
     private final Alertas alert = new Alertas();
 
@@ -59,8 +63,7 @@ public class ProfileController implements Initializable {
         resetImagesViews(EmojiSectionController.viewEyes);
         resetImagesViews(EmojiSectionController.viewMouth);
         resetImagesViews(EmojiSectionController.viewEyebrows);
-        
-        
+        EmojiSectionController.currentComponents = null;
         Serialization.serialize(Profile.arrayProfile, "profile");
         Stage currentStage = (Stage) btnLogout.getScene().getWindow();
         currentStage.close();
@@ -82,13 +85,19 @@ public class ProfileController implements Initializable {
             }
             Stage newStage = new Stage();
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.setTitle("Project Window");
+            newStage.initStyle(StageStyle.UNDECORATED);
             newStage.setScene(new Scene(root));
             newStage.show();
             //close actual window
             Stage currentStage = (Stage) btnLogout.getScene().getWindow();
             currentStage.close();
         }
+    }
+    
+    @FXML
+    private void closeWindow(){
+        Stage stage = (Stage) imgClose.getScene().getWindow();
+            stage.close();
     }
     
     private void resetImagesViews(ImageView imgV){

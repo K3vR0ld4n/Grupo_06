@@ -41,7 +41,8 @@ public class UserComponentsController implements Initializable {
     @FXML
     private Button btDeleteImages;
 
-    
+    @FXML
+    private ImageView imgClose;
     
     private final List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
     private String selectedPath;
@@ -83,11 +84,17 @@ public class UserComponentsController implements Initializable {
         }
 
     }
+    
+    @FXML
+    private void closeWindow(){
+        Stage stage = (Stage) imgClose.getScene().getWindow();
+            stage.close();
+    }
 
     @FXML
     void deleteImages() {
         if (selectedPath == null) {
-            alert.AlertInfo("You must to select a Emoji");
+            alert.AlertInfo("You must to select a Image");
         } else if (alert.AlertConfirmation("Are you sure you want to DELETE this Component?")) {
 
             System.out.println(selectedPath);

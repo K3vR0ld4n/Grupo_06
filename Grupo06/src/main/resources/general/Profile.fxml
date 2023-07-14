@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="450.0" styleClass="mainFxmlClass" stylesheets="@../styles/profile.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="general.ProfileController">
+<AnchorPane id="AnchorPane" prefHeight="721.0" prefWidth="450.0" styleClass="mainFxmlClass" stylesheets="@../styles/profile.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.ProfileController">
    <children>
       <ImageView fitHeight="351.0" fitWidth="450.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -64,5 +64,10 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </TextField>
+      <ImageView id="clicked" fx:id="imgClose" fitHeight="27.0" fitWidth="31.0" layoutX="422.0" layoutY="1.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/closeIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

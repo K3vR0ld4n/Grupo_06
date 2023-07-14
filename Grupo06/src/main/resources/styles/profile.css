@@ -43,3 +43,8 @@
     -fx-text-fill: white;
     /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 0, 0, 2, 2);*/    
 }
+
+/*show hand hover the images*/
+#clicked:hover{
+    -fx-cursor: hand;
+}

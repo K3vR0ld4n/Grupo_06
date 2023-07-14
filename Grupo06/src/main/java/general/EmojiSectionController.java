@@ -37,6 +37,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modules.Emoji;
 import modules.Component;
 import modules.History;
@@ -225,7 +226,7 @@ public class EmojiSectionController implements Initializable {
         }
          Stage newStage = new Stage();
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.setTitle("Default Emojis Selector");
+            newStage.initStyle(StageStyle.UNDECORATED);
             newStage.setScene(new Scene(root));
             newStage.showAndWait();
     }
@@ -249,6 +250,7 @@ public class EmojiSectionController implements Initializable {
                     String imagePath = file.getCanonicalPath();
 
                     profile.saveUserComponent(imagePath, currentComponents.getType().name().toLowerCase());
+                    alert.AlertInfo("Image upload successfully");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -285,7 +287,7 @@ public class EmojiSectionController implements Initializable {
             }
             Stage newStage = new Stage();
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.setTitle("User Components Window");
+            newStage.initStyle(StageStyle.UNDECORATED);
             newStage.setScene(new Scene(root));
             newStage.showAndWait();
 
@@ -463,7 +465,8 @@ public class EmojiSectionController implements Initializable {
     }
 
     public static void updateImageView(Component comp, ImageView imgV) {
-        imgV.setImage(Emoji.toImage(comp.getPath()));
+        //imgV.setImage(Emoji.toImage(comp.getPath()));
+        imgV.setImage(Emoji.toImage(Paths.get(comp.getPath()).toAbsolutePath().toUri().toString()));
         imgV.setTranslateX(comp.getPositionX());
         imgV.setTranslateY(comp.getPositionY());
         imgV.setFitHeight(comp.getHeight());
@@ -495,6 +498,7 @@ public class EmojiSectionController implements Initializable {
                     String filePath = file.getCanonicalPath();
                     System.out.println(filePath);
                     ProjectController.exportStackPaneAsImage(SPEmoji, filePath + ".png");
+                    alert.AlertInfo("Emoji exported successfully");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -507,7 +511,9 @@ public class EmojiSectionController implements Initializable {
     public void saveProject() {
         if (profile.getName().equals("Guest")) {
             alert.AlertInfo("You must log in to perform this action");
-        } else {
+        }else if(viewFace.getImage() == null && viewEyes.getImage() == null && viewAccessory.getImage() == null && viewMouth.getImage() == null && viewEyebrows.getImage() == null) {
+            alert.AlertInfo("There is not proyect to save");
+        }else {
             Emoji actualEmoji = history.getActual();
 
             if (profile.getLibrary().getUserEmoji().contains(actualEmoji)) {
@@ -528,6 +534,7 @@ public class EmojiSectionController implements Initializable {
                 lb.addLast(actualEmoji);
 
                 System.out.println(profile.getLibrary().getUserEmoji());
+                alert.AlertInfo("Emoji saved successfully");
             }
 
         }
@@ -564,7 +571,7 @@ public class EmojiSectionController implements Initializable {
         }
         Stage newStage = new Stage();
         newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.setTitle("Profile window");
+        newStage.initStyle(StageStyle.UNDECORATED);
         newStage.setScene(new Scene(root));
         newStage.show();
     }

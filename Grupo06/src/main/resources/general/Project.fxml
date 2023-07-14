@@ -46,5 +46,10 @@
       </ScrollPane>
       <Button fx:id="btDelete" layoutX="476.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteMethod" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Delete" />
       <Button fx:id="btClearAll" layoutX="48.0" layoutY="388.0" mnemonicParsing="false" onAction="#clearAllMethod" onMouseClicked="#selectMethod" prefHeight="40.0" prefWidth="132.0" text="Clear All" />
+      <ImageView id="clicked" fx:id="imgClose" fitHeight="27.0" fitWidth="31.0" layoutX="672.0" layoutY="1.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/closeIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

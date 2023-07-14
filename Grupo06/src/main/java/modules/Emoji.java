@@ -55,7 +55,10 @@ public class Emoji implements Serializable {
 
     private static Component buildWithoutNull(ImageView img) {
         if (img != null && img.getImage() != null) {
-            Component c = new Component(img.getImage().getUrl(), img.getTranslateX(), img.getTranslateY(), img.getFitWidth(), img.getFitHeight());
+
+            String path = img.getImage().getUrl() ;
+            int index = path.indexOf("Grupo06/");
+            Component c = new Component(path.substring(index+8), img.getTranslateX(), img.getTranslateY(), img.getFitWidth(), img.getFitHeight());
             return c;
         }
         return new Component("", 0, 0, 0, 0);

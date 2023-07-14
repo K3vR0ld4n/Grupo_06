@@ -43,3 +43,8 @@
     -fx-border-color: black;
     -fx-background-radius: 5px;
 }
+
+/*show hand hover the images*/
+#clicked:hover{
+    -fx-cursor: hand;
+}

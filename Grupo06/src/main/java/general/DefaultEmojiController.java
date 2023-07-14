@@ -41,6 +41,9 @@ public class DefaultEmojiController implements Initializable {
 
     @FXML
     private Button bttSelect;
+    
+    @FXML
+    private ImageView imgClose;
 
     private Emoji selectedEmoji;
 
@@ -50,6 +53,12 @@ public class DefaultEmojiController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         List<Emoji> defaultEmojis = Library.defaultEmoji;
         loadProjects(GpDefault, defaultEmojis);
+    }
+    
+    @FXML
+    private void closeWindow(){
+        Stage stage = (Stage) imgClose.getScene().getWindow();
+            stage.close();
     }
 
     @FXML

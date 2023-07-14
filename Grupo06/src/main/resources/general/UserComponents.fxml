@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.UserComponentsController">
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="700.0" styleClass="mainFxmlClass" stylesheets="@../styles/project.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.UserComponentsController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="30.0" prefHeight="53.0" prefWidth="227.0" text="My Images" textFill="#212a3e">
          <font>
@@ -45,5 +45,10 @@
       </ScrollPane>
       <Button fx:id="btDeleteImages" layoutX="476.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteImages" prefHeight="40.0" prefWidth="132.0" text="Delete" />
       <Button fx:id="btClearAllImages" layoutX="48.0" layoutY="388.0" mnemonicParsing="false" onAction="#clearAllImages" prefHeight="40.0" prefWidth="132.0" text="Clear All" />
+      <ImageView id="clicked" fx:id="imgClose" fitHeight="27.0" fitWidth="31.0" layoutX="672.0" layoutY="1.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/closeIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
