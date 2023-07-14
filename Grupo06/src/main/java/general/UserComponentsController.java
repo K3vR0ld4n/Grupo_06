@@ -41,14 +41,17 @@ public class UserComponentsController implements Initializable {
     @FXML
     private Button btDeleteImages;
 
+    
+    
+    private final List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
     private String selectedPath;
     private final Alertas alert = new Alertas();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
-        loadProjects(GpComponents, loadCurrentUploadComponents(components, EmojiSectionController.currentComponents.getType().name().toLowerCase()));
+        
+        loadProjects(GpComponents, currentUploadComponents(components, EmojiSectionController.currentComponents.getType().name().toLowerCase()));
     }
 
     @FXML
@@ -58,14 +61,21 @@ public class UserComponentsController implements Initializable {
         } else {
             if (alert.AlertConfirmation("Are you sure you want to DELETE ALL COMPONENTS?")) {
 
-                List<String> components = EmojiSectionController.profile.getLibrary().getUserComponentsPaths();
+                List<String> componentsToDeleate = currentUploadComponents(components, EmojiSectionController.currentComponents.getType().name().toLowerCase());
 
-                for (String path : components) {
+                String type= EmojiSectionController.currentComponents.getType().name().toLowerCase();
+                EmojiSectionController.currentComponents.setResourcesList(new Resource(type).getResourcesList());
+                
+                
+                for (String path : componentsToDeleate) {
                     Resource.deleteFilePath(path);
+                    components.remove(path);
+                    
+                    
                     //Resource.deleteFilePath("target/classes" + em.getCurrentEmojiPath().substring(18));
                 }
 
-                components.clear();
+              
 
                 Stage currentStage = (Stage) btDeleteImages.getScene().getWindow();
                 currentStage.close();
@@ -122,7 +132,7 @@ public class UserComponentsController implements Initializable {
 
     }
 
-    private ArrayList<String> loadCurrentUploadComponents(List<String> lista, String type) {
+    private ArrayList<String> currentUploadComponents(List<String> lista, String type) {
         ArrayList<String> toLoad = new ArrayList<>();
 
         if (!lista.isEmpty()) {

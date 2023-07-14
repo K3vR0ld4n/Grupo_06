@@ -114,7 +114,7 @@ public class DoubleCircularList<E> implements List<E>, Serializable {
                 prevNode.setNext(nextNode);
                 nextNode.setPrev(prevNode);
                 if (nodo == last) {
-                    last = nextNode;
+                    last = prevNode;
                 }
                 retorno = true;
                 break;

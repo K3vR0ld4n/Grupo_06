@@ -1,5 +1,27 @@
-#configuraciones de Netbeanas
-Grupo06/nbactions.xml
-Grupo06/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
-Grupo06/nb-configuration.xml
+# Build and execution files
+/Grupo06/build/
+/Grupo06/dist/
+/Grupo06/nbproject/private/
+/Grupo06/nbbuild/
+/Grupo06/nbdist/
+/Grupo06/nbactions.xml
+/Grupo06/nb-configuration.xml
+/Grupo06/*.jar
+
+# IDE configuration files
+/Grupo06/nb-gradle.xml
+/Grupo06/nb-configuration.xml
+/Grupo06/nb-configuration.json
+/Grupo06/nbactions.xml
+
+# Backup and cache files
+/Grupo06/*~
+/Grupo06/*.bak
+/Grupo06/.idea/
+/Grupo06/.DS_Store
+
+# Maven dependencies
 /Grupo06/target/
+
+# Logs
+/Grupo06/*.log
