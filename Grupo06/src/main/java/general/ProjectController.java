@@ -69,8 +69,8 @@ public class ProjectController implements Initializable {
     private void selectMethod() {
 
         if (selectedEmoji == null) {
-            alert.AlertInfo("You must to select a Emoji");
-        } else if (alert.AlertConfirmation("Are you sure you want to LOAD this emoji?")) {
+            alert.AlertInfo("You must to select a project");
+        } else if (alert.AlertConfirmation("Are you sure you want to LOAD this project?")) {
             EmojiSectionController.updateImageView(selectedEmoji.getAccessoriesComponent(), EmojiSectionController.viewAccessory);
             EmojiSectionController.updateImageView(selectedEmoji.getEyeComponent(), EmojiSectionController.viewEyes);
             EmojiSectionController.updateImageView(selectedEmoji.getFaceComponent(), EmojiSectionController.viewFace);
@@ -86,8 +86,8 @@ public class ProjectController implements Initializable {
     @FXML
     private void deleteMethod() {
         if (selectedEmoji == null) {
-            alert.AlertInfo("You must to select a Emoji");
-        } else if (alert.AlertConfirmation("Are you sure you want to DELETE this Emoji?")) {
+            alert.AlertInfo("You must to select a project");
+        } else if (alert.AlertConfirmation("Are you sure you want to DELETE this PROJECTS?")) {
             System.out.println(selectedEmoji.getCurrentEmojiPath());
 
             EmojiSectionController.profile.getLibrary().getUserEmoji().remove(selectedEmoji);
@@ -104,19 +104,11 @@ public class ProjectController implements Initializable {
     @FXML
     private void clearAllMethod() {
         if (GpProject.getChildren().isEmpty()) {
-            alert.AlertInfo("There are no images to delete");
+            alert.AlertInfo("There are no projects to delete");
         } else {
             if (alert.AlertConfirmation("Are you sure you want to DELETE ALL PROJECTS?")) {
 
             List<Emoji> emoji = EmojiSectionController.profile.getLibrary().getUserEmoji();
-              //List<Emoji> emoji = Library.defaultEmoji;
-//            Iterator<Emoji> itr = EmojiSectionController.profile.getLibrary().getUserEmoji().iterator();
-//            int count = 0;
-//
-//            while (count < emoji.size()) {
-//                Resource.deleteFilePath(itr.next().getCurrentEmojiPath());
-//                count++;
-//            }
             for (Emoji e : emoji) {
                 Resource.deleteFilePath(e.getCurrentEmojiPath());
             }
@@ -180,7 +172,6 @@ public class ProjectController implements Initializable {
 
         WritableImage snapshot = stackPane.snapshot(new SnapshotParameters(), null);
         File file = new File(filePath);
-        //File file2 = new File("target/classes/" + filePath.substring(18));
 
         try {
 
