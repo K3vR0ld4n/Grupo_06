@@ -204,13 +204,30 @@ public class EmojiSectionController implements Initializable {
     @FXML
     private void closeWindow() throws IOException {
         Serialization.serialize(Profile.arrayProfile, "profile");
-       Serialization.serialize(Library.defaultEmoji, "defaultEmojis");
+        Serialization.serialize(Library.defaultEmoji, "defaultEmojis");
         System.exit(0);
     }
 
     @FXML
     private void LogOutMethod() throws IOException {
         App.setRoot("Login");
+    }
+
+    @FXML
+    private void viewDefaultEmojis() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DefaultEmojis.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+         Stage newStage = new Stage();
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.setTitle("Default Emojis Selector");
+            newStage.setScene(new Scene(root));
+            newStage.showAndWait();
     }
 
     @FXML
@@ -494,7 +511,7 @@ public class EmojiSectionController implements Initializable {
             if (profile.getLibrary().getUserEmoji().contains(actualEmoji)) {
                 alert.AlertError("Cannot save the same project");
             } else if (actualEmoji != null) {
-                
+
                 String path = "userData/profiles/" + profile.getMail() + "/project" + profile.getLibrary().getUserEmoji().size() + ".png";
                 //String path = "userData/defaultEmojis/" + Library.defaultEmoji.size() + ".png";
                 ProjectController.exportStackPaneAsImage(SPEmoji, path);

@@ -57,8 +57,7 @@ public class ProjectController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        loadProjects(GpProject, Library.defaultEmoji);
+        
         loadProjects(GpProject, EmojiSectionController.profile.getLibrary().getUserEmoji());
 
     }

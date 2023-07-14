@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
+<AnchorPane id="AnchorPane" fx:id="PanePrincipal" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: F8F8F8;" stylesheets="@../styles/emojisection.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="general.EmojiSectionController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -145,6 +145,6 @@
             <Image url="@../resources/exportIcon.png" />
          </image>
       </ImageView>
-      <Button id="btSpecific" fx:id="btEmojis" layoutX="749.0" layoutY="196.0" mnemonicParsing="false" text="Emojis" />
+      <Button id="btSpecific" fx:id="btEmojis" layoutX="749.0" layoutY="196.0" mnemonicParsing="false" onAction="#viewDefaultEmojis" text="Emojis" />
    </children>
 </AnchorPane>
